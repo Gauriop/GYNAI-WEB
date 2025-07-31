@@ -1,0 +1,41 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 20px;
+}
+h2 {
+  color: #c2185b;
+}
+form, nav, ul {
+  margin-top: 20px;
+}
+input, button {
+  padding: 8px;
+  width: 250px;
+  margin-top: 5px;
+}
+button {
+  background-color: #c2185b;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #a31548;
+}
+a {
+  color: #c2185b;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+nav ul li {
+  margin-bottom: 10px;
+}
