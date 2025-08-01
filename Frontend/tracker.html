@@ -1,24 +1,859 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Symptom Tracker - GynAi</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Tracker - GynAi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFF0F5;
+            min-height: 100vh;
+            color: #750D37;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Decorative circles matching the theme */
+        .decorative-circles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+        }
+
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            background: #750D37;
+            top: 15%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 80px;
+            height: 80px;
+            background: #FF6B9D;
+            bottom: 25%;
+            right: 15%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            background: #A0164D;
+            top: 45%;
+            right: 25%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .circle-4 {
+            width: 60px;
+            height: 60px;
+            background: #750D37;
+            bottom: 35%;
+            left: 8%;
+            animation: float 9s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #750D37;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 50px;
+            border: 2px solid #f3d5e3;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.1);
+        }
+
+        .back-link:hover {
+            background: #750D37;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.2);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: #750D37;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #750D37;
+            opacity: 0.7;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .date-picker {
+            display: inline-flex;
+            align-items: center;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid #f3d5e3;
+            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.1);
+        }
+
+        .date-picker i {
+            margin-right: 10px;
+            color: #FF6B9D;
+        }
+
+        .date-picker input {
+            border: none;
+            background: none;
+            color: #750D37;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .tracking-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.1);
+            border: 2px solid #f3d5e3;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .tracking-form::before {
+            content: '📋';
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 8rem;
+            opacity: 0.04;
+            z-index: 0;
+        }
+
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #750D37;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #750D37;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #f3d5e3;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #750D37;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #750D37;
+            box-shadow: 0 0 0 3px rgba(117, 13, 55, 0.1);
+        }
+
+        .range-group {
+            margin-top: 15px;
+        }
+
+        .range-input {
+            width: 100%;
+            height: 6px;
+            background: #f3d5e3;
+            border-radius: 5px;
+            outline: none;
+            margin: 10px 0;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #750D37;
+            opacity: 0.7;
+        }
+
+        .range-value {
+            text-align: center;
+            font-weight: 600;
+            color: #750D37;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #F0E6EF;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #F0E6EF;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #f3d5e3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            background: #750D37;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #750D37;
+        }
+
+        .mood-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mood-option {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 15px 10px;
+            background: #F0E6EF;
+            border: 2px solid #f3d5e3;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mood-option:hover,
+        .mood-option.selected {
+            background: #750D37;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .mood-emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            color: white;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.3);
+        }
+
+        .submit-btn i {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            padding: 10px 20px;
+            background: white;
+            color: #750D37;
+            border: 2px solid #f3d5e3;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .quick-btn:hover {
+            background: #750D37;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-btn i {
+            margin-right: 8px;
+        }
+
+        .tracking-history {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.1);
+            border: 2px solid #f3d5e3;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tracking-history h3 {
+            color: #750D37;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tracking-history h3 i {
+            margin-right: 12px;
+            color: #FF6B9D;
+        }
+
+        .history-item {
+            padding: 15px;
+            background: #F0E6EF;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-date {
+            font-weight: 600;
+            color: #750D37;
+        }
+
+        .history-summary {
+            color: #750D37;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #f3d5e3;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: #750D37;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+            margin-top: 30px;
+        }
+
+        .disclaimer i {
+            color: #FF6B9D;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tracking-form {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .mood-selector {
+                flex-direction: column;
+            }
+
+            .mood-option {
+                flex: none;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-  <a href="home.html">&larr; Back to Home</a>
-  <h2>Log Your Symptoms</h2>
-  <form>
-    <label>Pain Level (0-10):</label><br>
-    <input type="number" min="0" max="10"><br><br>
-    <label>Bleeding (ml):</label><br>
-    <input type="number"><br><br>
-    <label>Mood:</label><br>
-    <input type="text"><br><br>
-    <label>Sleep Hours:</label><br>
-    <input type="number"><br><br>
-    <label>Fatigue Level:</label><br>
-    <input type="number"><br><br>
-    <button type="submit">Submit</button>
-  </form>
-</body>
-</html>
+    <div class="decorative-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+
+    <div class="container">
+        <a href="home.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="header">
+            <h1>Daily Symptom Tracker</h1>
+            <p>Track your symptoms to help identify patterns and improve your health</p>
+            <div class="date-picker">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="trackingDate" value="">
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            Your symptoms have been logged successfully!
+        </div>
+
+        <form class="tracking-form" id="trackingForm">
+            <div class="form-content">
+                <!-- Pain & Discomfort -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        Pain & Discomfort
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="painLevel">Overall Pain Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="painLevel" name="painLevel" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>No Pain</span>
+                                    <span>Severe Pain</span>
+                                </div>
+                                <div class="range-value" id="painValue">0</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pelvicPain">Pelvic Pain Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="pelvicPain" name="pelvicPain" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>None</span>
+                                    <span>Severe</span>
+                                </div>
+                                <div class="range-value" id="pelvicPainValue">0</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="backPain">Back Pain Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="backPain" name="backPain" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>None</span>
+                                    <span>Severe</span>
+                                </div>
+                                <div class="range-value" id="backPainValue">0</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="headacheLevel">Headache Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="headacheLevel" name="headacheLevel" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>None</span>
+                                    <span>Severe</span>
+                                </div>
+                                <div class="range-value" id="headacheValue">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menstrual Information -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-tint"></i></div>
+                        Menstrual Information
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bleeding">Bleeding Amount</label>
+                            <select id="bleeding" name="bleeding">
+                                <option value="none">None</option>
+                                <option value="spotting">Spotting</option>
+                                <option value="light">Light</option>
+                                <option value="medium">Medium</option>
+                                <option value="heavy">Heavy</option>
+                                <option value="very-heavy">Very Heavy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cycleDay">Day of Cycle</label>
+                            <input type="number" id="cycleDay" name="cycleDay" min="1" max="50" placeholder="Day 1-50">
+                        </div>
+                        <div class="form-group">
+                            <label for="cervicalMucus">Cervical Mucus</label>
+                            <select id="cervicalMucus" name="cervicalMucus">
+                                <option value="none">None observed</option>
+                                <option value="dry">Dry</option>
+                                <option value="sticky">Sticky</option>
+                                <option value="creamy">Creamy</option>
+                                <option value="watery">Watery</option>
+                                <option value="egg-white">Egg white</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cramps">Cramp Intensity (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="cramps" name="cramps" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>None</span>
+                                    <span>Severe</span>
+                                </div>
+                                <div class="range-value" id="crampsValue">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Physical Symptoms -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-body"></i></div>
+                        Physical Symptoms
+                    </h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bloating" name="symptoms" value="bloating">
+                            <label for="bloating">Bloating</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="breastTenderness" name="symptoms" value="breastTenderness">
+                            <label for="breastTenderness">Breast Tenderness</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nausea" name="symptoms" value="nausea">
+                            <label for="nausea">Nausea</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fatigue" name="symptoms" value="fatigue">
+                            <label for="fatigue">Fatigue</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="dizziness" name="symptoms" value="dizziness">
+                            <label for="dizziness">Dizziness</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hotFlashes" name="symptoms" value="hotFlashes">
+                            <label for="hotFlashes">Hot Flashes</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="acne" name="symptoms" value="acne">
+                            <label for="acne">Acne/Skin Issues</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hairChanges" name="symptoms" value="hairChanges">
+                            <label for="hairChanges">Hair Changes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood & Mental Health -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-smile"></i></div>
+                        Mood & Mental Health
+                    </h3>
+                    <div class="form-group">
+                        <label>Overall Mood Today</label>
+                        <div class="mood-selector">
+                            <div class="mood-option" data-mood="terrible">
+                                <span class="mood-emoji">😢</span>
+                                <span>Terrible</span>
+                            </div>
+                            <div class="mood-option" data-mood="bad">
+                                <span class="mood-emoji">😞</span>
+                                <span>Bad</span>
+                            </div>
+                            <div class="mood-option" data-mood="okay">
+                                <span class="mood-emoji">😐</span>
+                                <span>Okay</span>
+                            </div>
+                            <div class="mood-option" data-mood="good">
+                                <span class="mood-emoji">😊</span>
+                                <span>Good</span>
+                            </div>
+                            <div class="mood-option" data-mood="great">
+                                <span class="mood-emoji">😄</span>
+                                <span>Great</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="anxietyLevel">Anxiety Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="anxietyLevel" name="anxietyLevel" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>Calm</span>
+                                    <span>Very Anxious</span>
+                                </div>
+                                <div class="range-value" id="anxietyValue">0</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="stressLevel">Stress Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="stressLevel" name="stressLevel" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>Relaxed</span>
+                                    <span>Very Stressed</span>
+                                </div>
+                                <div class="range-value" id="stressValue">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sleep & Energy -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-bed"></i></div>
+                        Sleep & Energy
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sleepHours">Hours of Sleep</label>
+                            <input type="number" id="sleepHours" name="sleepHours" min="0" max="24" step="0.5" placeholder="8.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="sleepQuality">Sleep Quality (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="sleepQuality" name="sleepQuality" min="0" max="10" value="5" class="range-input">
+                                <div class="range-labels">
+                                    <span>Poor</span>
+                                    <span>Excellent</span>
+                                </div>
+                                <div class="range-value" id="sleepQualityValue">5</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="energyLevel">Energy Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="energyLevel" name="energyLevel" min="0" max="10" value="5" class="range-input">
+                                <div class="range-labels">
+                                    <span>Exhausted</span>
+                                    <span>Very Energetic</span>
+                                </div>
+                                <div class="range-value" id="energyValue">5</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fatigueLevel">Fatigue Level (0-10)</label>
+                            <div class="range-group">
+                                <input type="range" id="fatigueLevel" name="fatigueLevel" min="0" max="10" value="0" class="range-input">
+                                <div class="range-labels">
+                                    <span>Alert</span>
+                                    <span>Very Tired</span>
+                                </div>
+                                <div class="range-value" id="fatigueValue">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-sticky-note"></i></div>
+                        Additional Notes
+                    </h3>
+                    <div class="form-group">
+                        <label for="notes">Notes & Observations</label>
+                        <textarea id="notes" name="notes" placeholder="Any additional symptoms, observations, or notes about your day..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="medications">Medications Taken</label>
+                        <input type="text" id="medications" name="medications" placeholder="List any medications or supplements taken today">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i>
+                    Save Today's Symptoms
+                </button>
+
+                <div class="quick-actions">
+                    <a href="prediction.html" class="quick-btn">
+                        <i class="fas fa-chart-line"></i>
+                        View Predictions
+                    </a>
+                    <a href="doctors.html" class="quick-btn">
+                        <i class="fas fa-user-md"></i>
+                        Find Doctors
+                    </a>
+                    <a href="#" class="quick-btn" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <div class="tracking-history">
+            <h3><i class="fas fa-history"></i>Recent Entries</h3>
+            <div class="history-item">
+                <div>
+                    <div class="history-date">Yesterday</div>
+                    <div class="history-summary">Pain: 3/10 • Mood: Good •
