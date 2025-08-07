@@ -103,19 +103,60 @@
       text-align: center;
     }
 
+    .input-group {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
     .login-box form input {
       width: 100%;
       padding: 15px;
-      margin: 10px 0;
+      margin: 0;
       border: 2px solid #f3cde3;
       border-radius: 10px;
       font-size: 1rem;
       color: #750D37;
+      transition: border-color 0.3s ease;
+    }
+
+    .login-box form input:focus {
+      outline: none;
+      border-color: #750D37;
+    }
+
+    .login-box form input.error {
+      border-color: #e74c3c;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    .login-box form input.valid {
+      border-color: #27ae60;
     }
 
     .login-box form input::placeholder {
       color: #750D37;
       opacity: 0.5;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      margin-left: 5px;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+    }
+
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
     .login-box button {
@@ -130,18 +171,47 @@
       cursor: pointer;
       margin-top: 15px;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .login-box button:hover {
       background: #750D37;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(117, 13, 55, 0.3);
     }
 
-    
+    .login-box button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .login-box button .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+
+    .login-box button.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
     .options {
       display: flex;
       justify-content: space-between;
-      align-items: center;  /* ✅ vertically align items */
+      align-items: center;
       font-size: 0.9rem;
       margin-top: 10px;
     }
@@ -149,15 +219,26 @@
     .options label {
       display: flex;
       align-items: center;
-      gap: 6px;              /* ✅ spacing between checkbox and label */
+      gap: 6px;
       color: #750D37;
       white-space: nowrap;
+      cursor: pointer;
     }
 
+    .options input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+    }
 
     .options a {
       color: #750D37;
       text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .options a:hover {
+      color: #A0164D;
     }
 
     .or {
@@ -172,8 +253,6 @@
       gap: 15px;
     }
 
-    
-
     .social-icons a {
       font-size: 1.5rem;
       text-decoration: none;
@@ -185,12 +264,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
 
     .social-icons a:hover {
       background-color: #750D37;
       color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(117, 13, 55, 0.3);
     }
 
     .register-text {
@@ -203,8 +284,65 @@
       color: #750D37;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
 
+    .register-text a:hover {
+      color: #A0164D;
+    }
+
+    .success-message {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .success-message.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #750D37;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .password-toggle:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+        max-width: 400px;
+      }
+
+      .left-section {
+        height: 200px;
+      }
+
+      .login-box {
+        padding: 30px;
+      }
+
+      .illustration img {
+        width: 150px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -226,23 +364,38 @@
 
     <!-- RIGHT SIDE -->
     <div class="login-box">
+      <div id="successMessage" class="success-message">
+        Login successful! Redirecting...
+      </div>
+      
       <h2>Login</h2>
-      <form onsubmit="handleLogin(event)">
-        <input type="email" id="email" placeholder="Email or username" required />
-        <input type="password" id="password" placeholder="Password" required />
-
-        <div class="options">
-          <label><input type="checkbox" />Remember me</label>
-          <a href="#">Forgot password?</a>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <input type="text" id="email" placeholder="Email or username" autocomplete="username" />
+          <div id="emailError" class="error-message">Please enter a valid email address</div>
         </div>
 
-        <button type="submit">Login</button>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+          <span class="password-toggle" onclick="togglePassword()">👁️</span>
+          <div id="passwordError" class="error-message">Password must be at least 6 characters long</div>
+        </div>
+
+        <div class="options">
+          <label><input type="checkbox" id="rememberMe" />Remember me</label>
+          <a href="#" onclick="handleForgotPassword()">Forgot password?</a>
+        </div>
+
+        <button type="submit" id="loginBtn">
+          <span class="spinner"></span>
+          <span id="buttonText">Login</span>
+        </button>
 
         <p class="or">or</p>
         <div class="social-icons">
-          <a href="#">📘</a>
-          <a href="#">📧</a>
-          <a href="#">📷</a>
+          <a href="#" onclick="handleSocialLogin('facebook')" title="Login with Facebook">📘</a>
+          <a href="#" onclick="handleSocialLogin('google')" title="Login with Google">📧</a>
+          <a href="#" onclick="handleSocialLogin('instagram')" title="Login with Instagram">📷</a>
         </div>
 
         <p class="register-text">Don't have an account? <a href="register.html">Register here</a></p>
@@ -252,11 +405,220 @@
   </div>
 
   <script>
+    // Form validation state
+    const validation = {
+      email: false,
+      password: false
+    };
+
+    // Get form elements
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const loginBtn = document.getElementById('loginBtn');
+    const buttonText = document.getElementById('buttonText');
+    const successMessage = document.getElementById('successMessage');
+
+    // Email validation function
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+      return emailRegex.test(email) || usernameRegex.test(email);
+    }
+
+    // Password validation function
+    function validatePassword(password) {
+      return password.length >= 6;
+    }
+
+    // Show error message
+    function showError(errorElement, message) {
+      errorElement.textContent = message;
+      errorElement.classList.add('show');
+    }
+
+    // Hide error message
+    function hideError(errorElement) {
+      errorElement.classList.remove('show');
+    }
+
+    // Validate individual field
+    function validateField(field, value) {
+      const input = field === 'email' ? emailInput : passwordInput;
+      const errorElement = field === 'email' ? emailError : passwordError;
+      
+      let isValid = false;
+      let errorMessage = '';
+
+      if (field === 'email') {
+        if (!value.trim()) {
+          errorMessage = 'Email or username is required';
+        } else if (!validateEmail(value)) {
+          errorMessage = 'Please enter a valid email address or username (3-20 characters)';
+        } else {
+          isValid = true;
+        }
+      } else if (field === 'password') {
+        if (!value) {
+          errorMessage = 'Password is required';
+        } else if (!validatePassword(value)) {
+          errorMessage = 'Password must be at least 6 characters long';
+        } else {
+          isValid = true;
+        }
+      }
+
+      // Update UI based on validation
+      if (isValid) {
+        input.classList.remove('error');
+        input.classList.add('valid');
+        hideError(errorElement);
+      } else {
+        input.classList.remove('valid');
+        input.classList.add('error');
+        showError(errorElement, errorMessage);
+      }
+
+      validation[field] = isValid;
+      updateSubmitButton();
+      return isValid;
+    }
+
+    // Update submit button state
+    function updateSubmitButton() {
+      const isFormValid = validation.email && validation.password;
+      loginBtn.disabled = !isFormValid;
+    }
+
+    // Real-time validation on input
+    emailInput.addEventListener('input', function() {
+      validateField('email', this.value);
+    });
+
+    emailInput.addEventListener('blur', function() {
+      validateField('email', this.value);
+    });
+
+    passwordInput.addEventListener('input', function() {
+      validateField('password', this.value);
+    });
+
+    passwordInput.addEventListener('blur', function() {
+      validateField('password', this.value);
+    });
+
+    // Toggle password visibility
+    function togglePassword() {
+      const passwordField = document.getElementById('password');
+      const toggleBtn = document.querySelector('.password-toggle');
+      
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleBtn.textContent = '🙈';
+      } else {
+        passwordField.type = 'password';
+        toggleBtn.textContent = '👁️';
+      }
+    }
+
+    // Handle form submission
     function handleLogin(e) {
       e.preventDefault();
-      alert("Login successful!");
-      window.location.href = "home.html";
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      // Validate all fields
+      const emailValid = validateField('email', email);
+      const passwordValid = validateField('password', password);
+
+      if (!emailValid || !passwordValid) {
+        // Focus on first invalid field
+        if (!emailValid) {
+          emailInput.focus();
+        } else if (!passwordValid) {
+          passwordInput.focus();
+        }
+        return;
+      }
+
+      // Show loading state
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+      buttonText.textContent = 'Logging in...';
+
+      // Simulate API call
+      setTimeout(() => {
+        // Hide loading state
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        buttonText.textContent = 'Login';
+
+        // Show success message
+        successMessage.classList.add('show');
+        
+        // Store login data if remember me is checked
+        if (document.getElementById('rememberMe').checked) {
+          // In a real app, you'd use secure methods to store tokens
+          console.log('Remember me checked - would store login token');
+        }
+
+        // Redirect after success message
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1500);
+      }, 2000);
     }
+
+    // Handle forgot password
+    function handleForgotPassword() {
+      const email = emailInput.value.trim();
+      if (email && validateEmail(email)) {
+        alert(`Password reset link will be sent to: ${email}`);
+      } else {
+        alert('Please enter a valid email address first');
+        emailInput.focus();
+      }
+    }
+
+    // Handle social login
+    function handleSocialLogin(provider) {
+      const providers = {
+        facebook: 'Facebook',
+        google: 'Google',
+        instagram: 'Instagram'
+      };
+      
+      alert(`Redirecting to ${providers[provider]} login...`);
+      // In a real app, you'd redirect to the OAuth provider
+    }
+
+    // Initialize form
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial button state
+      updateSubmitButton();
+      
+      // Focus on email field
+      emailInput.focus();
+
+      // Add enter key support for better UX
+      emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          passwordInput.focus();
+        }
+      });
+    });
+
+    // Add some interactive feedback
+    form.addEventListener('submit', function() {
+      // Add subtle animation to form
+      form.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        form.style.transform = 'scale(1)';
+      }, 150);
+    });
   </script>
 
 </body>
