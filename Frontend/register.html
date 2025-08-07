@@ -342,26 +342,27 @@
       }
     }
 
-    document.querySelector('form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const repeatPassword = document.getElementById('repeat-password').value;
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const repeatPassword = document.getElementById('repeat-password').value;
 
-      if (!name || !email || !password || !repeatPassword) {
-        alert('Please fill in all fields');
-        return;
-      }
+  if (!name || !email || !password || !repeatPassword) {
+    alert('Please fill in all fields');
+    return;
+  }
 
-      if (password !== repeatPassword) {
-        alert('Passwords do not match');
-        return;
-      }
+  if (password !== repeatPassword) {
+    alert('Passwords do not match');
+    return;
+  }
 
-      alert('Account created successfully! Welcome to PCOS Prediction App.');
-      console.log({ name, email, password });
-    });
+  alert('Account created successfully! Welcome to PCOS Prediction App.');
+  window.location.href = 'home.html'; 
+});
+
   </script>
 
 </body>
