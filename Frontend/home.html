@@ -95,28 +95,50 @@
         }
 
         /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #750D37, #a91b5a);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 50px;
+    background-color: #fce4ec; /* Light pink background */
+}
 
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
+.hero-section img {
+    max-width: 250px;
+    height: auto;
+}
 
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 400;
-        }
+.hero-text {
+    flex: 1;
+    text-align: center;
+    color: #800040;
+}
+
+.hero-text h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.hero-text button {
+    background-color: #800040;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.hero-text button:hover {
+    background-color: #a00050;
+}
+
+
 
         .cta-button {
             background: white;
@@ -173,6 +195,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
+            
         }
 
         .feature-card {
@@ -181,6 +204,7 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(117, 13, 55, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
         }
 
         .feature-card:hover {
@@ -189,89 +213,85 @@
         }
 
         .feature-image {
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.1;
-            background-size: 50px 50px;
-            background-repeat: repeat;
-        }
+/* Remove overlay pattern if not needed */
+.feature-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    background-size: 50px 50px;
+    background-repeat: repeat;
+}
 
-        .feature-image.causes {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-        }
+/* Causes, Diagnosis and Symptoms */
+.feature-image.causes {
+    background-image: url('./images/diagnosis.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.causes::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M25 15c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10zm0 2c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z'/%3E%3C/g%3E%3C/svg%3E");
-        }
+/* Fertility Management */
+.feature-image.fertility {
+    background-image: url('./images/fertility.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.fertility {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
-        }
+/* Menstrual Health */
+.feature-image.periods {
+    background-image: url('./images/menstrual .jpg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.fertility::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='25' cy='20' r='3'/%3E%3Cpath d='M25 25c-2.8 0-5 2.2-5 5v5h10v-5c0-2.8-2.2-5-5-5z'/%3E%3C/g%3E%3C/svg%3E");
-        }
+/* Dermatological Health */
+.feature-image.skin-hair {
+    background-image: url('./images/dermat (2).jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.periods {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
+/* Chronic Condition Management */
+.feature-image.health-conditions {
+    background-image: url('./images/chronic.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.periods::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='15' y='10' width='20' height='25' rx='2'/%3E%3Crect x='20' y='5' width='2' height='10'/%3E%3Crect x='28' y='5' width='2' height='10'/%3E%3C/g%3E%3C/svg%3E");
-        }
+/* Treatment Protocols */
+.feature-image.management {
+    background-image: url('./images/treatment.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.skin-hair {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-        }
+/* Sexual Health Services */
+.feature-image.sexual-health {
+    background-image: url('./images/relationship.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.skin-hair::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='25' cy='25' r='15'/%3E%3Ccircle cx='25' cy='25' r='8'/%3E%3C/g%3E%3C/svg%3E");
-        }
+/* Weight Management */
+.feature-image.weight {
+    background-image: url('./images/weight.jpeg');
+    background-size: cover;
+    background-position: center;
+}
 
-        .feature-image.health-conditions {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-
-        .feature-image.health-conditions::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M25 10v15h15v10H25v15H15V35H0V25h15V10z'/%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .feature-image.management {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-        }
-
-        .feature-image.management::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='10' y='15' width='30' height='20' rx='3'/%3E%3Crect x='15' y='10' width='20' height='5'/%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .feature-image.sexual-health {
-            background: linear-gradient(135deg, #e91e63, #ad1457);
-        }
-
-        .feature-image.sexual-health::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M25 40c-8.3 0-15-6.7-15-15 0-4.1 1.7-7.9 4.4-10.6l2.1 2.1C14.2 18.8 13 21.8 13 25c0 6.6 5.4 12 12 12s12-5.4 12-12c0-3.2-1.2-6.2-3.5-8.5l2.1-2.1C38.3 17.1 40 20.9 40 25c0 8.3-6.7 15-15 15z'/%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .feature-image.weight {
-            background: linear-gradient(135deg, #9c27b0, #673ab7);
-        }
-
-        .feature-image.weight::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='15' y='30' width='20' height='8' rx='4'/%3E%3Crect x='23' y='15' width='4' height='20'/%3E%3C/g%3E%3C/svg%3E");
-        }
 
         .feature-content {
             padding: 1.5rem;
@@ -329,7 +349,7 @@
 
         .journey-image {
             height: 500px;
-            background: url('w.jpeg') center center / cover no-repeat;
+            background: url('images/w.jpeg') center center / cover no-repeat;
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -451,18 +471,30 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h2>Welcome to GynAi Dashboard</h2>
-            <p>We have worked closely with women to develop this AI to make sure it meets your needs. Track your symptoms, get health predictions, and connect with healthcare professionals.</p>
-            <a href="tracker.html" class="cta-button">Start Your Journey →</a>
-        </div>
-    </section>
+<section class="hero-section">
+    <div class="hero-left">
+        <img src="images/dash.png" alt="Doctor Illustration">
+    </div>
+
+    <div class="hero-text">
+        <h1>Welcome to GynAi Dashboard</h1>
+        <p>We have worked closely with women to develop this AI to make sure it meets your needs.
+           Track your symptoms, get health predictions, and connect with healthcare professionals.</p>
+        <button>Start Your Journey →</button>
+    </div>
+
+    <div class="hero-right">
+        <img src="images/d.png" alt="Woman Illustration">
+    </div>
+</section>
+
+
+
 
     <main class="main-content">
         <div class="container">
             <div class="section-title">
-                <div class="explore-icon"></div>
+                <div class="explore-icon">🔍</div>
                 <h3>Explore</h3>
             </div>
 
@@ -552,7 +584,7 @@
         <div class="container">
             <h3>Connect with us and other women</h3>
             <p>Our researchers and clinicians have investigated women's health extensively so that we now know a good deal more about the underlying causes and the best treatment approaches.</p>
-            <a href="#" class="cta-button">Join Discussion Forum →</a>
+ 
         </div>
     </section>
 
