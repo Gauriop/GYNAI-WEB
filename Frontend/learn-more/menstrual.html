@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menstrual Health Management - GynAi</title>
+  <style>
+body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: #fff8fa;
+      color: #333;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2, h3 {
+      color: #8a004f;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    /* Section styling */
+    section {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    /* Images */
+    .section-image {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    /* Icons container for symptoms */
+    .icons-row {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    /* FAQ Accordion Styles */
+    .faq {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    .faq h3 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+    .accordion-question {
+      background: white;
+      color: #8a004f;
+      cursor: pointer;
+      padding: 15px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .accordion-question:hover {
+      background: #f4acc0;
+    }
+    .accordion-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: white;
+      padding: 0 20px;
+      margin-bottom: 15px;
+      border-radius: 0 0 6px 6px;
+      color: #333;
+    }
+    .accordion-answer.open {
+      padding: 15px 20px;
+      max-height: 1000px; 
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      background: #8a004f;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background: #b3006e;
+    }
+
+    @media (max-width: 600px) {
+      .icons-row {
+        gap: 15px;
+      }
+      .icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Comprehensive Menstrual Health Management</h1>
+
+  <section id="normal-cycle">
+    <h2>Understanding the Normal Menstrual Cycle</h2>
+    <p>A healthy menstrual cycle is a sign of reproductive wellness. Understanding what's normal helps identify when something needs attention.</p>
+    
+    <h3>Normal Cycle Characteristics:</h3>
+    <ul>
+      <li><strong>Cycle length:</strong> 21-35 days from first day of one period to first day of next</li>
+      <li><strong>Period duration:</strong> 3-7 days of bleeding</li>
+      <li><strong>Flow volume:</strong> 30-40ml total blood loss (about 2-3 tablespoons)</li>
+      <li><strong>Color and consistency:</strong> Bright red to dark red, may include small clots</li>
+      <li><strong>Associated symptoms:</strong> Mild cramping, breast tenderness, mood changes</li>
+    </ul>
+
+    <h3>Menstrual Cycle Phases:</h3>
+    <ul>
+      <li><strong>Menstrual phase (Days 1-5):</strong> Shedding of uterine lining</li>
+      <li><strong>Follicular phase (Days 1-13):</strong> Egg development and estrogen rise</li>
+      <li><strong>Ovulation (Day 14):</strong> Egg release from ovary</li>
+      <li><strong>Luteal phase (Days 15-28):</strong> Progesterone production and potential implantation</li>
+    </ul>
+  </section>
+
+  <section id="pcos-menstrual">
+    <h2>PCOS and Menstrual Health</h2>
+    <p>Polycystic Ovary Syndrome (PCOS) significantly impacts menstrual cycles, affecting 6-12% of reproductive-aged women worldwide.</p>
+    
+    <h3>How PCOS Affects Menstruation:</h3>
+    <ul>
+      <li><strong>Irregular periods:</strong> Cycles longer than 35 days or fewer than 8 cycles per year</li>
+      <li><strong>Amenorrhea:</strong> Complete absence of periods for 3+ months</li>
+      <li><strong>Heavy bleeding:</strong> When periods do occur, they may be very heavy due to thick uterine lining</li>
+      <li><strong>Unpredictable timing:</strong> Difficulty predicting when periods will start</li>
+      <li><strong>Anovulation:</strong> Lack of ovulation disrupts normal hormonal cycling</li>
+    </ul>
+
+    <h3>PCOS Hormonal Imbalances:</h3>
+    <ul>
+      <li><strong>Elevated androgens:</strong> High testosterone levels interfere with ovulation</li>
+      <li><strong>Insulin resistance:</strong> Affects hormone production and ovarian function</li>
+      <li><strong>LH dominance:</strong> Elevated luteinizing hormone disrupts egg maturation</li>
+      <li><strong>Low progesterone:</strong> Lack of ovulation means insufficient progesterone production</li>
+    </ul>
+
+    <h3>PCOS Menstrual Management:</h3>
+    <ul>
+      <li><strong>Hormonal birth control:</strong> Combined pills, patches, or rings to regulate cycles</li>
+      <li><strong>Progesterone therapy:</strong> Cyclic progesterone to induce regular periods</li>
+      <li><strong>Metformin:</strong> Improves insulin sensitivity and may restore ovulation</li>
+      <li><strong>Lifestyle modifications:</strong> Weight management, low-glycemic diet, regular exercise</li>
+      <li><strong>Ovulation induction:</strong> Medications like letrozole or clomiphene for those trying to conceive</li>
+    </ul>
+  </section>
+
+  <section id="menstrual-disorders">
+    <h2>Common Menstrual Disorders</h2>
+    <p>Various conditions can disrupt normal menstrual patterns, each requiring specific management approaches.</p>
+    
+    <h3>Amenorrhea (Absent Periods):</h3>
+    <ul>
+      <li><strong>Primary amenorrhea:</strong> No periods by age 15 or 3 years after breast development</li>
+      <li><strong>Secondary amenorrhea:</strong> Periods stop for 3+ months in previously menstruating women</li>
+      <li><strong>Common causes:</strong> PCOS, thyroid disorders, excessive exercise, stress, eating disorders, pituitary problems</li>
+      <li><strong>Treatment approach:</strong> Address underlying cause, hormone therapy if needed</li>
+    </ul>
+
+    <h3>Dysmenorrhea (Painful Periods):</h3>
+    <ul>
+      <li><strong>Primary dysmenorrhea:</strong> Normal cramping due to uterine contractions</li>
+      <li><strong>Secondary dysmenorrhea:</strong> Pain due to underlying conditions like endometriosis</li>
+      <li><strong>Management:</strong> NSAIDs, heat therapy, hormonal contraceptives, lifestyle modifications</li>
+      <li><strong>Red flags:</strong> Severe pain interfering with daily activities, worsening pain over time</li>
+    </ul>
+
+    <h3>Menorrhagia (Heavy Bleeding):</h3>
+    <ul>
+      <li><strong>Definition:</strong> Bleeding lasting >7 days or >80ml blood loss per cycle</li>
+      <li><strong>Causes:</strong> Fibroids, polyps, adenomyosis, bleeding disorders, medications</li>
+      <li><strong>Treatment options:</strong> Hormonal IUD, tranexamic acid, hormonal therapy, surgical interventions</li>
+      <li><strong>Complications:</strong> Anemia, fatigue, impact on quality of life</li>
+    </ul>
+
+    <h3>Oligomenorrhea (Infrequent Periods):</h3>
+    <ul>
+      <li><strong>Definition:</strong> Cycles longer than 35 days but less than 90 days</li>
+      <li><strong>Common in:</strong> PCOS, thyroid disorders, perimenopause, stress</li>
+      <li><strong>Evaluation:</strong> Hormone testing, ultrasound, medical history review</li>
+      <li><strong>Management:</strong> Treat underlying cause, cycle regulation if desired</li>
+    </ul>
+  </section>
+
+  <section id="hormonal-factors">
+    <h2>Hormonal Factors Affecting Menstruation</h2>
+    <p>Multiple hormones work together to regulate the menstrual cycle. Imbalances can significantly impact menstrual health.</p>
+    
+    <h3>Key Reproductive Hormones:</h3>
+    <ul>
+      <li><strong>Estrogen:</strong> Builds uterine lining, regulates cycle length</li>
+      <li><strong>Progesterone:</strong> Maintains uterine lining, triggers menstruation when levels drop</li>
+      <li><strong>FSH (Follicle Stimulating Hormone):</strong> Stimulates egg development</li>
+      <li><strong>LH (Luteinizing Hormone):</strong> Triggers ovulation</li>
+      <li><strong>Androgens:</strong> When elevated (as in PCOS), can disrupt ovulation</li>
+    </ul>
+
+    <h3>Non-Reproductive Hormones Affecting Cycles:</h3>
+    <ul>
+      <li><strong>Thyroid hormones:</strong> Hypothyroidism can cause heavy, irregular periods</li>
+      <li><strong>Insulin:</strong> Insulin resistance affects ovarian hormone production</li>
+      <li><strong>Prolactin:</strong> Elevated levels can suppress ovulation</li>
+      <li><strong>Cortisol:</strong> Chronic stress and high cortisol disrupt reproductive hormones</li>
+    </ul>
+
+    <h3>Hormonal Testing for Menstrual Issues:</h3>
+    <ul>
+      <li><strong>Day 3 hormones:</strong> FSH, LH, estradiol to assess ovarian function</li>
+      <li><strong>Mid-luteal progesterone:</strong> Confirms ovulation (day 21 of 28-day cycle)</li>
+      <li><strong>Thyroid function:</strong> TSH, T3, T4 to rule out thyroid disorders</li>
+      <li><strong>Androgen levels:</strong> Testosterone, DHEA-S for PCOS evaluation</li>
+      <li><strong>Additional tests:</strong> Prolactin, insulin, glucose tolerance test if indicated</li>
+    </ul>
+  </section>
+
+  <section id="lifestyle-factors">
+    <h2>Lifestyle Factors and Menstrual Health</h2>
+    <p>Daily lifestyle choices significantly impact menstrual cycle regularity and symptoms.</p>
+    
+    <h3>Diet and Nutrition:</h3>
+    <ul>
+      <li><strong>Balanced nutrition:</strong> Adequate calories and nutrients for hormone production</li>
+      <li><strong>Iron-rich foods:</strong> Prevent anemia from monthly blood loss</li>
+      <li><strong>Omega-3 fatty acids:</strong> Reduce inflammation and menstrual pain</li>
+      <li><strong>Complex carbohydrates:</strong> Support stable blood sugar and hormone balance</li>
+      <li><strong>Limit processed foods:</strong> Reduce inflammation and hormonal disruption</li>
+      <li><strong>Calcium and magnesium:</strong> May help reduce PMS symptoms</li>
+    </ul>
+
+    <h3>Exercise and Physical Activity:</h3>
+    <ul>
+      <li><strong>Moderate exercise:</strong> Supports regular cycles and reduces period pain</li>
+      <li><strong>Excessive exercise:</strong> Can suppress ovulation and cause amenorrhea</li>
+      <li><strong>Weight management:</strong> Both underweight and overweight can disrupt cycles</li>
+      <li><strong>Stress reduction:</strong> Regular activity helps manage cortisol levels</li>
+    </ul>
+
+    <h3>Sleep and Stress Management:</h3>
+    <ul>
+      <li><strong>Adequate sleep:</strong> 7-9 hours for optimal hormone production</li>
+      <li><strong>Consistent sleep schedule:</strong> Supports circadian rhythm and hormone balance</li>
+      <li><strong>Stress management techniques:</strong> Meditation, yoga, counseling</li>
+      <li><strong>Work-life balance:</strong> Chronic stress disrupts reproductive hormones</li>
+    </ul>
+
+    <h3>Environmental Factors:</h3>
+    <ul>
+      <li><strong>Endocrine disruptors:</strong> Limit exposure to BPA, phthalates, pesticides</li>
+      <li><strong>Smoking cessation:</strong> Smoking can cause irregular cycles and early menopause</li>
+      <li><strong>Alcohol moderation:</strong> Excessive alcohol affects hormone metabolism</li>
+      <li><strong>Medication awareness:</strong> Some medications can affect menstrual cycles</li>
+    </ul>
+  </section>
+
+  <section id="treatment-options">
+    <h2>Treatment Options for Menstrual Issues</h2>
+    <p>Treatment approaches vary based on the specific menstrual problem, underlying causes, and individual patient needs.</p>
+    
+    <h3>Hormonal Treatments:</h3>
+    <ul>
+      <li><strong>Combined birth control pills:</strong> Regulate cycles, reduce flow, manage PCOS</li>
+      <li><strong>Progestin therapy:</strong> Cyclic progesterone for absent periods</li>
+      <li><strong>Hormonal IUD:</strong> Reduces heavy bleeding, may stop periods completely</li>
+      <li><strong>GnRH agonists:</strong> For severe endometriosis or fibroids</li>
+      <li><strong>Thyroid medication:</strong> For hypothyroidism affecting cycles</li>
+    </ul>
+
+    <h3>Non-Hormonal Medications:</h3>
+    <ul>
+      <li><strong>NSAIDs:</strong> Reduce pain and bleeding by decreasing prostaglandins</li>
+      <li><strong>Tranexamic acid:</strong> Reduces heavy menstrual bleeding</li>
+      <li><strong>Iron supplements:</strong> Treat anemia from heavy periods</li>
+      <li><strong>Metformin:</strong> For PCOS-related cycle irregularities</li>
+    </ul>
+
+    <h3>Surgical Interventions:</h3>
+    <ul>
+      <li><strong>Endometrial ablation:</strong> Destroys uterine lining for heavy bleeding</li>
+      <li><strong>Myomectomy:</strong> Removes fibroids while preserving uterus</li>
+      <li><strong>Hysteroscopy:</strong> Removes polyps or treats uterine abnormalities</li>
+      <li><strong>Laparoscopy:</strong> Treats endometriosis or ovarian cysts</li>
+      <li><strong>Hysterectomy:</strong> Last resort for severe, refractory cases</li>
+    </ul>
+
+    <h3>Complementary Therapies:</h3>
+    <ul>
+      <li><strong>Acupuncture:</strong> May help regulate cycles and reduce pain</li>
+      <li><strong>Herbal supplements:</strong> Chaste berry, evening primrose oil (under medical supervision)</li>
+      <li><strong>Heat therapy:</strong> Heating pads for menstrual cramps</li>
+      <li><strong>Dietary supplements:</strong> Magnesium, vitamin B6, omega-3s</li>
+    </ul>
+  </section>
+
+  <section id="tracking-monitoring">
+    <h2>Tracking and Monitoring Menstrual Health</h2>
+    <p>Regular tracking helps identify patterns, detect abnormalities, and optimize treatment approaches.</p>
+    
+    <h3>What to Track:</h3>
+    <ul>
+      <li><strong>Cycle length:</strong> Days from start of one period to start of next</li>
+      <li><strong>Flow characteristics:</strong> Heavy, medium, light days and overall duration</li>
+      <li><strong>Symptoms:</strong> Cramping, mood changes, breast tenderness, bloating</li>
+      <li><strong>Ovulation signs:</strong> Cervical mucus changes, ovulation pain, basal body temperature</li>
+      <li><strong>Lifestyle factors:</strong> Stress levels, sleep quality, exercise, diet changes</li>
+    </ul>
+
+    <h3>Tracking Methods:</h3>
+    <ul>
+      <li><strong>Mobile apps:</strong> Convenient digital tracking with analysis features</li>
+      <li><strong>Paper calendars:</strong> Simple, private tracking method</li>
+      <li><strong>Basal body temperature:</strong> Daily temperature tracking to confirm ovulation</li>
+      <li><strong>Ovulation predictor kits:</strong> Detect LH surge before ovulation</li>
+    </ul>
+
+    <h3>When to Seek Medical Attention:</h3>
+    <ul>
+      <li><strong>Sudden cycle changes:</strong> Significant deviation from normal pattern</li>
+      <li><strong>Severe pain:</strong> Pain interfering with daily activities</li>
+      <li><strong>Very heavy bleeding:</strong> Soaking pad/tampon every hour for several hours</li>
+      <li><strong>Missed periods:</strong> No period for 3+ months (if not pregnant)</li>
+      <li><strong>Bleeding between periods:</strong> Unexpected spotting or bleeding</li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <h3>Frequently Asked Questions (FAQs)</h3>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q1: How does PCOS specifically affect my menstrual cycle?</div>
+      <div class="accordion-answer">
+        <p>PCOS disrupts normal ovulation due to hormonal imbalances, particularly elevated androgens and insulin resistance. This leads to irregular or absent periods, unpredictable cycle timing, and when periods do occur, they may be very heavy due to prolonged buildup of the uterine lining.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q2: Is it normal to have different symptoms each cycle?</div>
+      <div class="accordion-answer">
+        <p>Some variation in symptoms is normal due to hormonal fluctuations, stress, lifestyle changes, and age. However, dramatic changes in cycle length, flow, or severe new symptoms should be evaluated by a healthcare provider to rule out underlying conditions.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q3: Can stress really affect my menstrual cycle?</div>
+      <div class="accordion-answer">
+        <p>Yes, chronic stress elevates cortisol levels, which can suppress reproductive hormones and disrupt ovulation. This can lead to irregular cycles, missed periods, or changes in flow. Managing stress through relaxation techniques, exercise, and adequate sleep can help restore normal cycles.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q4: What's considered "heavy" menstrual bleeding?</div>
+      <div class="accordion-answer">
+        <p>Heavy bleeding is defined as soaking a pad or tampon every hour for several consecutive hours, bleeding for more than 7 days, passing clots larger than a quarter, or bleeding that interferes with daily activities. If you experience any of these, consult your healthcare provider.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q5: Can birth control pills help regulate irregular periods?</div>
+      <div class="accordion-answer">
+        <p>Yes, hormonal birth control can effectively regulate irregular cycles by providing consistent hormone levels. Combined pills are particularly effective for conditions like PCOS, reducing both cycle irregularity and heavy bleeding while providing contraceptive benefits.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q6: Why do my periods get worse during times of weight change?</div>
+      <div class="accordion-answer">
+        <p>Fat tissue produces estrogen, so significant weight changes affect hormone levels. Weight loss can lead to lighter or absent periods, while weight gain may cause heavier, irregular cycles. Maintaining a stable, healthy weight supports regular menstruation.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q7: Should I be concerned about period pain that requires medication?</div>
+      <div class="accordion-answer">
+        <p>While some cramping is normal, pain that requires regular pain medication, interferes with daily activities, or is getting progressively worse may indicate conditions like endometriosis or fibroids. It's worth discussing with your healthcare provider for proper evaluation and management.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q8: How does thyroid function affect menstrual cycles?</div>
+      <div class="accordion-answer">
+        <p>Thyroid hormones directly influence reproductive hormones. Hypothyroidism (underactive thyroid) can cause heavy, irregular periods, while hyperthyroidism (overactive thyroid) may lead to light, infrequent periods. Proper thyroid treatment usually normalizes menstrual cycles.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <a href="../home.html" class="button">Back to Home</a>
+      
+     
+  <script src="learn.js"></script>
+</body>
+</html>

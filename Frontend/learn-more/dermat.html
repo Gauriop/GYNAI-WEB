@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dermatological Health Management - GynAi</title>
+  <style>
+body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: #fff8fa;
+      color: #333;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2, h3 {
+      color: #8a004f;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    /* Section styling */
+    section {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    /* Images */
+    .section-image {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    /* Icons container for symptoms */
+    .icons-row {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    /* FAQ Accordion Styles */
+    .faq {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    .faq h3 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+    .accordion-question {
+      background: white;
+      color: #8a004f;
+      cursor: pointer;
+      padding: 15px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .accordion-question:hover {
+      background: #f4acc0;
+    }
+    .accordion-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: white;
+      padding: 0 20px;
+      margin-bottom: 15px;
+      border-radius: 0 0 6px 6px;
+      color: #333;
+    }
+    .accordion-answer.open {
+      padding: 15px 20px;
+      max-height: 1000px; 
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      background: #8a004f;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background: #b3006e;
+    }
+
+    @media (max-width: 600px) {
+      .icons-row {
+        gap: 15px;
+      }
+      .icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Comprehensive Dermatological Health Management</h1>
+
+  <section id="skin-basics">
+    <h2>Understanding Healthy Skin</h2>
+    <p>Skin is the body's largest organ, serving as a protective barrier while reflecting overall health. Understanding normal skin function helps identify when problems arise.</p>
+    
+    <h3>Skin Functions:</h3>
+    <ul>
+      <li><strong>Protection:</strong> Shields against UV radiation, bacteria, chemicals, and physical damage</li>
+      <li><strong>Temperature regulation:</strong> Controls body temperature through sweating and blood vessel dilation</li>
+      <li><strong>Sensation:</strong> Detects touch, pressure, temperature, and pain</li>
+      <li><strong>Vitamin D synthesis:</strong> Produces vitamin D when exposed to sunlight</li>
+      <li><strong>Immune function:</strong> First line of defense against pathogens</li>
+    </ul>
+
+    <h3>Skin Structure:</h3>
+    <ul>
+      <li><strong>Epidermis:</strong> Outermost protective layer that renews every 28 days</li>
+      <li><strong>Dermis:</strong> Contains collagen, elastin, blood vessels, and nerve endings</li>
+      <li><strong>Hypodermis:</strong> Deepest layer with fat cells for insulation and cushioning</li>
+      <li><strong>Associated structures:</strong> Hair follicles, sebaceous glands, sweat glands</li>
+    </ul>
+  </section>
+
+  <section id="hormonal-skin">
+    <h2>Hormonal Effects on Skin Health</h2>
+    <p>Hormones significantly influence skin condition, causing various changes throughout life stages and menstrual cycles.</p>
+    
+    <h3>PCOS and Skin Manifestations:</h3>
+    <ul>
+      <li><strong>Acne:</strong> Elevated androgens increase sebum production, leading to persistent adult acne</li>
+      <li><strong>Hirsutism:</strong> Excessive hair growth on face, chest, back, and abdomen</li>
+      <li><strong>Male-pattern hair loss:</strong> Thinning hair on scalp, particularly crown and temples</li>
+      <li><strong>Acanthosis nigricans:</strong> Dark, velvety patches in skin folds (neck, armpits, groin)</li>
+      <li><strong>Skin tags:</strong> Small, benign growths often associated with insulin resistance</li>
+    </ul>
+
+    <h3>Menstrual Cycle Skin Changes:</h3>
+    <ul>
+      <li><strong>Pre-menstrual breakouts:</strong> Hormonal fluctuations trigger acne flares</li>
+      <li><strong>Estrogen dominance:</strong> Clear, glowing skin during follicular phase</li>
+      <li><strong>Progesterone effects:</strong> Increased oil production in luteal phase</li>
+      <li><strong>Perimenstrual sensitivity:</strong> Increased skin sensitivity around period time</li>
+    </ul>
+
+    <h3>Life Stage Hormonal Changes:</h3>
+    <ul>
+      <li><strong>Puberty:</strong> Androgen surge causes acne, increased oil production</li>
+      <li><strong>Pregnancy:</strong> Melasma, stretch marks, increased pigmentation</li>
+      <li><strong>Postpartum:</strong> Hair loss, skin texture changes, hormonal acne</li>
+      <li><strong>Perimenopause/Menopause:</strong> Decreased estrogen leads to dryness, wrinkles, thinning</li>
+    </ul>
+  </section>
+
+  <section id="common-conditions">
+    <h2>Common Dermatological Conditions</h2>
+    <p>Understanding prevalent skin conditions helps in early recognition and appropriate treatment.</p>
+    
+    <h3>Acne and Related Conditions:</h3>
+    <ul>
+      <li><strong>Comedonal acne:</strong> Blackheads and whiteheads from clogged pores</li>
+      <li><strong>Inflammatory acne:</strong> Red, swollen papules and pustules</li>
+      <li><strong>Cystic acne:</strong> Deep, painful nodules and cysts</li>
+      <li><strong>Hormonal acne:</strong> Adult acne related to hormonal fluctuations</li>
+      <li><strong>Post-inflammatory hyperpigmentation:</strong> Dark spots left after acne heals</li>
+    </ul>
+
+    <h3>Pigmentation Disorders:</h3>
+    <ul>
+      <li><strong>Melasma:</strong> Brown patches on face, often pregnancy or hormone-related</li>
+      <li><strong>Post-inflammatory hyperpigmentation:</strong> Dark spots after skin injury or inflammation</li>
+      <li><strong>Sun spots/age spots:</strong> Brown spots from cumulative sun exposure</li>
+      <li><strong>Vitiligo:</strong> Loss of pigmentation creating white patches</li>
+    </ul>
+
+    <h3>Inflammatory Skin Conditions:</h3>
+    <ul>
+      <li><strong>Eczema/Atopic dermatitis:</strong> Chronic inflammation causing dry, itchy patches</li>
+      <li><strong>Psoriasis:</strong> Autoimmune condition with thick, scaly plaques</li>
+      <li><strong>Rosacea:</strong> Facial redness, bumps, and visible blood vessels</li>
+      <li><strong>Seborrheic dermatitis:</strong> Scaly, itchy patches on oily areas</li>
+    </ul>
+
+    <h3>Infectious Skin Conditions:</h3>
+    <ul>
+      <li><strong>Bacterial infections:</strong> Cellulitis, impetigo, folliculitis</li>
+      <li><strong>Fungal infections:</strong> Athlete's foot, ringworm, yeast infections</li>
+      <li><strong>Viral infections:</strong> Herpes, warts, molluscum contagiosum</li>
+      <li><strong>Parasitic conditions:</strong> Scabies, lice infestations</li>
+    </ul>
+  </section>
+
+  <section id="prevention-care">
+    <h2>Preventive Skin Care and Daily Management</h2>
+    <p>Consistent preventive care is essential for maintaining healthy skin and preventing many dermatological issues.</p>
+    
+    <h3>Daily Skincare Routine:</h3>
+    <ul>
+      <li><strong>Gentle cleansing:</strong> Use mild, pH-balanced cleansers twice daily</li>
+      <li><strong>Moisturizing:</strong> Apply appropriate moisturizer for your skin type</li>
+      <li><strong>Sun protection:</strong> Broad-spectrum SPF 30+ sunscreen daily</li>
+      <li><strong>Avoid over-washing:</strong> Excessive cleansing can strip natural oils</li>
+      <li><strong>Pat dry:</strong> Gently pat skin dry instead of rubbing</li>
+    </ul>
+
+    <h3>Sun Protection Strategies:</h3>
+    <ul>
+      <li><strong>Sunscreen application:</strong> Apply 15-30 minutes before sun exposure</li>
+      <li><strong>Reapplication:</strong> Every 2 hours or after swimming/sweating</li>
+      <li><strong>Protective clothing:</strong> Wide-brimmed hats, long sleeves, UV-protective fabrics</li>
+      <li><strong>Seek shade:</strong> Avoid peak sun hours (10 AM - 4 PM)</li>
+      <li><strong>Sunglasses:</strong> Protect delicate eye area skin</li>
+    </ul>
+
+    <h3>Lifestyle Factors for Healthy Skin:</h3>
+    <ul>
+      <li><strong>Hydration:</strong> Drink adequate water for skin moisture</li>
+      <li><strong>Balanced diet:</strong> Antioxidant-rich foods, omega-3 fatty acids</li>
+      <li><strong>Quality sleep:</strong> 7-9 hours for skin repair and regeneration</li>
+      <li><strong>Stress management:</strong> Chronic stress worsens many skin conditions</li>
+      <li><strong>Avoid smoking:</strong> Accelerates aging and impairs healing</li>
+      <li><strong>Limit alcohol:</strong> Dehydrates skin and causes inflammation</li>
+    </ul>
+  </section>
+
+  <section id="treatment-approaches">
+    <h2>Treatment Approaches for Skin Conditions</h2>
+    <p>Treatment strategies vary based on the specific condition, severity, and individual patient factors.</p>
+    
+    <h3>Topical Treatments:</h3>
+    <ul>
+      <li><strong>Retinoids:</strong> Tretinoin, adapalene for acne and anti-aging</li>
+      <li><strong>Antibiotics:</strong> Clindamycin, erythromycin for bacterial acne</li>
+      <li><strong>Benzoyl peroxide:</strong> Antimicrobial agent for acne treatment</li>
+      <li><strong>Salicylic acid:</strong> Beta hydroxy acid for exfoliation and unclogging pores</li>
+      <li><strong>Hydroquinone:</strong> Skin lightening agent for hyperpigmentation</li>
+      <li><strong>Corticosteroids:</strong> Anti-inflammatory for eczema, psoriasis</li>
+    </ul>
+
+    <h3>Oral Medications:</h3>
+    <ul>
+      <li><strong>Antibiotics:</strong> Doxycycline, minocycline for inflammatory acne</li>
+      <li><strong>Hormonal therapy:</strong> Birth control pills, spironolactone for hormonal acne</li>
+      <li><strong>Isotretinoin:</strong> Powerful retinoid for severe cystic acne</li>
+      <li><strong>Antifungals:</strong> For systemic fungal infections</li>
+      <li><strong>Immunosuppressants:</strong> For severe psoriasis, eczema</li>
+    </ul>
+
+    <h3>Professional Procedures:</h3>
+    <ul>
+      <li><strong>Chemical peels:</strong> Glycolic, salicylic, or TCA peels for texture and pigmentation</li>
+      <li><strong>Laser treatments:</strong> IPL, fractionated lasers for pigmentation and scarring</li>
+      <li><strong>Microneedling:</strong> Stimulates collagen production for scars and texture</li>
+      <li><strong>Cryotherapy:</strong> Freezing treatment for warts, precancerous lesions</li>
+      <li><strong>Photodynamic therapy:</strong> Light-activated treatment for acne and sun damage</li>
+    </ul>
+
+    <h3>Cosmetic Dermatology:</h3>
+    <ul>
+      <li><strong>Botox injections:</strong> Reduce dynamic wrinkles and excessive sweating</li>
+      <li><strong>Dermal fillers:</strong> Restore volume, smooth wrinkles</li>
+      <li><strong>Radiofrequency treatments:</strong> Skin tightening and collagen stimulation</li>
+      <li><strong>Ultherapy:</strong> Ultrasound therapy for skin lifting</li>
+    </ul>
+  </section>
+
+  <section id="hormonal-dermatology">
+    <h2>Hormonal Dermatology and Women's Health</h2>
+    <p>Hormonal fluctuations significantly impact skin health throughout a woman's life, requiring specialized understanding and treatment approaches.</p>
+    
+    <h3>PCOS-Related Skin Issues:</h3>
+    <ul>
+      <li><strong>Androgenic alopecia:</strong> Male-pattern hair loss due to elevated androgens</li>
+      <li><strong>Persistent acne:</strong> Adult acne that doesn't respond to typical treatments</li>
+      <li><strong>Seborrhea:</strong> Excessive oil production leading to greasy skin</li>
+      <li><strong>Insulin-related changes:</strong> Acanthosis nigricans from insulin resistance</li>
+      <li><strong>Treatment approach:</strong> Anti-androgen therapy, insulin sensitizers, topical retinoids</li>
+    </ul>
+
+    <h3>Pregnancy-Related Skin Changes:</h3>
+    <ul>
+      <li><strong>Melasma (chloasma):</strong> "Pregnancy mask" with dark facial patches</li>
+      <li><strong>Linea nigra:</strong> Dark line down the abdomen</li>
+      <li><strong>Stretch marks:</strong> Striae on abdomen, breasts, thighs</li>
+      <li><strong>Spider veins:</strong> Small, visible blood vessels</li>
+      <li><strong>Skin tags:</strong> Small growths in friction areas</li>
+      <li><strong>Pruritic urticarial papules:</strong> Itchy bumps, especially in third trimester</li>
+    </ul>
+
+    <h3>Menopause and Skin Health:</h3>
+    <ul>
+      <li><strong>Decreased collagen:</strong> Loss of skin elasticity and firmness</li>
+      <li><strong>Reduced moisture:</strong> Dryness due to decreased estrogen</li>
+      <li><strong>Slower healing:</strong> Reduced cellular turnover and repair</li>
+      <li><strong>Increased fragility:</strong> Thinner skin more prone to injury</li>
+      <li><strong>Management:</strong> Hormone replacement therapy, intensive moisturizing, retinoids</li>
+    </ul>
+  </section>
+
+  <section id="diagnosis-evaluation">
+    <h2>Diagnosis and Skin Evaluation</h2>
+    <p>Proper diagnosis involves comprehensive assessment of skin conditions, medical history, and contributing factors.</p>
+    
+    <h3>Clinical Examination:</h3>
+    <ul>
+      <li><strong>Visual inspection:</strong> Systematic examination of all skin areas</li>
+      <li><strong>Dermatoscopy:</strong> Magnified examination of lesions and moles</li>
+      <li><strong>Photography:</strong> Documentation for monitoring changes over time</li>
+      <li><strong>Palpation:</strong> Assessment of texture, temperature, and consistency</li>
+    </ul>
+
+    <h3>Diagnostic Procedures:</h3>
+    <ul>
+      <li><strong>Biopsy:</strong> Skin sample examination for suspicious lesions</li>
+      <li><strong>KOH test:</strong> Microscopic examination for fungal infections</li>
+      <li><strong>Bacterial culture:</strong> Identify specific bacterial pathogens</li>
+      <li><strong>Patch testing:</strong> Determine contact allergens</li>
+      <li><strong>Wood's lamp examination:</strong> UV light examination for certain conditions</li>
+    </ul>
+
+    <h3>Laboratory Testing:</h3>
+    <ul>
+      <li><strong>Hormonal evaluation:</strong> Testosterone, DHEA-S, insulin levels for PCOS-related skin issues</li>
+      <li><strong>Thyroid function:</strong> TSH, T3, T4 for conditions affecting skin texture</li>
+      <li><strong>Nutritional assessment:</strong> Vitamin D, B vitamins, zinc levels</li>
+      <li><strong>Autoimmune markers:</strong> ANA, specific antibodies for autoimmune skin conditions</li>
+    </ul>
+  </section>
+
+  <section id="special-populations">
+    <h2>Dermatological Care for Special Populations</h2>
+    <p>Certain groups require specialized dermatological care due to unique physiological or environmental factors.</p>
+    
+    <h3>Pediatric Dermatology:</h3>
+    <ul>
+      <li><strong>Eczema management:</strong> Gentle skincare, identifying triggers</li>
+      <li><strong>Diaper dermatitis:</strong> Prevention and treatment of diaper rash</li>
+      <li><strong>Birthmarks and moles:</strong> Monitoring for changes</li>
+      <li><strong>Infectious conditions:</strong> Common childhood skin infections</li>
+      <li><strong>Sun protection education:</strong> Establishing early protective habits</li>
+    </ul>
+
+    <h3>Elderly Skin Care:</h3>
+    <ul>
+      <li><strong>Age-related changes:</strong> Thinning, dryness, decreased elasticity</li>
+      <li><strong>Skin cancer surveillance:</strong> Regular screening for suspicious lesions</li>
+      <li><strong>Wound healing:</strong> Slower healing requiring specialized care</li>
+      <li><strong>Medication effects:</strong> Drug-induced skin changes</li>
+      <li><strong>Comfort measures:</strong> Managing itching, dryness</li>
+    </ul>
+
+    <h3>Immunocompromised Patients:</h3>
+    <ul>
+      <li><strong>Infection prevention:</strong> Enhanced hygiene and wound care</li>
+      <li><strong>Drug reactions:</strong> Increased risk of skin side effects</li>
+      <li><strong>Skin cancer risk:</strong> Higher incidence requiring frequent monitoring</li>
+      <li><strong>Healing complications:</strong> Delayed or impaired wound healing</li>
+    </ul>
+  </section>
+
+  <section id="advanced-treatments">
+    <h2>Advanced Dermatological Treatments</h2>
+    <p>Modern dermatology offers sophisticated treatment options for complex skin conditions and cosmetic concerns.</p>
+    
+    <h3>Laser and Light Therapies:</h3>
+    <ul>
+      <li><strong>Fractional CO2 laser:</strong> Skin resurfacing for scars, wrinkles, texture</li>
+      <li><strong>IPL (Intense Pulsed Light):</strong> Treats pigmentation, rosacea, hair removal</li>
+      <li><strong>Nd:YAG laser:</strong> Vascular lesions, hair removal on darker skin</li>
+      <li><strong>Excimer laser:</strong> Targeted treatment for psoriasis, vitiligo</li>
+      <li><strong>LED therapy:</strong> Anti-inflammatory treatment for acne</li>
+    </ul>
+
+    <h3>Injectable Treatments:</h3>
+    <ul>
+      <li><strong>Botulinum toxin:</strong> Wrinkle reduction, hyperhidrosis treatment</li>
+      <li><strong>Hyaluronic acid fillers:</strong> Volume restoration, wrinkle filling</li>
+      <li><strong>Collagen stimulators:</strong> Sculptra for gradual volume enhancement</li>
+      <li><strong>Corticosteroid injections:</strong> For keloids, cysts, inflammatory lesions</li>
+    </ul>
+
+    <h3>Surgical Dermatology:</h3>
+    <ul>
+      <li><strong>Mohs surgery:</strong> Precise skin cancer removal with margin control</li>
+      <li><strong>Excisional surgery:</strong> Complete lesion removal with pathological examination</li>
+      <li><strong>Electrosurgery:</strong> Removal of benign lesions using electrical current</li>
+      <li><strong>Cryosurgery:</strong> Freezing treatment for various lesions</li>
+    </ul>
+  </section>
+
+  <section id="skin-cancer">
+    <h2>Skin Cancer Prevention and Detection</h2>
+    <p>Skin cancer is the most common type of cancer, but early detection and prevention strategies can significantly improve outcomes.</p>
+    
+    <h3>Types of Skin Cancer:</h3>
+    <ul>
+      <li><strong>Basal cell carcinoma:</strong> Most common, rarely metastasizes, appears as pearly bumps</li>
+      <li><strong>Squamous cell carcinoma:</strong> Second most common, can metastasize, appears as scaly patches</li>
+      <li><strong>Melanoma:</strong> Most dangerous, can spread rapidly, irregular moles or new dark spots</li>
+      <li><strong>Merkel cell carcinoma:</strong> Rare but aggressive, appears as firm nodules</li>
+    </ul>
+
+    <h3>ABCDE Rule for Melanoma Detection:</h3>
+    <ul>
+      <li><strong>Asymmetry:</strong> One half doesn't match the other</li>
+      <li><strong>Border irregularity:</strong> Edges are ragged, notched, or blurred</li>
+      <li><strong>Color variation:</strong> Multiple colors or uneven color distribution</li>
+      <li><strong>Diameter:</strong> Larger than 6mm (pencil eraser size)</li>
+      <li><strong>Evolution:</strong> Changes in size, shape, color, or symptoms</li>
+    </ul>
+
+    <h3>Prevention Strategies:</h3>
+    <ul>
+      <li><strong>Regular skin self-examinations:</strong> Monthly head-to-toe checks</li>
+      <li><strong>Professional skin exams:</strong> Annual dermatology visits, more frequent if high risk</li>
+      <li><strong>Comprehensive sun protection:</strong> Sunscreen, clothing, shade</li>
+      <li><strong>Avoid tanning beds:</strong> No safe level of UV exposure from artificial sources</li>
+      <li><strong>Know your risk factors:</strong> Fair skin, family history, multiple moles</li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <h3>Frequently Asked Questions (FAQs)</h3>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q1: How does PCOS specifically affect my skin?</div>
+      <div class="accordion-answer">
+        <p>PCOS elevates androgen levels, causing increased sebum production leading to persistent acne, excessive facial and body hair growth (hirsutism), male-pattern hair loss, and dark patches in skin folds (acanthosis nigricans). These skin changes often improve with hormonal treatments that reduce androgen levels.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q2: Why does my acne get worse before my period?</div>
+      <div class="accordion-answer">
+        <p>Hormonal fluctuations during the menstrual cycle cause pre-menstrual acne flares. Rising progesterone levels in the luteal phase increase oil production, while dropping estrogen levels reduce the skin's natural protective effects, leading to breakouts typically 7-10 days before menstruation.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q3: What's the difference between melasma and other dark spots?</div>
+      <div class="accordion-answer">
+        <p>Melasma appears as symmetrical brown patches on the face, often triggered by hormones (pregnancy, birth control) or sun exposure. Unlike age spots or post-inflammatory hyperpigmentation, melasma has a characteristic butterfly pattern and tends to worsen with heat and hormonal changes.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q4: How often should I get professional skin cancer screenings?</div>
+      <div class="accordion-answer">
+        <p>Most people should have annual skin exams by a dermatologist. Those with higher risk factors (family history, fair skin, multiple moles, previous skin cancer) may need screenings every 6 months. Additionally, perform monthly self-examinations and see a dermatologist immediately for any concerning changes.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q5: Can diet really affect my skin condition?</div>
+      <div class="accordion-answer">
+        <p>Yes, diet significantly impacts skin health. High-glycemic foods may worsen acne, while anti-inflammatory foods rich in omega-3s, antioxidants, and vitamins can improve skin condition. Dairy products may trigger acne in some individuals, and adequate hydration supports overall skin health.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q6: Why is my eczema getting worse during stressful times?</div>
+      <div class="accordion-answer">
+        <p>Stress increases cortisol levels and can trigger inflammatory responses that worsen eczema. Stress also compromises the skin barrier function and can lead to increased scratching. Managing stress through relaxation techniques, adequate sleep, and stress-reduction strategies often improves eczema symptoms.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q7: When should I see a dermatologist versus trying over-the-counter treatments?</div>
+      <div class="accordion-answer">
+        <p>See a dermatologist for persistent conditions lasting more than 2-4 weeks, severe symptoms affecting quality of life, suspicious moles or lesions, widespread rashes, or conditions that don't improve with over-the-counter treatments. Early professional intervention often leads to better outcomes.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q8: How do hormonal contraceptives affect skin?</div>
+      <div class="accordion-answer">
+        <p>Hormonal contraceptives can improve acne by reducing androgen activity, but may worsen melasma due to estrogen content. Some progestin-only methods might worsen acne. The effects vary by individual and specific hormone formulation. Discuss skin concerns with your healthcare provider when choosing contraception.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q9: What skincare routine is best for sensitive skin?</div>
+      <div class="accordion-answer">
+        <p>Use gentle, fragrance-free products with minimal ingredients. Start with a mild cleanser, follow with a hypoallergenic moisturizer, and always use broad-spectrum sunscreen. Introduce new products one at a time, patch test first, and avoid harsh scrubs or alcohol-based products that can irritate sensitive skin.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <a href="../home.html" class="button">Back to Home</a>
+
+<script src="learn.js"></script>
+</body>
+</html>

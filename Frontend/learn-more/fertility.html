@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fertility Management - GynAi</title>
+  <style>
+body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: #fff8fa;
+      color: #333;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2, h3 {
+      color: #8a004f;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    /* Section styling */
+    section {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    /* Images */
+    .section-image {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    /* Icons container for symptoms */
+    .icons-row {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    /* FAQ Accordion Styles */
+    .faq {
+      background: #fce4ec;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgb(138 0 79 / 0.1);
+    }
+    .faq h3 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+    .accordion-question {
+      background: white;
+      color: #8a004f;
+      cursor: pointer;
+      padding: 15px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .accordion-question:hover {
+      background: #f4acc0;
+    }
+    .accordion-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: white;
+      padding: 0 20px;
+      margin-bottom: 15px;
+      border-radius: 0 0 6px 6px;
+      color: #333;
+    }
+    .accordion-answer.open {
+      padding: 15px 20px;
+      max-height: 1000px; 
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      background: #8a004f;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background: #b3006e;
+    }
+
+    @media (max-width: 600px) {
+      .icons-row {
+        gap: 15px;
+      }
+      .icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Comprehensive Fertility Management</h1>
+
+  <section id="causes">
+    <h2>Causes of Fertility Problems</h2>
+    <p>Fertility issues can arise from a variety of factors affecting both men and women. Understanding these causes helps in effective management and treatment planning.</p>
+    <ul>
+      <li><strong>Female factors:</strong> Hormonal imbalances, ovulation disorders, fallopian tube blockages, endometriosis, uterine fibroids, age-related fertility decline, premature ovarian failure.</li>
+      <li><strong>Male factors:</strong> Low sperm count (oligospermia), poor sperm motility (asthenospermia), abnormal sperm morphology, structural problems like varicocele, hormonal issues, genetic conditions.</li>
+      <li><strong>Lifestyle factors:</strong> Smoking, excessive alcohol use, obesity, chronic stress, poor nutrition, exposure to environmental toxins, sedentary lifestyle.</li>
+      <li><strong>Medical conditions:</strong> Diabetes, thyroid disorders, autoimmune diseases, sexually transmitted infections.</li>
+      <li><strong>Unexplained infertility:</strong> Approximately 10-15% of couples have no identifiable cause despite comprehensive evaluation.</li>
+    </ul>
+  </section>
+
+  <section id="pcos-fertility">
+    <h2>PCOS and Fertility</h2>
+    <p>Polycystic Ovary Syndrome (PCOS) is one of the most common causes of female infertility, affecting 6-12% of women of reproductive age.</p>
+    
+    <h3>How PCOS Affects Fertility:</h3>
+    <ul>
+      <li><strong>Irregular ovulation:</strong> PCOS disrupts normal ovulation cycles, making it difficult to predict fertile days</li>
+      <li><strong>Hormonal imbalances:</strong> Elevated androgens and insulin resistance interfere with egg development</li>
+      <li><strong>Multiple cysts:</strong> Small cysts on ovaries prevent proper egg release</li>
+      <li><strong>Metabolic issues:</strong> Insulin resistance can worsen fertility problems</li>
+    </ul>
+
+    <h3>PCOS Fertility Management:</h3>
+    <ul>
+      <li><strong>Lifestyle modifications:</strong> Weight management, regular exercise, balanced diet low in refined carbohydrates</li>
+      <li><strong>Medications:</strong> Metformin for insulin resistance, Clomiphene citrate or Letrozole for ovulation induction</li>
+      <li><strong>Ovulation monitoring:</strong> Tracking cycles with ultrasound and hormone testing</li>
+      <li><strong>Advanced treatments:</strong> IUI or IVF if other methods are unsuccessful</li>
+    </ul>
+  </section>
+
+  <section id="pregnancy-preparation">
+    <h2>Preparing for Pregnancy</h2>
+    <p>Preconception care is crucial for optimizing fertility and ensuring a healthy pregnancy. Both partners should begin preparation at least 3-6 months before attempting conception.</p>
+    
+    <h3>For Women:</h3>
+    <ul>
+      <li><strong>Folic acid supplementation:</strong> Take 400-800 mcg daily to prevent neural tube defects</li>
+      <li><strong>Prenatal vitamins:</strong> Start taking prenatal vitamins containing essential nutrients</li>
+      <li><strong>Health screenings:</strong> Complete physical exam, Pap smear, STI screening, blood type and Rh factor testing</li>
+      <li><strong>Vaccination updates:</strong> Ensure immunity to rubella, chickenpox, and receive flu vaccine</li>
+      <li><strong>Medical history review:</strong> Discuss chronic conditions, medications, and family history with healthcare provider</li>
+      <li><strong>Lifestyle optimization:</strong> Achieve healthy weight, quit smoking, limit alcohol, reduce caffeine intake</li>
+    </ul>
+
+    <h3>For Men:</h3>
+    <ul>
+      <li><strong>Healthy lifestyle:</strong> Maintain healthy weight, exercise regularly, avoid excessive heat exposure</li>
+      <li><strong>Nutrition:</strong> Take multivitamin with antioxidants, ensure adequate zinc and vitamin C intake</li>
+      <li><strong>Avoid toxins:</strong> Limit exposure to pesticides, heavy metals, and chemicals</li>
+      <li><strong>Medical evaluation:</strong> Address any underlying health conditions, review medications</li>
+      <li><strong>Stress management:</strong> Practice stress-reduction techniques as stress can affect sperm quality</li>
+    </ul>
+
+    <h3>Timing and Tracking:</h3>
+    <ul>
+      <li><strong>Menstrual cycle tracking:</strong> Monitor cycle length and ovulation signs</li>
+      <li><strong>Ovulation prediction:</strong> Use ovulation predictor kits or basal body temperature charting</li>
+      <li><strong>Optimal timing:</strong> Have regular intercourse every 2-3 days throughout the cycle</li>
+    </ul>
+  </section>
+
+  <section id="gestational-diabetes">
+    <h2>Gestational Diabetes and Fertility</h2>
+    <p>Gestational diabetes can impact both conception and pregnancy outcomes. Understanding the connection helps in comprehensive fertility care.</p>
+    
+    <h3>Impact on Fertility:</h3>
+    <ul>
+      <li><strong>Pre-existing diabetes:</strong> Type 1 or Type 2 diabetes can affect ovulation and egg quality</li>
+      <li><strong>Insulin resistance:</strong> Can contribute to PCOS and ovulatory dysfunction</li>
+      <li><strong>Pregnancy complications:</strong> Increases risk of miscarriage, birth defects, and pregnancy complications</li>
+    </ul>
+
+    <h3>Management Strategies:</h3>
+    <ul>
+      <li><strong>Preconception glucose control:</strong> Achieve HbA1c levels below 6.5% before conception</li>
+      <li><strong>Medication adjustment:</strong> Switch to pregnancy-safe diabetes medications</li>
+      <li><strong>Nutritional counseling:</strong> Work with dietitian for optimal meal planning</li>
+      <li><strong>Regular monitoring:</strong> Frequent glucose checks and medical supervision</li>
+      <li><strong>Folic acid:</strong> Higher doses (5mg) may be recommended for women with diabetes</li>
+    </ul>
+
+    <h3>Prevention of Gestational Diabetes:</h3>
+    <ul>
+      <li>Maintain healthy pre-pregnancy weight</li>
+      <li>Follow balanced, low-glycemic diet</li>
+      <li>Regular physical activity</li>
+      <li>Early pregnancy screening if at high risk</li>
+    </ul>
+  </section>
+
+  <section id="medical-treatment">
+    <h2>Medical Treatment for Infertility</h2>
+    <p>Medical fertility treatments range from simple medications to complex hormonal therapies, tailored to specific fertility challenges.</p>
+    
+    <h3>Ovulation Induction Medications:</h3>
+    <ul>
+      <li><strong>Clomiphene Citrate (Clomid):</strong> First-line treatment for ovulatory disorders, stimulates egg development</li>
+      <li><strong>Letrozole (Femara):</strong> Aromatase inhibitor, often preferred for PCOS patients</li>
+      <li><strong>Metformin:</strong> Improves insulin sensitivity, particularly beneficial for PCOS</li>
+      <li><strong>Gonadotropins (FSH/LH):</strong> Injectable hormones for controlled ovarian stimulation</li>
+    </ul>
+
+    <h3>Hormonal Treatments:</h3>
+    <ul>
+      <li><strong>Progesterone supplementation:</strong> Supports luteal phase and early pregnancy</li>
+      <li><strong>Thyroid medications:</strong> For hypothyroidism affecting fertility</li>
+      <li><strong>Prolactin-lowering drugs:</strong> Bromocriptine or Cabergoline for hyperprolactinemia</li>
+      <li><strong>GnRH agonists/antagonists:</strong> Used in IVF protocols to control ovulation timing</li>
+    </ul>
+
+    <h3>Male Fertility Medications:</h3>
+    <ul>
+      <li><strong>Clomiphene citrate:</strong> Can improve sperm count in men with low testosterone</li>
+      <li><strong>HCG injections:</strong> Stimulate testosterone production</li>
+      <li><strong>Antibiotics:</strong> Treat infections affecting sperm quality</li>
+      <li><strong>Antioxidant supplements:</strong> Coenzyme Q10, vitamin E, zinc for sperm health</li>
+    </ul>
+
+    <h3>Monitoring During Treatment:</h3>
+    <ul>
+      <li>Regular ultrasound monitoring of follicle development</li>
+      <li>Hormonal blood tests (estradiol, LH, progesterone)</li>
+      <li>Ovulation timing with HCG trigger shots</li>
+      <li>Side effect management and cycle adjustment</li>
+    </ul>
+  </section>
+
+  <section id="surgical-options">
+    <h2>Surgical Options for Fertility Treatment</h2>
+    <p>When medical treatments are insufficient, surgical interventions can address structural problems and improve fertility outcomes.</p>
+    
+    <h3>Female Fertility Surgeries:</h3>
+    <ul>
+      <li><strong>Laparoscopy:</strong> Minimally invasive surgery to diagnose and treat endometriosis, ovarian cysts, and adhesions</li>
+      <li><strong>Hysteroscopy:</strong> Removes uterine polyps, fibroids, or septum that may interfere with implantation</li>
+      <li><strong>Tubal surgery:</strong> Repair blocked or damaged fallopian tubes (salpingostomy, salpingoplasty)</li>
+      <li><strong>Myomectomy:</strong> Surgical removal of uterine fibroids while preserving the uterus</li>
+      <li><strong>Ovarian drilling:</strong> Laparoscopic procedure for PCOS to restore ovulation</li>
+      <li><strong>Septoplasty:</strong> Correction of uterine septum to improve implantation rates</li>
+    </ul>
+
+    <h3>Male Fertility Surgeries:</h3>
+    <ul>
+      <li><strong>Varicocelectomy:</strong> Repair of enlarged veins in the scrotum to improve sperm quality</li>
+      <li><strong>Vasovasostomy:</strong> Reversal of vasectomy to restore sperm flow</li>
+      <li><strong>Vasoepididymostomy:</strong> Bypass procedure for epididymal blockage</li>
+      <li><strong>Sperm retrieval procedures:</strong> MESA, TESE, or PESA for obtaining sperm when ejaculation is not possible</li>
+      <li><strong>Transurethral resection:</strong> Remove blockages in the ejaculatory ducts</li>
+    </ul>
+
+    <h3>Advanced Surgical Techniques:</h3>
+    <ul>
+      <li><strong>Robotic-assisted surgery:</strong> Enhanced precision for complex procedures</li>
+      <li><strong>Microsurgery:</strong> Precise repair of delicate reproductive structures</li>
+      <li><strong>Adhesiolysis:</strong> Removal of scar tissue that may interfere with fertility</li>
+      <li><strong>Endometrioma removal:</strong> Surgical treatment of ovarian endometriosis</li>
+    </ul>
+
+    <h3>Post-Surgical Care:</h3>
+    <ul>
+      <li>Recovery timeline and activity restrictions</li>
+      <li>Follow-up imaging to assess surgical success</li>
+      <li>Timing of conception attempts after surgery</li>
+      <li>Integration with assisted reproductive technologies if needed</li>
+    </ul>
+  </section>
+
+  <section id="symptoms">
+    <h2>Common Signs and Symptoms</h2>
+    <p>Recognizing early signs of fertility challenges can lead to timely intervention and improved outcomes:</p>
+    <ul>
+      <li><strong>Irregular menstrual cycles:</strong> Cycles shorter than 21 days or longer than 35 days</li>
+      <li><strong>Absent periods:</strong> Missing periods for several months (amenorrhea)</li>
+      <li><strong>Painful periods:</strong> Severe cramping that interferes with daily activities</li>
+      <li><strong>Heavy menstrual bleeding:</strong> Periods lasting more than 7 days or requiring frequent pad/tampon changes</li>
+      <li><strong>Pelvic pain:</strong> Chronic pain in the pelvic region, especially during intercourse</li>
+      <li><strong>Hormonal symptoms:</strong> Acne, excessive hair growth (hirsutism), unexplained weight gain</li>
+      <li><strong>Male fertility signs:</strong> Low libido, erectile dysfunction, pain or swelling in testicles</li>
+      <li><strong>Recurrent miscarriages:</strong> Two or more consecutive pregnancy losses</li>
+    </ul>
+  </section>
+
+  <section id="diagnosis">
+    <h2>Comprehensive Diagnosis</h2>
+    <p>Thorough fertility evaluation involves both partners and includes multiple assessment methods:</p>
+    
+    <h3>Initial Assessment:</h3>
+    <ul>
+      <li><strong>Detailed medical history:</strong> Menstrual history, previous pregnancies, medical conditions, medications</li>
+      <li><strong>Physical examination:</strong> Pelvic exam for women, genital exam for men</li>
+      <li><strong>Lifestyle evaluation:</strong> Diet, exercise, smoking, alcohol consumption, occupational exposures</li>
+    </ul>
+
+    <h3>Female Fertility Testing:</h3>
+    <ul>
+      <li><strong>Hormonal blood tests:</strong> FSH, LH, estradiol, AMH, thyroid function, prolactin</li>
+      <li><strong>Ovarian reserve testing:</strong> AMH levels and antral follicle count via ultrasound</li>
+      <li><strong>Ovulation monitoring:</strong> Mid-luteal progesterone, ovulation predictor kits</li>
+      <li><strong>Imaging studies:</strong> Pelvic ultrasound, hysterosalpingography (HSG), MRI if indicated</li>
+      <li><strong>Specialized tests:</strong> Hysteroscopy, laparoscopy, genetic testing when appropriate</li>
+    </ul>
+
+    <h3>Male Fertility Testing:</h3>
+    <ul>
+      <li><strong>Semen analysis:</strong> Sperm count, motility, morphology, volume</li>
+      <li><strong>Hormonal testing:</strong> Testosterone, FSH, LH levels</li>
+      <li><strong>Physical examination:</strong> Assessment of varicocele, testicular size</li>
+      <li><strong>Specialized testing:</strong> Sperm DNA fragmentation, anti-sperm antibodies</li>
+    </ul>
+  </section>
+
+  <section id="treatment">
+    <h2>Comprehensive Treatment Approaches</h2>
+    <p>Treatment plans are individualized based on specific fertility challenges, age, duration of infertility, and patient preferences:</p>
+    
+    <h3>First-Line Treatments:</h3>
+    <ul>
+      <li><strong>Lifestyle optimization:</strong> Weight management, smoking cessation, stress reduction, nutritional counseling</li>
+      <li><strong>Timed intercourse:</strong> Natural cycle monitoring with optimal timing</li>
+      <li><strong>Ovulation induction:</strong> Medications to stimulate egg development</li>
+    </ul>
+
+    <h3>Assisted Reproductive Technologies (ART):</h3>
+    <ul>
+      <li><strong>Intrauterine Insemination (IUI):</strong> Placement of prepared sperm directly into the uterus</li>
+      <li><strong>In Vitro Fertilization (IVF):</strong> Fertilization outside the body with embryo transfer</li>
+      <li><strong>Intracytoplasmic Sperm Injection (ICSI):</strong> Direct injection of sperm into egg</li>
+      <li><strong>Preimplantation Genetic Testing (PGT):</strong> Genetic screening of embryos before transfer</li>
+    </ul>
+
+    <h3>Third-Party Reproduction:</h3>
+    <ul>
+      <li><strong>Donor eggs:</strong> For women with poor egg quality or quantity</li>
+      <li><strong>Donor sperm:</strong> For severe male infertility or single women</li>
+      <li><strong>Gestational surrogacy:</strong> When carrying pregnancy is not possible</li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <h3>Frequently Asked Questions (FAQs)</h3>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q1: How long should we try to conceive before seeking help?</div>
+      <div class="accordion-answer">
+        <p>Most couples should seek fertility evaluation after 12 months of regular, unprotected intercourse without conception. Women over 35 years of age are advised to seek help after 6 months due to age-related fertility decline. Those with known risk factors should consider earlier evaluation.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q2: Can lifestyle changes significantly improve fertility?</div>
+      <div class="accordion-answer">
+        <p>Yes, lifestyle modifications can dramatically improve fertility outcomes. Maintaining a healthy weight, eating a balanced diet, exercising regularly, quitting smoking, limiting alcohol, managing stress, and avoiding environmental toxins can all enhance fertility in both men and women.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q3: How does age affect fertility for both men and women?</div>
+      <div class="accordion-answer">
+        <p>Female fertility declines gradually after age 30 and more rapidly after 35, with significant decline after 40 due to decreased egg quality and quantity. Male fertility also declines with age, though more gradually, with decreased sperm quality and increased DNA fragmentation after age 40.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q4: What is the success rate of IVF?</div>
+      <div class="accordion-answer">
+        <p>IVF success rates vary by age, diagnosis, and clinic. For women under 35, success rates per cycle are typically 40-50%. Success rates decrease with age: 35-37 years (30-40%), 38-40 years (20-30%), and over 40 years (10-20%). Multiple cycles may be needed to achieve pregnancy.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q5: Is PCOS a major cause of infertility?</div>
+      <div class="accordion-answer">
+        <p>Yes, PCOS is one of the leading causes of female infertility, affecting 6-12% of reproductive-aged women. It causes irregular ovulation or anovulation. However, with proper treatment including lifestyle changes, ovulation-inducing medications, and assisted reproductive techniques, most women with PCOS can achieve pregnancy.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q6: When is surgery recommended for fertility treatment?</div>
+      <div class="accordion-answer">
+        <p>Surgery may be recommended for structural problems such as blocked fallopian tubes, large uterine fibroids, severe endometriosis, uterine septum, or male conditions like varicocele. The decision depends on the specific condition, age, other fertility factors, and whether less invasive treatments have been unsuccessful.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-question">Q7: How important is male partner evaluation in fertility treatment?</div>
+      <div class="accordion-answer">
+        <p>Male factor infertility contributes to approximately 40-50% of infertility cases. It's essential that both partners undergo evaluation simultaneously. Male fertility assessment is straightforward, typically starting with semen analysis, and can identify treatable conditions that significantly impact conception success.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <a href="../home.html" class="button">Back to Home</a>
+
+  <script src="learn.js"></script>
+</body>
+</html>
