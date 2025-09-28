@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Directory - GynAi</title>
+    <title>Doctor Directory - Find Healthcare Professionals Near You</title>
+    <meta name="description" content="Find qualified doctors and healthcare professionals near you. Book appointments, view ratings, and get directions to clinics.">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -12,72 +14,75 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --medical-primary: hsl(340, 95%, 15%);
+            --medical-secondary: hsl(340, 80%, 45%);
+            --medical-accent: hsl(330, 70%, 75%);
+            --medical-soft: hsl(330, 100%, 97%);
+            --background: hsl(330, 100%, 97%);
+            --foreground: hsl(340, 95%, 15%);
+            --card: hsl(0, 0%, 100%);
+            --border: hsl(330, 20%, 88%);
+            --muted: hsl(330, 30%, 40%);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #FFF0F5;
+            background: linear-gradient(135deg, var(--medical-soft), var(--background), hsl(330, 70%, 88%, 0.1));
             min-height: 100vh;
-            color: #750D37;
+            color: var(--foreground);
             line-height: 1.6;
-            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 2rem;
             position: relative;
+            z-index: 10;
         }
 
-        /* Decorative circles matching login/register theme */
-        .decorative-circles {
+        /* Decorative background elements */
+        .bg-decoration {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            inset: 0;
+            overflow: hidden;
             pointer-events: none;
+            z-index: 0;
         }
 
-        .circle {
+        .bg-circle {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.08;
-        }
-
-        .circle-1 {
-            width: 120px;
-            height: 120px;
-            background: #750D37;
-            top: 10%;
-            left: 15%;
+            opacity: 0.05;
             animation: float 6s ease-in-out infinite;
         }
 
-        .circle-2 {
-            width: 80px;
-            height: 80px;
-            background: #FF6B9D;
-            bottom: 20%;
+        .bg-circle-1 {
+            width: 6rem;
+            height: 6rem;
+            background: var(--medical-primary);
+            top: 10%;
             right: 10%;
-            animation: float 8s ease-in-out infinite reverse;
+            animation-delay: 0s;
         }
 
-        .circle-3 {
-            width: 100px;
-            height: 100px;
-            background: #A0164D;
-            top: 50%;
-            right: 20%;
-            animation: float 7s ease-in-out infinite;
-        }
-
-        .circle-4 {
-            width: 60px;
-            height: 60px;
-            background: #750D37;
-            bottom: 40%;
+        .bg-circle-2 {
+            width: 8rem;
+            height: 8rem;
+            background: var(--medical-accent);
+            bottom: 20%;
             left: 5%;
-            animation: float 9s ease-in-out infinite reverse;
+            animation-delay: 2s;
+        }
+
+        .bg-circle-3 {
+            width: 4rem;
+            height: 4rem;
+            background: var(--medical-secondary);
+            top: 50%;
+            right: 30%;
+            animation-delay: 4s;
         }
 
         @keyframes float {
@@ -85,1992 +90,953 @@
             50% { transform: translateY(-20px); }
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            color: #750D37;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 30px;
-            padding: 12px 20px;
-            background: white;
-            border-radius: 50px;
-            border: 2px solid #f3d5e3;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.1);
-        }
-
-        .back-link:hover {
-            background: #750D37;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.2);
-        }
-
-        .back-link i {
-            margin-right: 8px;
-            font-size: 16px;
-        }
-
+        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 3rem;
         }
 
         .header h1 {
-            color: #750D37;
-            font-size: 2.5rem;
-            font-weight: 400;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
         }
 
-        .location-badge {
-            display: inline-flex;
-            align-items: center;
-            background: white;
-            color: #750D37;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.1);
-            border: 2px solid #f3d5e3;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .header p {
+            font-size: 1.125rem;
+            color: var(--muted);
+            max-width: 32rem;
+            margin: 0 auto;
         }
 
-        .location-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(117, 13, 55, 0.15);
-        }
-
-        .location-badge i {
-            margin-right: 10px;
-            color: #FF6B9D;
-        }
-
+        /* Search and Filters */
         .search-filters {
             display: flex;
-            gap: 20px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
         }
 
-        .search-box {
-            flex: 1;
-            max-width: 400px;
+        .search-container {
             position: relative;
+            width: 100%;
+            max-width: 32rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: 2px solid #f3d5e3;
-            border-radius: 50px;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid hsl(340, 95%, 15%, 0.3);
+            border-radius: 9999px;
             font-size: 1rem;
             background: white;
-            color: #750D37;
+            box-shadow: 0 10px 25px hsl(340, 95%, 15%, 0.1);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #750D37;
-            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.1);
+            border-color: var(--medical-primary);
+            box-shadow: 0 0 0 3px hsl(340, 95%, 15%, 0.1);
         }
 
         .search-icon {
             position: absolute;
-            right: 20px;
+            left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #750D37;
-            opacity: 0.6;
+            color: hsl(340, 95%, 15%, 0.6);
         }
 
-        .filter-dropdown {
+        .filters-container {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .dropdown {
             position: relative;
+            display: inline-block;
         }
 
-        .filter-btn {
-            padding: 15px 25px;
-            background: white;
-            border: 2px solid #f3d5e3;
-            border-radius: 50px;
-            color: #750D37;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .dropdown-button {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 2px solid hsl(340, 95%, 15%, 0.3);
+            border-radius: 0.5rem;
+            color: var(--medical-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
             font-weight: 500;
         }
 
-        .filter-btn:hover {
-            border-color: #750D37;
+        .dropdown-button:hover {
+            background: var(--medical-primary);
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.1);
+            box-shadow: 0 8px 25px hsl(340, 95%, 15%, 0.2);
         }
 
-        .filter-menu {
+        .dropdown-content {
+            display: none;
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
             background: white;
-            border: 2px solid #f3d5e3;
-            border-radius: 15px;
-            margin-top: 10px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(117, 13, 55, 0.1);
-            display: none;
-            z-index: 10;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            margin-top: 0.25rem;
+            padding: 0.5rem;
+            box-shadow: 0 10px 30px hsl(340, 95%, 15%, 0.15);
+            z-index: 1000;
+            min-width: 200px;
         }
 
-        .filter-menu.active {
+        .dropdown-content.show {
             display: block;
         }
 
-        .filter-option {
-            padding: 8px 15px;
+        .dropdown-item {
+            padding: 0.5rem 0.75rem;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-item:hover {
+            background: hsl(330, 70%, 88%, 0.3);
+            color: var(--medical-primary);
+        }
+
+        .near-me-btn {
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 2px solid var(--medical-accent);
+            border-radius: 0.5rem;
+            color: var(--medical-primary);
+            cursor: pointer;
             transition: all 0.3s ease;
-            margin: 2px 0;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        .filter-option:hover {
-            background: #F0E6EF;
-            color: #750D37;
+        .near-me-btn:hover {
+            background: var(--medical-accent);
+            color: white;
         }
 
-        .stats-bar {
+        /* Statistics */
+        .stats-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
         }
 
-        .stat-item {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 15px;
+        .stat-card {
+            background: linear-gradient(135deg, white, hsl(330, 70%, 88%, 0.1));
+            border: 1px solid hsl(330, 70%, 88%, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.1);
-            border: 2px solid #f3d5e3;
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px hsl(340, 95%, 15%, 0.08);
+            transition: transform 0.3s ease;
         }
 
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.15);
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--medical-primary);
         }
 
         .stat-number {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #750D37;
-            display: block;
-            margin-bottom: 5px;
+            color: var(--medical-primary);
+            margin-bottom: 0.25rem;
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            color: #750D37;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.875rem;
+            color: var(--muted);
         }
 
+        /* Results header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            background: hsl(330, 70%, 88%, 0.3);
+            color: var(--medical-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tag button {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Doctor cards */
         .doctors-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 1;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .doctor-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(117, 13, 55, 0.1);
-            border: 2px solid #f3d5e3;
+            background: linear-gradient(135deg, white, hsl(330, 70%, 88%, 0.05));
+            border: 1px solid var(--medical-accent);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px hsl(340, 95%, 15%, 0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .doctor-card.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
-
-        .doctor-card::before {
-            content: '👩‍⚕️';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 8rem;
-            opacity: 0.03;
-            z-index: 0;
-            transform: rotate(15deg);
-        }
-
-        .doctor-card:nth-child(2)::before {
-            content: '🩺';
-            top: -10px;
-            right: -30px;
-            font-size: 7rem;
-            opacity: 0.04;
-        }
-
-        .doctor-card:nth-child(3)::before {
-            content: '💊';
-            top: -15px;
-            right: -25px;
-            font-size: 6rem;
-            opacity: 0.04;
-            transform: rotate(-10deg);
         }
 
         .doctor-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(117, 13, 55, 0.15);
-            border-color: #750D37;
+            box-shadow: 0 20px 40px hsl(340, 95%, 15%, 0.15);
+            border-color: var(--medical-primary);
+        }
+
+        .doctor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
         }
 
         .doctor-info {
             display: flex;
             align-items: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
+            gap: 1rem;
         }
 
         .doctor-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #750D37, #A0164D);
+            width: 3rem;
+            height: 3rem;
             border-radius: 50%;
+            background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 20px;
             color: white;
-            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.2);
+            font-size: 1.125rem;
+            box-shadow: 0 4px 15px hsl(340, 95%, 15%, 0.2);
         }
 
         .doctor-details h3 {
-            color: #750D37;
-            font-size: 1.3rem;
+            font-size: 1.125rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            color: var(--foreground);
+            margin-bottom: 0.25rem;
         }
 
-        .clinic-name {
-            color: #750D37;
-            opacity: 0.7;
-            font-size: 1rem;
+        .doctor-specialty {
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+
+        .availability-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .available {
+            background: hsl(120, 60%, 90%);
+            color: hsl(120, 60%, 30%);
+        }
+
+        .busy {
+            background: hsl(45, 100%, 90%);
+            color: hsl(45, 100%, 30%);
+        }
+
+        .offline {
+            background: hsl(0, 60%, 90%);
+            color: hsl(0, 60%, 30%);
+        }
+
+        .doctor-meta {
+            margin-top: 1rem;
+        }
+
+        .meta-item {
             display: flex;
             align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
         }
 
-        .clinic-name i {
-            margin-right: 8px;
-            color: #FF6B9D;
+        .meta-item i {
+            color: var(--medical-accent);
         }
 
-        .doctor-rating {
+        .rating {
             display: flex;
             align-items: center;
-            margin: 15px 0;
-            gap: 5px;
-            position: relative;
-            z-index: 1;
+            gap: 0.5rem;
         }
 
         .stars {
-            color: #FFD700;
-            margin-right: 8px;
+            color: #fbbf24;
         }
 
-        .rating-text {
-            color: #750D37;
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        .doctor-specialties {
-            margin: 15px 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .specialty-tag {
-            display: inline-block;
-            background: #F0E6EF;
-            color: #750D37;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin: 2px;
-            border: 1px solid #f3d5e3;
+        .fee {
+            font-weight: 600;
+            color: var(--medical-primary);
         }
 
         .doctor-actions {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
+            gap: 0.5rem;
         }
 
         .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
             font-weight: 500;
-            text-decoration: none;
-            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
+            gap: 0.5rem;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #750D37, #A0164D);
+            background: var(--medical-primary);
             color: white;
             flex: 1;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(117, 13, 55, 0.3);
+            background: var(--medical-secondary);
         }
 
-        .btn-secondary {
-            background: #F0E6EF;
-            color: #750D37;
-            flex: 1;
-            border: 2px solid #f3d5e3;
+        .btn-outline {
+            background: white;
+            border: 2px solid var(--medical-primary);
+            color: var(--medical-primary);
         }
 
-        .btn-secondary:hover {
-            background: #750D37;
+        .btn-outline:hover {
+            background: var(--medical-primary);
             color: white;
         }
 
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .availability-status {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-top: 8px;
-        }
-
-        .status-available {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .status-busy {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f3d5e3;
-        }
-
-        .modal-title {
-            color: #750D37;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #750D37;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .close-btn:hover {
-            background: #F0E6EF;
-            transform: rotate(90deg);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #750D37;
-            font-weight: 500;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #f3d5e3;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #750D37;
-            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.1);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: 2px solid #d4edda;
-            color: #155724;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transform: translateX(400px);
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            border-color: #f5c6cb;
-            color: #721c24;
-        }
-
-        .map-placeholder {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
+        /* No results */
+        .no-results {
             text-align: center;
-            box-shadow: 0 10px 30px rgba(117, 13, 55, 0.1);
-            border: 2px solid #f3d5e3;
-            position: relative;
-            z-index: 1;
-            margin-top: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 3rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px hsl(340, 95%, 15%, 0.08);
         }
 
-        .map-placeholder:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.15);
-        }
-
-        .map-placeholder i {
+        .no-results i {
             font-size: 4rem;
-            color: #750D37;
-            margin-bottom: 20px;
-            opacity: 0.6;
+            color: var(--muted);
+            margin-bottom: 1rem;
         }
 
-        .map-placeholder h3 {
-            color: #750D37;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            font-weight: 400;
+        .no-results h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 0.5rem;
         }
 
-        .map-placeholder p {
-            color: #750D37;
-            opacity: 0.7;
-            font-size: 1rem;
-            line-height: 1.6;
+        .no-results p {
+            color: var(--muted);
+            margin-bottom: 1rem;
         }
 
-        .loading-animation {
-            display: inline-block;
-            animation: pulse 2s infinite;
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 10px 30px hsl(340, 95%, 15%, 0.15);
+            z-index: 1000;
+            display: none;
+            min-width: 300px;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        .toast.show {
+            display: block;
+            animation: slideIn 0.3s ease;
         }
 
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast-success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast-error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast-info {
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
             .header h1 {
                 font-size: 2rem;
             }
-
+            
+            .search-filters {
+                align-items: stretch;
+            }
+            
+            .filters-container {
+                justify-content: stretch;
+            }
+            
+            .dropdown-button, .near-me-btn {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .stats-container {
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                flex: 1;
+                min-width: 120px;
+            }
+            
             .doctors-grid {
                 grid-template-columns: 1fr;
             }
-
-            .doctor-actions {
+            
+            .results-header {
                 flex-direction: column;
-            }
-
-            .stats-bar {
-                gap: 15px;
-            }
-
-            .stat-item {
-                padding: 15px 20px;
-            }
-
-            .stat-number {
-                font-size: 1.5rem;
-            }
-
-            .doctor-card {
-                padding: 20px;
-            }
-
-            .map-placeholder {
-                padding: 30px 20px;
-            }
-
-            .search-filters {
-                flex-direction: column;
-            }
-
-            .search-box {
-                max-width: none;
+                align-items: stretch;
             }
         }
     </style>
 </head>
 <body>
-    <div class="decorative-circles">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-3"></div>
-        <div class="circle circle-4"></div>
+    <!-- Background decorations -->
+    <div class="bg-decoration">
+        <div class="bg-circle bg-circle-1"></div>
+        <div class="bg-circle bg-circle-2"></div>
+        <div class="bg-circle bg-circle-3"></div>
     </div>
 
     <div class="container">
-        <a href="home.html" class="back-link">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-
+        <!-- Header -->
         <div class="header">
-            <h1>Nearby Doctors</h1>
-            <div class="location-badge" id="locationBadge">
-                <i class="fas fa-map-marker-alt"></i>
-                <span id="currentLocation">Pune, Maharashtra</span>
-            </div>
+            <h1>Find Your Doctor</h1>
+            <p>Discover qualified healthcare professionals near you and book appointments instantly</p>
         </div>
 
+        <!-- Search and Filters -->
         <div class="search-filters">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search doctors, specialties, or clinics...">
+            <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search doctors by name, specialty, or clinic..."
+                >
             </div>
             
-            <div class="filter-dropdown">
-                <div class="filter-btn" id="specialtyFilter">
-                    <i class="fas fa-filter"></i>
-                    <span>All Specialties</span>
-                    <i class="fas fa-chevron-down"></i>
+            <div class="filters-container">
+                <div class="dropdown" id="specialtyDropdown">
+                    <button class="dropdown-button">
+                        <i class="fas fa-stethoscope"></i>
+                        <span id="specialtyText">All Specialties</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="specialtyContent"></div>
                 </div>
-                <div class="filter-menu" id="specialtyMenu">
-                    <div class="filter-option" data-filter="all">All Specialties</div>
-                    <div class="filter-option" data-filter="gynecology">Gynecology</div>
-                    <div class="filter-option" data-filter="pcos">PCOS Treatment</div>
-                    <div class="filter-option" data-filter="reproductive">Reproductive Health</div>
-                    <div class="filter-option" data-filter="fertility">Fertility</div>
-                    <div class="filter-option" data-filter="pregnancy">Pregnancy Care</div>
+                
+                <div class="dropdown" id="availabilityDropdown">
+                    <button class="dropdown-button">
+                        <i class="fas fa-clock"></i>
+                        <span id="availabilityText">All Availability</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="availabilityContent"></div>
                 </div>
-            </div>
-
-            <div class="filter-dropdown">
-                <div class="filter-btn" id="availabilityFilter">
-                    <i class="fas fa-clock"></i>
-                    <span>All Availability</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-menu" id="availabilityMenu">
-                    <div class="filter-option" data-filter="all">All Availability</div>
-                    <div class="filter-option" data-filter="available">Available Today</div>
-                    <div class="filter-option" data-filter="tomorrow">Available Tomorrow</div>
-                </div>
+                
+                <button class="near-me-btn" onclick="detectLocation()">
+                    <i class="fas fa-location-arrow"></i>
+                    Near Me
+                </button>
             </div>
         </div>
 
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-number" id="doctorCount">3</span>
-                <span class="stat-label">Available Doctors</span>
+        <!-- Statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-number" id="totalDoctors">0</div>
+                <div class="stat-label">Total Doctors</div>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">Support</span>
+            
+            <div class="stat-card">
+                <i class="fas fa-calendar-check stat-icon" style="color: #10b981;"></i>
+                <div class="stat-number" id="availableNow" style="color: #10b981;">0</div>
+                <div class="stat-label">Available Now</div>
             </div>
-            <div class="stat-item">
-                <span class="stat-number" id="avgRating">4.8★</span>
-                <span class="stat-label">Average Rating</span>
-            </div>
-        </div>
-
-        <div class="doctors-grid" id="doctorsGrid">
-            <div class="doctor-card" data-specialty="gynecology pcos women" data-availability="available" data-rating="4.9">
-                <div class="doctor-info">
-                    <div class="doctor-avatar">SK</div>
-                    <div class="doctor-details">
-                        <h3>Dr. Shweta Kulkarni</h3>
-                        <div class="clinic-name">
-                            <i class="fas fa-hospital"></i>
-                            Sunshine Clinic
-                        </div>
-                        <div class="availability-status status-available">
-                            Available Today
-                        </div>
-                    </div>
-                </div>
-                <div class="doctor-rating">
-                    <div class="stars">★★★★★</div>
-                    <span class="rating-text">4.9 (127 reviews)</span>
-                </div>
-                <div class="doctor-specialties">
-                    <span class="specialty-tag">Gynecology</span>
-                    <span class="specialty-tag">PCOS Treatment</span>
-                    <span class="specialty-tag">Women's Health</span>
-                </div>
-                <div class="doctor-actions">
-                    <button class="btn btn-primary" onclick="callDoctor('Dr. Shweta Kulkarni', '+91-9876543210')">
-                        <i class="fas fa-phone"></i>
-                        Call Now
-                    </button>
-                    <button class="btn btn-secondary" onclick="bookAppointment('Dr. Shweta Kulkarni', 'Sunshine Clinic')">
-                        <i class="fas fa-calendar"></i>
-                        Book Appointment
-                    </button>
-                </div>
-            </div>
-
-            <div class="doctor-card" data-specialty="reproductive fertility hormonal" data-availability="tomorrow" data-rating="4.7">
-                <div class="doctor-info">
-                    <div class="doctor-avatar">AM</div>
-                    <div class="doctor-details">
-                        <h3>Dr. Anjali Mehta</h3>
-                        <div class="clinic-name">
-                            <i class="fas fa-hospital"></i>
-                            Blossom Health Center
-                        </div>
-                        <div class="availability-status status-busy">
-                            Next Available: Tomorrow
-                        </div>
-                    </div>
-                </div>
-                <div class="doctor-rating">
-                    <div class="stars">★★★★☆</div>
-                    <span class="rating-text">4.7 (89 reviews)</span>
-                </div>
-                <div class="doctor-specialties">
-                    <span class="specialty-tag">Reproductive Health</span>
-                    <span class="specialty-tag">Fertility</span>
-                    <span class="specialty-tag">Hormonal Disorders</span>
-                </div>
-                <div class="doctor-actions">
-                    <button class="btn btn-primary" onclick="callDoctor('Dr. Anjali Mehta', '+91-9876543211')">
-                        <i class="fas fa-phone"></i>
-                        Call Now
-                    </button>
-                    <button class="btn btn-secondary" onclick="bookAppointment('Dr. Anjali Mehta', 'Blossom Health Center')">
-                        <i class="fas fa-calendar"></i>
-                        Book Appointment
-                    </button>
-                </div>
-            </div>
-
-            <div class="doctor-card" data-specialty="gynecology pregnancy menstrual" data-availability="available" data-rating="4.8">
-                <div class="doctor-info">
-                    <div class="doctor-avatar">NP</div>
-                    <div class="doctor-details">
-                        <h3>Dr. Neha Patil</h3>
-                        <div class="clinic-name">
-                            <i class="fas fa-hospital"></i>
-                            Women's Care Clinic
-                        </div>
-                        <div class="availability-status status-available">
-                            Available Today
-                        </div>
-                    </div>
-                </div>
-                <div class="doctor-rating">
-                    <div class="stars">★★★★★</div>
-                    <span class="rating-text">4.8 (156 reviews)</span>
-                </div>
-                <div class="doctor-specialties">
-                    <span class="specialty-tag">Gynecology</span>
-                    <span class="specialty-tag">Pregnancy Care</span>
-                    <span class="specialty-tag">Menstrual Health</span>
-                </div>
-                <div class="doctor-actions">
-                    <button class="btn btn-primary" onclick="callDoctor('Dr. Neha Patil', '+91-9876543212')">
-                        <i class="fas fa-phone"></i>
-                        Call Now
-                    </button>
-                    <button class="btn btn-secondary" onclick="bookAppointment('Dr. Neha Patil', 'Women\'s Care Clinic')">
-                        <i class="fas fa-calendar"></i>
-                        Book Appointment
-                    </button>
-                </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-star stat-icon" style="color: #fbbf24;"></i>
+                <div class="stat-number" id="averageRating" style="color: #fbbf24;">0.0★</div>
+                <div class="stat-label">Average Rating</div>
             </div>
         </div>
 
-        <div class="map-placeholder" onclick="openMap()">
-            <i class="fas fa-map-marked-alt loading-animation"></i>
-            <h3>Interactive Map</h3>
-            <p>Click here to view doctor locations on an interactive map with directions and real-time traffic updates.</p>
+        <!-- Results Header -->
+        <div class="results-header">
+            <h2 class="results-title" id="resultsTitle">0 Doctors Found</h2>
+            <div class="filter-tags" id="filterTags"></div>
+        </div>
+
+        <!-- Doctors Grid -->
+        <div class="doctors-grid" id="doctorsGrid"></div>
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-stethoscope"></i>
+            <h3>No doctors found</h3>
+            <p>Try adjusting your search criteria or filters</p>
+            <button class="btn btn-outline" onclick="clearAllFilters()">
+                Clear Filters
+            </button>
         </div>
     </div>
 
-    <!-- Appointment Booking Modal -->
-    <div class="modal-overlay" id="appointmentModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Book Appointment</h2>
-                <button class="close-btn" onclick="closeModal('appointmentModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Doctor</label>
-                    <input type="text" class="form-input" id="doctorName" readonly>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Clinic</label>
-                    <input type="text" class="form-input" id="clinicName" readonly>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Your Name</label>
-                    <input type="text" class="form-input" id="patientName" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-input" id="patientPhone" placeholder="Enter your phone number">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Preferred Date</label>
-                    <input type="date" class="form-input" id="appointmentDate">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Preferred Time</label>
-                    <select class="form-input" id="appointmentTime">
-                        <option value="">Select time slot</option>
-                        <option value="09:00">09:00 AM</option>
-                        <option value="09:30">09:30 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="10:30">10:30 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="11:30">11:30 AM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="14:30">02:30 PM</option>
-                        <option value="15:00">03:00 PM</option>
-                        <option value="15:30">03:30 PM</option>
-                        <option value="16:00">04:00 PM</option>
-                        <option value="16:30">04:30 PM</option>
-                        <option value="17:00">05:00 PM</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Reason for Visit</label>
-                    <textarea class="form-input" id="visitReason" rows="3" placeholder="Brief description of your concern (optional)"></textarea>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" onclick="submitAppointment()" style="width: 100%; justify-content: center;">
-                        <i class="fas fa-calendar-check"></i>
-                        Confirm Appointment
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Location Change Modal -->
-    <div class="modal-overlay" id="locationModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Change Location</h2>
-                <button class="close-btn" onclick="closeModal('locationModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Search City</label>
-                    <input type="text" class="form-input" id="citySearch" placeholder="Enter city name">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Popular Cities</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-                        <button class="btn btn-secondary" onclick="changeLocation('Mumbai, Maharashtra')" style="flex: none;">Mumbai</button>
-                        <button class="btn btn-secondary" onclick="changeLocation('Delhi, Delhi')" style="flex: none;">Delhi</button>
-                        <button class="btn btn-secondary" onclick="changeLocation('Bangalore, Karnataka')" style="flex: none;">Bangalore</button>
-                        <button class="btn btn-secondary" onclick="changeLocation('Chennai, Tamil Nadu')" style="flex: none;">Chennai</button>
-                        <button class="btn btn-secondary" onclick="changeLocation('Kolkata, West Bengal')" style="flex: none;">Kolkata</button>
-                        <button class="btn btn-secondary" onclick="changeLocation('Hyderabad, Telangana')" style="flex: none;">Hyderabad</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" onclick="detectLocation()" style="width: 100%; justify-content: center;">
-                        <i class="fas fa-location-arrow"></i>
-                        Use Current Location
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <div id="notificationMessage"></div>
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <div id="toastMessage"></div>
     </div>
 
     <script>
-        // Database Schema and Management
-        class DoctorDatabase {
-            constructor() {
-                this.doctors = this.loadDoctors();
-                this.appointments = this.loadAppointments();
-                this.reviews = this.loadReviews();
-                this.locations = this.loadLocations();
-                this.init();
-            }
+        // Global variables
+        let doctorsData = null;
+        let filteredDoctors = [];
+        let searchTerm = '';
+        let selectedSpecialty = 'all';
+        let selectedAvailability = 'all';
 
-            init() {
-                // Set minimum date to today
-                const today = new Date().toISOString().split('T')[0];
-                const dateInput = document.getElementById('appointmentDate');
-                if (dateInput) {
-                    dateInput.min = today;
-                    dateInput.value = today;
-                }
-            }
-
-            // Doctor data with comprehensive information
-            loadDoctors() {
-                const defaultDoctors = [
-                    {
-                        id: 1,
-                        name: "Dr. Shweta Kulkarni",
-                        avatar: "SK",
-                        clinic: "Sunshine Clinic",
-                        phone: "+91-9876543210",
-                        email: "shweta.kulkarni@sunshine.com",
-                        specialties: ["Gynecology", "PCOS Treatment", "Women's Health"],
-                        rating: 4.9,
-                        reviewCount: 127,
-                        experience: 12,
-                        location: "Pune, Maharashtra",
-                        address: "123 FC Road, Shivajinagar, Pune - 411005",
-                        availability: "available",
-                        consultationFee: 800,
-                        languages: ["English", "Hindi", "Marathi"],
-                        education: "MBBS, MD (Gynecology) - AIIMS Delhi",
-                        about: "Specialist in women's health with focus on PCOS and reproductive disorders.",
-                        availableSlots: {
-                            "2025-08-04": ["09:00", "09:30", "10:00", "14:00", "15:00"],
-                            "2025-08-05": ["09:00", "10:30", "11:00", "14:30", "16:00"],
-                            "2025-08-06": ["09:30", "10:00", "11:30", "15:00", "16:30"]
-                        }
-                    },
-                    {
-                        id: 2,
-                        name: "Dr. Anjali Mehta",
-                        avatar: "AM",
-                        clinic: "Blossom Health Center",
-                        phone: "+91-9876543211",
-                        email: "anjali.mehta@blossom.com",
-                        specialties: ["Reproductive Health", "Fertility", "Hormonal Disorders"],
-                        rating: 4.7,
-                        reviewCount: 89,
-                        experience: 8,
-                        location: "Pune, Maharashtra",
-                        address: "456 JM Road, Deccan, Pune - 411004",
-                        availability: "tomorrow",
-                        consultationFee: 1200,
-                        languages: ["English", "Hindi", "Gujarati"],
-                        education: "MBBS, MS (Obstetrics & Gynecology) - KEM Hospital",
-                        about: "Expert in fertility treatments and reproductive endocrinology.",
-                        availableSlots: {
-                            "2025-08-05": ["09:00", "10:00", "11:00", "14:00", "15:00"],
-                            "2025-08-06": ["09:30", "10:30", "14:30", "15:30", "16:00"],
-                            "2025-08-07": ["09:00", "10:00", "11:30", "15:00", "16:30"]
-                        }
-                    },
-                    {
-                        id: 3,
-                        name: "Dr. Neha Patil",
-                        avatar: "NP",
-                        clinic: "Women's Care Clinic",
-                        phone: "+91-9876543212",
-                        email: "neha.patil@womenscare.com",
-                        specialties: ["Gynecology", "Pregnancy Care", "Menstrual Health"],
-                        rating: 4.8,
-                        reviewCount: 156,
-                        experience: 15,
-                        location: "Pune, Maharashtra",
-                        address: "789 Karve Road, Kothrud, Pune - 411029",
-                        availability: "available",
-                        consultationFee: 600,
-                        languages: ["English", "Hindi", "Marathi"],
-                        education: "MBBS, DGO, DNB (Gynecology) - Sassoon Hospital",
-                        about: "Comprehensive women's healthcare with expertise in pregnancy and menstrual disorders.",
-                        availableSlots: {
-                            "2025-08-04": ["10:00", "10:30", "11:00", "14:30", "15:30"],
-                            "2025-08-05": ["09:30", "11:00", "11:30", "15:00", "16:00"],
-                            "2025-08-06": ["09:00", "10:00", "14:00", "15:30", "17:00"]
-                        }
-                    }
-                ];
-
-                const stored = this.getStoredData('gynai_doctors');
-                return stored.length > 0 ? stored : defaultDoctors;
-            }
-
-            // Load appointments from storage
-            loadAppointments() {
-                return this.getStoredData('gynai_appointments');
-            }
-
-            // Load reviews from storage
-            loadReviews() {
-                const defaultReviews = [
-                    {
-                        id: 1,
-                        doctorId: 1,
-                        patientName: "Priya S.",
-                        rating: 5,
-                        comment: "Excellent doctor, very caring and knowledgeable about PCOS treatment.",
-                        date: "2025-07-28",
-                        verified: true
-                    },
-                    {
-                        id: 2,
-                        doctorId: 2,
-                        patientName: "Kavita R.",
-                        rating: 5,
-                        comment: "Dr. Mehta helped us with fertility treatment. Very professional.",
-                        date: "2025-07-25",
-                        verified: true
-                    },
-                    {
-                        id: 3,
-                        doctorId: 3,
-                        patientName: "Sunita M.",
-                        rating: 4,
-                        comment: "Good experience during pregnancy care. Recommended!",
-                        date: "2025-07-30",
-                        verified: true
-                    }
-                ];
-
-                const stored = this.getStoredData('gynai_reviews');
-                return stored.length > 0 ? stored : defaultReviews;
-            }
-
-            // Load location data
-            loadLocations() {
-                return {
-                    "Pune, Maharashtra": {
-                        latitude: 18.5204,
-                        longitude: 73.8567,
-                        doctorCount: 3
-                    },
-                    "Mumbai, Maharashtra": {
-                        latitude: 19.0760,
-                        longitude: 72.8777,
-                        doctorCount: 8
-                    },
-                    "Delhi, Delhi": {
-                        latitude: 28.7041,
-                        longitude: 77.1025,
-                        doctorCount: 12
-                    },
-                    "Bangalore, Karnataka": {
-                        latitude: 12.9716,
-                        longitude: 77.5946,
-                        doctorCount: 6
-                    }
-                };
-            }
-
-            // Get stored data from localStorage
-            getStoredData(key) {
-                try {
-                    const data = JSON.parse(localStorage.getItem(key) || '[]');
-                    return Array.isArray(data) ? data : [];
-                } catch (error) {
-                    console.error(`Error loading ${key}:`, error);
-                    return [];
-                }
-            }
-
-            // Save data to localStorage
-            saveData(key, data) {
-                try {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    return true;
-                } catch (error) {
-                    console.error(`Error saving ${key}:`, error);
-                    return false;
-                }
-            }
-
-            // CRUD Operations for Doctors
-            getAllDoctors() {
-                return this.doctors;
-            }
-
-            getDoctorById(id) {
-                return this.doctors.find(doctor => doctor.id === parseInt(id));
-            }
-
-            searchDoctors(query, filters = {}) {
-                let results = this.doctors;
-
-                // Text search
-                if (query) {
-                    const searchTerm = query.toLowerCase();
-                    results = results.filter(doctor => 
-                        doctor.name.toLowerCase().includes(searchTerm) ||
-                        doctor.clinic.toLowerCase().includes(searchTerm) ||
-                        doctor.specialties.some(specialty => 
-                            specialty.toLowerCase().includes(searchTerm)
-                        )
-                    );
-                }
-
-                // Specialty filter
-                if (filters.specialty && filters.specialty !== 'all') {
-                    results = results.filter(doctor =>
-                        doctor.specialties.some(specialty =>
-                            specialty.toLowerCase().includes(filters.specialty.toLowerCase())
-                        )
-                    );
-                }
-
-                // Availability filter
-                if (filters.availability && filters.availability !== 'all') {
-                    results = results.filter(doctor => {
-                        if (filters.availability === 'available') {
-                            return doctor.availability === 'available';
-                        } else if (filters.availability === 'tomorrow') {
-                            return doctor.availability === 'tomorrow' || doctor.availability === 'available';
-                        }
-                        return true;
-                    });
-                }
-
-                return results;
-            }
-
-            // CRUD Operations for Appointments
-            createAppointment(appointmentData) {
-                const newAppointment = {
-                    id: Date.now(),
-                    ...appointmentData,
-                    status: 'confirmed',
-                    createdAt: new Date().toISOString(),
-                    bookingReference: 'GYN' + Date.now().toString().slice(-6)
-                };
-
-                this.appointments.push(newAppointment);
-                this.saveData('gynai_appointments', this.appointments);
-
-                // Update doctor's available slots
-                this.updateDoctorSlots(appointmentData.doctorId, appointmentData.date, appointmentData.time);
-
-                return newAppointment;
-            }
-
-            updateDoctorSlots(doctorId, date, time) {
-                const doctor = this.getDoctorById(doctorId);
-                if (doctor && doctor.availableSlots[date]) {
-                    doctor.availableSlots[date] = doctor.availableSlots[date].filter(slot => slot !== time);
-                    this.saveData('gynai_doctors', this.doctors);
-                }
-            }
-
-            getAppointmentsByDoctor(doctorId) {
-                return this.appointments.filter(apt => apt.doctorId === parseInt(doctorId));
-            }
-
-            // Statistics and Analytics
-            getStatistics() {
-                const totalDoctors = this.doctors.length;
-                const availableToday = this.doctors.filter(d => d.availability === 'available').length;
-                const averageRating = (this.doctors.reduce((sum, d) => sum + d.rating, 0) / totalDoctors).toFixed(1);
-                const totalAppointments = this.appointments.length;
-
-                return {
-                    totalDoctors,
-                    availableToday,
-                    averageRating,
-                    totalAppointments
-                };
-            }
-
-            // Location-based filtering
-            getDoctorsByLocation(location) {
-                return this.doctors.filter(doctor => doctor.location === location);
-            }
-
-            // Advanced search with multiple criteria
-            advancedSearch(criteria) {
-                let results = this.doctors;
-
-                Object.keys(criteria).forEach(key => {
-                    const value = criteria[key];
-                    if (!value || value === 'all') return;
-
-                    switch (key) {
-                        case 'minRating':
-                            results = results.filter(d => d.rating >= parseFloat(value));
-                            break;
-                        case 'maxFee':
-                            results = results.filter(d => d.consultationFee <= parseInt(value));
-                            break;
-                        case 'experience':
-                            results = results.filter(d => d.experience >= parseInt(value));
-                            break;
-                        case 'language':
-                            results = results.filter(d => d.languages.includes(value));
-                            break;
-                        case 'location':
-                            results = results.filter(d => d.location === value);
-                            break;
-                    }
-                });
-
-                return results;
+        // Load data and initialize app
+        async function loadDoctorsData() {
+            try {
+                const response = await fetch('./database.json');
+                doctorsData = await response.json();
+                initializeApp();
+            } catch (error) {
+                console.error('Error loading doctors data:', error);
+                showToast('Error loading doctor data', 'error');
             }
         }
 
-        // Initialize Database
-        const db = new DoctorDatabase();
-
-        // Global variables for filtering and search
-        let currentFilters = {
-            specialty: 'all',
-            availability: 'all',
-            search: ''
-        };
-
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-            setupEventListeners();
-            loadDoctors();
-            updateStatistics();
-        });
-
         function initializeApp() {
-            // Set today's date for appointment booking
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('appointmentDate');
-            if (dateInput) {
-                dateInput.min = today;
-                dateInput.value = today;
-            }
+            populateDropdowns();
+            filteredDoctors = doctorsData.doctors;
+            updateDisplay();
+            setupEventListeners();
+        }
 
-            // Update available time slots based on selected date
-            if (dateInput) {
-                dateInput.addEventListener('change', updateAvailableTimeSlots);
-            }
+        function populateDropdowns() {
+            // Populate specialty dropdown
+            const specialtyContent = document.getElementById('specialtyContent');
+            doctorsData.specialties.forEach(specialty => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.innerHTML = `
+                    <span>${specialty}</span>
+                    <i class="fas fa-check" style="display: none;"></i>
+                `;
+                item.onclick = () => selectSpecialty(specialty);
+                specialtyContent.appendChild(item);
+            });
+
+            // Populate availability dropdown
+            const availabilityContent = document.getElementById('availabilityContent');
+            doctorsData.availabilityOptions.forEach(option => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.innerHTML = `
+                    <span>${option}</span>
+                    <i class="fas fa-check" style="display: none;"></i>
+                `;
+                item.onclick = () => selectAvailability(option);
+                availabilityContent.appendChild(item);
+            });
         }
 
         function setupEventListeners() {
-            // Search functionality
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(handleSearch, 300));
-            }
-
-            // Filter dropdowns
-            document.getElementById('specialtyFilter').addEventListener('click', () => {
-                toggleDropdown('specialtyMenu');
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchTerm = e.target.value.toLowerCase();
+                filterDoctors();
             });
 
-            document.getElementById('availabilityFilter').addEventListener('click', () => {
-                toggleDropdown('availabilityMenu');
+            // Dropdown toggles
+            document.getElementById('specialtyDropdown').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleDropdown('specialtyContent');
             });
 
-            // Location badge click
-            document.getElementById('locationBadge').addEventListener('click', () => {
-                openModal('locationModal');
-            });
-
-            // Filter options
-            document.querySelectorAll('.filter-option').forEach(option => {
-                option.addEventListener('click', handleFilterSelect);
+            document.getElementById('availabilityDropdown').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleDropdown('availabilityContent');
             });
 
             // Close dropdowns when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.filter-dropdown')) {
-                    document.querySelectorAll('.filter-menu').forEach(menu => {
-                        menu.classList.remove('active');
-                    });
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            });
+        }
+
+        function toggleDropdown(contentId) {
+            const content = document.getElementById(contentId);
+            content.classList.toggle('show');
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                if (dropdown.id !== contentId) {
+                    dropdown.classList.remove('show');
                 }
             });
         }
 
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+        function selectSpecialty(specialty) {
+            selectedSpecialty = specialty === 'All Specialties' ? 'all' : specialty;
+            document.getElementById('specialtyText').textContent = specialty;
+            updateDropdownSelection('specialtyContent', specialty);
+            toggleDropdown('specialtyContent');
+            filterDoctors();
         }
 
-        function handleSearch(e) {
-            currentFilters.search = e.target.value;
-            filterAndDisplayDoctors();
+        function selectAvailability(availability) {
+            selectedAvailability = availability === 'All Availability' ? 'all' : availability;
+            document.getElementById('availabilityText').textContent = availability;
+            updateDropdownSelection('availabilityContent', availability);
+            toggleDropdown('availabilityContent');
+            filterDoctors();
         }
 
-        function toggleDropdown(menuId) {
-            const menu = document.getElementById(menuId);
-            const isActive = menu.classList.contains('active');
-            
-            // Close all dropdowns
-            document.querySelectorAll('.filter-menu').forEach(m => m.classList.remove('active'));
-            
-            // Toggle current dropdown
-            if (!isActive) {
-                menu.classList.add('active');
-            }
+        function updateDropdownSelection(contentId, selectedValue) {
+            const content = document.getElementById(contentId);
+            content.querySelectorAll('.dropdown-item').forEach(item => {
+                const checkIcon = item.querySelector('.fas.fa-check');
+                const span = item.querySelector('span');
+                if (span.textContent === selectedValue) {
+                    checkIcon.style.display = 'inline';
+                } else {
+                    checkIcon.style.display = 'none';
+                }
+            });
         }
 
-        function handleFilterSelect(e) {
-            const filterType = e.target.closest('.filter-menu').id.replace('Menu', '');
-            const filterValue = e.target.dataset.filter;
-            const filterButton = document.getElementById(filterType + 'Filter');
-            
-            // Update filter text
-            const filterText = filterButton.querySelector('span');
-            filterText.textContent = e.target.textContent;
-            
-            // Update current filters
-            if (filterType === 'specialty') {
-                currentFilters.specialty = filterValue;
-            } else if (filterType === 'availability') {
-                currentFilters.availability = filterValue;
-            }
-            
-            // Close dropdown
-            e.target.closest('.filter-menu').classList.remove('active');
-            
-            // Apply filters
-            filterAndDisplayDoctors();
-        }
-
-        function filterAndDisplayDoctors() {
-            const filteredDoctors = db.searchDoctors(currentFilters.search, {
-                specialty: currentFilters.specialty,
-                availability: currentFilters.availability
+        function filterDoctors() {
+            filteredDoctors = doctorsData.doctors.filter(doctor => {
+                const matchesSearch = !searchTerm || 
+                    doctor.name.toLowerCase().includes(searchTerm) ||
+                    doctor.specialty.toLowerCase().includes(searchTerm) ||
+                    doctor.clinic.toLowerCase().includes(searchTerm);
+                
+                const matchesSpecialty = selectedSpecialty === 'all' || 
+                    doctor.specialty === selectedSpecialty;
+                
+                const matchesAvailability = selectedAvailability === 'all' ||
+                    (selectedAvailability === 'Available Now' && doctor.availability === 'available') ||
+                    (selectedAvailability === 'Available Today' && doctor.availability !== 'offline') ||
+                    (selectedAvailability === 'Available Tomorrow' && doctor.availability !== 'offline') ||
+                    (selectedAvailability === 'Available This Week' && doctor.availability !== 'offline');
+                
+                return matchesSearch && matchesSpecialty && matchesAvailability;
             });
 
-            displayDoctors(filteredDoctors);
-            updateStatistics(filteredDoctors);
+            updateDisplay();
         }
 
-        function loadDoctors() {
-            const doctors = db.getAllDoctors();
-            displayDoctors(doctors);
+        function updateDisplay() {
+            updateStatistics();
+            updateResultsHeader();
+            updateFilterTags();
+            renderDoctors();
         }
 
-        function displayDoctors(doctors) {
-            const grid = document.getElementById('doctorsGrid');
+        function updateStatistics() {
+            const totalDoctors = filteredDoctors.length;
+            const availableNow = filteredDoctors.filter(d => d.availability === 'available').length;
+            const averageRating = filteredDoctors.length > 0 
+                ? (filteredDoctors.reduce((sum, d) => sum + d.rating, 0) / filteredDoctors.length).toFixed(1)
+                : '0.0';
             
-            if (doctors.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #750D37;">
-                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                        <h3>No doctors found</h3>
-                        <p>Try adjusting your search criteria or filters.</p>
-                    </div>
-                `;
+            document.getElementById('totalDoctors').textContent = totalDoctors;
+            document.getElementById('availableNow').textContent = availableNow;
+            document.getElementById('averageRating').textContent = averageRating + '★';
+        }
+
+        function updateResultsHeader() {
+            const count = filteredDoctors.length;
+            document.getElementById('resultsTitle').textContent = 
+                `${count} Doctor${count !== 1 ? 's' : ''} Found`;
+        }
+
+        function updateFilterTags() {
+            const filterTags = document.getElementById('filterTags');
+            filterTags.innerHTML = '';
+
+            if (selectedSpecialty !== 'all') {
+                addFilterTag(selectedSpecialty, () => selectSpecialty('All Specialties'));
+            }
+
+            if (selectedAvailability !== 'all') {
+                addFilterTag(selectedAvailability, () => selectAvailability('All Availability'));
+            }
+
+            if (searchTerm) {
+                addFilterTag(`"${searchTerm}"`, () => {
+                    document.getElementById('searchInput').value = '';
+                    searchTerm = '';
+                    filterDoctors();
+                });
+            }
+        }
+
+        function addFilterTag(text, onRemove) {
+            const filterTags = document.getElementById('filterTags');
+            const tag = document.createElement('div');
+            tag.className = 'filter-tag';
+            tag.innerHTML = `
+                <span>${text}</span>
+                <button onclick="event.preventDefault(); (${onRemove.toString()})()">×</button>
+            `;
+            filterTags.appendChild(tag);
+        }
+
+        function renderDoctors() {
+            const grid = document.getElementById('doctorsGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (filteredDoctors.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
                 return;
             }
 
-            grid.innerHTML = doctors.map(doctor => `
-                <div class="doctor-card" data-specialty="${doctor.specialties.join(' ').toLowerCase()}" 
-                     data-availability="${doctor.availability}" data-rating="${doctor.rating}">
-                    <div class="doctor-info">
-                        <div class="doctor-avatar">${doctor.avatar}</div>
-                        <div class="doctor-details">
-                            <h3>${doctor.name}</h3>
-                            <div class="clinic-name">
-                                <i class="fas fa-hospital"></i>
-                                ${doctor.clinic}
-                            </div>
-                            <div class="availability-status ${doctor.availability === 'available' ? 'status-available' : 'status-busy'}">
-                                ${doctor.availability === 'available' ? 'Available Today' : 'Next Available: Tomorrow'}
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = filteredDoctors.map(doctor => createDoctorCard(doctor)).join('');
+        }
+
+        function createDoctorCard(doctor) {
+            const availabilityClass = doctor.availability;
+            const stars = generateStars(doctor.rating);
+            const initials = doctor.name.split(' ').map(n => n[0]).join('');
+
+            return `
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <div class="doctor-avatar">${initials}</div>
+                            <div class="doctor-details">
+                                <h3>Dr. ${doctor.name}</h3>
+                                <div class="doctor-specialty">${doctor.specialty}</div>
                             </div>
                         </div>
+                        <div class="availability-badge ${availabilityClass}">${doctor.availability}</div>
                     </div>
-                    <div class="doctor-rating">
-                        <div class="stars">${generateStars(doctor.rating)}</div>
-                        <span class="rating-text">${doctor.rating} (${doctor.reviewCount} reviews)</span>
+
+                    <div class="doctor-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${doctor.clinic}</span>
+                        </div>
+                        
+                        <div class="meta-item rating">
+                            <div class="stars">${stars}</div>
+                            <span>${doctor.rating} (${doctor.reviews} reviews)</span>
+                            <span style="margin-left: auto;">${doctor.experience} years exp.</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Consultation Fee:</span>
+                            <span class="fee">₹${doctor.consultationFee}</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Next available: ${doctor.nextAvailable}</span>
+                        </div>
                     </div>
-                    <div class="doctor-specialties">
-                        ${doctor.specialties.map(specialty => `<span class="specialty-tag">${specialty}</span>`).join('')}
-                    </div>
+
                     <div class="doctor-actions">
-                        <button class="btn btn-primary" onclick="callDoctor('${doctor.name}', '${doctor.phone}')">
-                            <i class="fas fa-phone"></i>
-                            Call Now
-                        </button>
-                        <button class="btn btn-secondary" onclick="bookAppointment('${doctor.name}', '${doctor.clinic}', ${doctor.id})">
+                        <button class="btn btn-primary" onclick="bookAppointment(${doctor.id})">
                             <i class="fas fa-calendar"></i>
                             Book Appointment
                         </button>
+                        
+                        <button class="btn btn-outline" onclick="callDoctor(${doctor.id})">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        
+                        <button class="btn btn-outline" onclick="viewLocation(${doctor.id})">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
 
         function generateStars(rating) {
             const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 !== 0;
             let stars = '';
             
-            for (let i = 0; i < fullStars; i++) {
-                stars += '★';
-            }
-            
-            if (hasHalfStar) {
-                stars += '☆';
-            }
-            
-            while (stars.length < 5) {
-                stars += '☆';
+            for (let i = 0; i < 5; i++) {
+                stars += i < fullStars ? '★' : '☆';
             }
             
             return stars;
         }
 
-        function updateStatistics(doctors = null) {
-            const stats = doctors ? {
-                totalDoctors: doctors.length,
-                availableToday: doctors.filter(d => d.availability === 'available').length,
-                averageRating: doctors.length > 0 ? (doctors.reduce((sum, d) => sum + d.rating, 0) / doctors.length).toFixed(1) : '0.0'
-            } : db.getStatistics();
-
-            document.getElementById('doctorCount').textContent = stats.totalDoctors || stats.availableToday;
-            document.getElementById('avgRating').textContent = stats.averageRating + '★';
-        }
-
-        // Appointment booking functionality
-        function bookAppointment(doctorName, clinicName, doctorId) {
-            document.getElementById('doctorName').value = doctorName;
-            document.getElementById('clinicName').value = clinicName;
-            document.getElementById('doctorName').dataset.doctorId = doctorId;
-            
-            updateAvailableTimeSlots();
-            openModal('appointmentModal');
-        }
-
-        function updateAvailableTimeSlots() {
-            const doctorId = document.getElementById('doctorName').dataset.doctorId;
-            const selectedDate = document.getElementById('appointmentDate').value;
-            const timeSelect = document.getElementById('appointmentTime');
-            
-            if (!doctorId || !selectedDate) return;
-            
-            const doctor = db.getDoctorById(parseInt(doctorId));
-            const availableSlots = doctor?.availableSlots[selectedDate] || [];
-            
-            // Clear existing options except the first one
-            timeSelect.innerHTML = '<option value="">Select time slot</option>';
-            
-            if (availableSlots.length === 0) {
-                timeSelect.innerHTML += '<option value="" disabled>No slots available for this date</option>';
-                return;
-            }
-            
-            availableSlots.forEach(slot => {
-                const option = document.createElement('option');
-                option.value = slot;
-                option.textContent = formatTime(slot);
-                timeSelect.appendChild(option);
-            });
-        }
-
-        function formatTime(time) {
-            const [hours, minutes] = time.split(':');
-            const hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
-            return `${displayHour}:${minutes} ${ampm}`;
-        }
-
-        function submitAppointment() {
-            const appointmentData = {
-                doctorId: parseInt(document.getElementById('doctorName').dataset.doctorId),
-                doctorName: document.getElementById('doctorName').value,
-                clinicName: document.getElementById('clinicName').value,
-                patientName: document.getElementById('patientName').value,
-                patientPhone: document.getElementById('patientPhone').value,
-                date: document.getElementById('appointmentDate').value,
-                time: document.getElementById('appointmentTime').value,
-                reason: document.getElementById('visitReason').value
-            };
-
-            // Validation
-            if (!appointmentData.patientName || !appointmentData.patientPhone || 
-                !appointmentData.date || !appointmentData.time) {
-                showNotification('Please fill in all required fields', 'error');
-                return;
-            }
-
-            // Phone validation
-            const phoneRegex = /^[6-9]\d{9}$/;
-            if (!phoneRegex.test(appointmentData.patientPhone.replace(/[^0-9]/g, ''))) {
-                showNotification('Please enter a valid phone number', 'error');
-                return;
-            }
-
-            try {
-                const appointment = db.createAppointment(appointmentData);
-                closeModal('appointmentModal');
-                showNotification(`Appointment confirmed! Reference: ${appointment.bookingReference}`, 'success');
-                
-                // Reset form
-                document.getElementById('patientName').value = '';
-                document.getElementById('patientPhone').value = '';
-                document.getElementById('visitReason').value = '';
-                
-                // Refresh doctor display to show updated availability
-                filterAndDisplayDoctors();
-                
-            } catch (error) {
-                console.error('Error booking appointment:', error);
-                showNotification('Failed to book appointment. Please try again.', 'error');
-            }
-        }
-
-        // Call functionality
-        function callDoctor(doctorName, phoneNumber) {
-            if (confirm(`Call ${doctorName} at ${phoneNumber}?`)) {
-                // In a real app, this would initiate a call
-                showNotification(`Calling ${doctorName}...`, 'success');
-                
-                // Simulate call initiation
-                setTimeout(() => {
-                    if (navigator.userAgent.match(/Mobile|Android|iPhone|iPad/)) {
-                        window.location.href = `tel:${phoneNumber}`;
-                    } else {
-                        showNotification('Please use your phone to call: ' + phoneNumber, 'info');
-                    }
-                }, 1000);
-            }
-        }
-
-        // Location functionality
-        function changeLocation(newLocation) {
-            document.getElementById('currentLocation').textContent = newLocation;
-            closeModal('locationModal');
-            showNotification(`Location changed to ${newLocation}`, 'success');
-            
-            // In a real app, this would fetch doctors for the new location
-            // For demo, we'll just show a message
-            setTimeout(() => {
-                showNotification('Loading doctors for your area...', 'info');
-            }, 1000);
+        function clearAllFilters() {
+            document.getElementById('searchInput').value = '';
+            searchTerm = '';
+            selectSpecialty('All Specialties');
+            selectAvailability('All Availability');
         }
 
         function detectLocation() {
             if (!navigator.geolocation) {
-                showNotification('Geolocation is not supported by this browser', 'error');
+                showToast('Geolocation is not supported by this browser', 'error');
                 return;
             }
 
-            showNotification('Detecting your location...', 'info');
+            showToast('Detecting your location...', 'info');
             
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
-                    
-                    // In a real app, you would reverse geocode these coordinates
-                    // For demo purposes, we'll simulate this
-                    setTimeout(() => {
-                        const detectedLocation = 'Mumbai, Maharashtra'; // Simulated
-                        changeLocation(detectedLocation);
-                        showNotification('Location detected successfully!', 'success');
-                    }, 2000);
+                    showToast('Location detected successfully!', 'success');
+                    // In a real app, you would filter doctors by proximity
                 },
                 (error) => {
                     console.error('Geolocation error:', error);
-                    showNotification('Could not detect location. Please select manually.', 'error');
+                    showToast('Could not detect location. Please try again.', 'error');
                 }
             );
         }
 
-        // Map functionality
-        function openMap() {
-            showNotification('Opening interactive map...', 'info');
-            
-            // In a real app, this would open an integrated map
-            // For demo, simulate map loading
+        function bookAppointment(doctorId) {
+            const doctor = filteredDoctors.find(d => d.id === doctorId);
+            showToast(`Booking appointment with Dr. ${doctor.name}...`, 'success');
+            // In a real app, this would open a booking modal or navigate to booking page
+        }
+
+        function callDoctor(doctorId) {
+            const doctor = filteredDoctors.find(d => d.id === doctorId);
+            showToast(`Calling Dr. ${doctor.name} at ${doctor.phone}`, 'info');
+            // In a real app, this would initiate a call
             setTimeout(() => {
-                const mapPlaceholder = document.querySelector('.map-placeholder');
-                mapPlaceholder.innerHTML = `
-                    <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: #750D37; margin-bottom: 20px; opacity: 0.6;"></i>
-                    <h3>Map Loading...</h3>
-                    <p>Interactive map with doctor locations and directions coming soon!</p>
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-primary" onclick="location.reload()" style="margin: 0 auto;">
-                            <i class="fas fa-sync-alt"></i>
-                            Refresh Page
-                        </button>
-                    </div>
-                `;
-                showNotification('Map feature will be available in the next update!', 'info');
-            }, 1500);
-        }
-
-        // Modal functionality
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Notification system
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            const messageEl = document.getElementById('notificationMessage');
-            
-            messageEl.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 4000);
-        }
-
-        // Advanced search functionality
-        function performAdvancedSearch(criteria) {
-            const results = db.advancedSearch(criteria);
-            displayDoctors(results);
-            updateStatistics(results);
-            
-            if (results.length === 0) {
-                showNotification('No doctors match your criteria. Try adjusting your filters.', 'info');
-            } else {
-                showNotification(`Found ${results.length} doctor(s) matching your criteria.`, 'success');
-            }
-        }
-
-        // Export functionality for appointments (CSV)
-        function exportAppointments() {
-            const appointments = db.appointments;
-            if (appointments.length === 0) {
-                showNotification('No appointments to export', 'info');
-                return;
-            }
-
-            const csvContent = "data:text/csv;charset=utf-8," + 
-                "Reference,Doctor,Patient,Phone,Date,Time,Status,Created\n" +
-                appointments.map(apt => 
-                    `${apt.bookingReference},${apt.doctorName},"${apt.patientName}",${apt.patientPhone},${apt.date},${apt.time},${apt.status},${new Date(apt.createdAt).toLocaleDateString()}`
-                ).join("\n");
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `appointments_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showNotification('Appointments exported successfully!', 'success');
-        }
-
-        // Real-time updates simulation
-        function simulateRealTimeUpdates() {
-            setInterval(() => {
-                // Simulate doctor availability changes
-                const doctors = db.getAllDoctors();
-                const randomDoctor = doctors[Math.floor(Math.random() * doctors.length)];
-                
-                // Randomly change availability
-                if (Math.random() > 0.8) {
-                    const oldAvailability = randomDoctor.availability;
-                    randomDoctor.availability = randomDoctor.availability === 'available' ? 'tomorrow' : 'available';
-                    
-                    if (oldAvailability !== randomDoctor.availability) {
-                        db.saveData('gynai_doctors', doctors);
-                        filterAndDisplayDoctors();
-                        showNotification(`${randomDoctor.name}'s availability updated`, 'info');
-                    }
-                }
-            }, 30000); // Check every 30 seconds
-        }
-
-        // Data backup and restore
-        function backupData() {
-            const backup = {
-                doctors: db.doctors,
-                appointments: db.appointments,
-                reviews: db.reviews,
-                timestamp: new Date().toISOString()
-            };
-            
-            const dataStr = JSON.stringify(backup, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `gynai_backup_${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            
-            showNotification('Data backup downloaded successfully!', 'success');
-        }
-
-        function restoreData(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const backup = JSON.parse(e.target.result);
-                    
-                    if (backup.doctors && backup.appointments && backup.reviews) {
-                        db.doctors = backup.doctors;
-                        db.appointments = backup.appointments;
-                        db.reviews = backup.reviews;
-                        
-                        db.saveData('gynai_doctors', backup.doctors);
-                        db.saveData('gynai_appointments', backup.appointments);
-                        db.saveData('gynai_reviews', backup.reviews);
-                        
-                        loadDoctors();
-                        updateStatistics();
-                        showNotification('Data restored successfully!', 'success');
-                    } else {
-                        showNotification('Invalid backup file format', 'error');
-                    }
-                } catch (error) {
-                    console.error('Restore error:', error);
-                    showNotification('Failed to restore data. Invalid file.', 'error');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        // Performance monitoring
-        function trackPerformance() {
-            const startTime = performance.now();
-            
-            return {
-                end: () => {
-                    const endTime = performance.now();
-                    return endTime - startTime;
-                }
-            };
-        }
-
-        // Analytics tracking (simplified)
-        function trackEvent(eventName, data = {}) {
-            const event = {
-                name: eventName,
-                data: data,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent,
-                url: window.location.href
-            };
-            
-            // In a real application, you would send this to your analytics service
-            console.log('Analytics Event:', event);
-            
-            // Store locally for demonstration
-            const events = JSON.parse(localStorage.getItem('gynai_analytics') || '[]');
-            events.push(event);
-            localStorage.setItem('gynai_analytics', JSON.stringify(events.slice(-100))); // Keep last 100 events
-        }
-
-        // Error handling and logging
-        function handleError(error, context = '') {
-            console.error(`Error in ${context}:`, error);
-            
-            const errorLog = {
-                message: error.message,
-                stack: error.stack,
-                context: context,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
-            };
-            
-            // Store error log
-            const errors = JSON.parse(localStorage.getItem('gynai_errors') || '[]');
-            errors.push(errorLog);
-            localStorage.setItem('gynai_errors', JSON.stringify(errors.slice(-50))); // Keep last 50 errors
-            
-            showNotification('An error occurred. Please try again.', 'error');
-        }
-
-        // Initialize error handling
-        window.addEventListener('error', (e) => {
-            handleError(e.error, 'Global Error Handler');
-        });
-
-        window.addEventListener('unhandledrejection', (e) => {
-            handleError(new Error(e.reason), 'Unhandled Promise Rejection');
-        });
-
-        // Service Worker registration for offline functionality
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-
-        // PWA install prompt
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show install button or notification
-            showNotification('Install GynAi app for better experience!', 'info');
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        trackEvent('app_installed');
-                        showNotification('App installed successfully!', 'success');
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + K for search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                document.getElementById('searchInput').focus();
-            }
-            
-            // Escape to close modals
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Touch gestures for mobile
-        let touchStartY = 0;
-        let touchEndY = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartY = e.changedTouches[0].screenY;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndY = e.changedTouches[0].screenY;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartY - touchEndY;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    // Swipe up - could trigger refresh or load more
-                    trackEvent('swipe_up');
+                if (navigator.userAgent.match(/Mobile|Android|iPhone|iPad/)) {
+                    window.location.href = `tel:${doctor.phone}`;
                 } else {
-                    // Swipe down - could trigger refresh
-                    trackEvent('swipe_down');
+                    showToast('Please use your phone to call: ' + doctor.phone, 'info');
                 }
-            }
+            }, 1000);
         }
 
-        // Auto-save functionality for forms
-        function setupAutoSave() {
-            const formInputs = document.querySelectorAll('.form-input');
-            formInputs.forEach(input => {
-                input.addEventListener('input', debounce(() => {
-                    const formData = {};
-                    formInputs.forEach(inp => {
-                        if (inp.value) {
-                            formData[inp.id] = inp.value;
-                        }
-                    });
-                    localStorage.setItem('gynai_form_autosave', JSON.stringify(formData));
-                }, 1000));
-            });
+        function viewLocation(doctorId) {
+            const doctor = filteredDoctors.find(d => d.id === doctorId);
+            showToast(`Opening map for ${doctor.clinic}`, 'info');
+            // In a real app, this would open Google Maps
+            const { latitude, longitude } = doctor.location;
+            const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            window.open(url, '_blank');
         }
 
-        function restoreAutoSavedData() {
-            const savedData = JSON.parse(localStorage.getItem('gynai_form_autosave') || '{}');
-            Object.keys(savedData).forEach(inputId => {
-                const input = document.getElementById(inputId);
-                if (input && !input.value) {
-                    input.value = savedData[inputId];
-                }
-            });
-        }
-
-        // Initialize all features
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                initializeApp();
-                setupEventListeners();
-                loadDoctors();
-                updateStatistics();
-                setupAutoSave();
-                restoreAutoSavedData();
-                
-                // Start real-time updates simulation
-                simulateRealTimeUpdates();
-                
-                // Track page load
-                trackEvent('page_loaded', {
-                    loadTime: performance.now(),
-                    doctorCount: db.getAllDoctors().length
-                });
-                
-                showNotification('Welcome to GynAi Doctor Directory!', 'success');
-                
-            } catch (error) {
-                handleError(error, 'App Initialization');
-            }
-        });
-
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            // Clear auto-save data
-            localStorage.removeItem('gynai_form_autosave');
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
             
-            // Track session end
-            trackEvent('session_ended', {
-                sessionDuration: performance.now()
-            });
-        });
+            toast.className = `toast toast-${type} show`;
+            toastMessage.textContent = message;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
-        // Debug utilities (for development)
-        window.gynaiDebug = {
-            db: db,
-            clearAllData: () => {
-                localStorage.clear();
-                location.reload();
-            },
-            exportLogs: () => {
-                const logs = {
-                    analytics: JSON.parse(localStorage.getItem('gynai_analytics') || '[]'),
-                    errors: JSON.parse(localStorage.getItem('gynai_errors') || '[]'),
-                    timestamp: new Date().toISOString()
-                };
-                
-                const dataStr = JSON.stringify(logs, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
-                
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(dataBlob);
-                link.download = `gynai_logs_${new Date().toISOString().split('T')[0]}.json`;
-                link.click();
-            },
-            simulateError: () => {
-                throw new Error('Simulated error for testing');
-            }
-        };
-
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', loadDoctorsData);
     </script>
 </body>
 </html>
