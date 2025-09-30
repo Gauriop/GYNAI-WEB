@@ -1,0 +1,4 @@
+step1: create ml model ->export pickel file
+step2: create folder/ene/gitignore/paste model-> craete flask app-> install libs
+step3: run locally
+step4: create git repo->push

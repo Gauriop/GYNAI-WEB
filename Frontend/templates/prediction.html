@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Health Prediction - GynAi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFF0F5;
+            min-height: 100vh;
+            color: #750D37;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Decorative circles matching the theme */
+        .decorative-circles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+        }
+
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            background: #750D37;
+            top: 15%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 80px;
+            height: 80px;
+            background: #FF6B9D;
+            bottom: 25%;
+            right: 15%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            background: #A0164D;
+            top: 45%;
+            right: 25%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .circle-4 {
+            width: 60px;
+            height: 60px;
+            background: #750D37;
+            bottom: 35%;
+            left: 8%;
+            animation: float 9s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #750D37;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 50px;
+            border: 2px solid #f3d5e3;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(117, 13, 55, 0.1);
+        }
+
+        .back-link:hover {
+            background: #750D37;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.2);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: #750D37;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: #750D37;
+            opacity: 0.7;
+            font-size: 1.1rem;
+        }
+
+        .prediction-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.1);
+            border: 2px solid #f3d5e3;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .prediction-form::before {
+            content: '🔬';
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 8rem;
+            opacity: 0.04;
+            z-index: 0;
+        }
+
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #750D37;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #750D37;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #f3d5e3;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #750D37;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #750D37;
+            box-shadow: 0 0 0 3px rgba(117, 13, 55, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #F0E6EF;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid #f3d5e3;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #750D37;
+            color: white;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #750D37;
+        }
+
+        .predict-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            color: white;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.3);
+        }
+
+        .predict-btn i {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        .predict-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 40px;
+        }
+
+        .prediction-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .prediction-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.1);
+            border: 2px solid #f3d5e3;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prediction-card::before {
+            content: '🔍';
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 6rem;
+            opacity: 0.04;
+            z-index: 0;
+        }
+
+        .confidence-card::before {
+            content: '📊';
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(117, 13, 55, 0.15);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .prediction-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 25px rgba(117, 13, 55, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #750D37;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .prediction-result {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .risk-level {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FF6B9D;
+            margin-bottom: 10px;
+        }
+
+        .risk-description {
+            color: #750D37;
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .confidence-level {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .confidence-percentage {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #750D37;
+            margin-bottom: 10px;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 12px;
+            background: #f3d5e3;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #750D37, #A0164D);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 2s ease-out;
+        }
+
+        .risk-factors {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(117, 13, 55, 0.1);
+            border: 2px solid #f3d5e3;
+            margin-bottom: 30px;
+        }
+
+        .risk-factors h3 {
+            color: #750D37;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .risk-factors h3 i {
+            margin-right: 12px;
+            color: #FF6B9D;
+        }
+
+        .risk-factor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3d5e3;
+        }
+
+        .risk-factor-item:last-child {
+            border-bottom: none;
+        }
+
+        .factor-impact {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .high-impact {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .medium-impact {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .low-impact {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #f3d5e3;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: #750D37;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .disclaimer i {
+            color: #FF6B9D;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .prediction-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .prediction-card, .prediction-form {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .confidence-percentage {
+                font-size: 2.5rem;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorative-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+
+    <div class="container">
+        <a href="home.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="header">
+            <h1>AI Health Prediction</h1>
+            <p>Advanced AI analysis for women's health conditions</p>
+        </div>
+
+        <form class="prediction-form" id="predictionForm">
+            <div class="form-content">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-user"></i></div>
+                        Personal Information
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age">Age (years)</label>
+                            <input type="number" id="age" name="age" min="12" max="80" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" min="30" max="200" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" name="height" min="120" max="200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bmi">BMI (calculated automatically)</label>
+                            <input type="text" id="bmi" name="bmi" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="bloodGroup">Blood Group</label>
+                            <select id="bloodGroup" name="bloodGroup">
+                                <option value="">Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="marriageStatus">Marriage Status (Years)</label>
+                            <input type="number" id="marriageStatus" name="marriageStatus" min="0" max="50" value="0" placeholder="0 if unmarried">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vital Signs -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-heartbeat"></i></div>
+                        Vital Signs
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pulseRate">Pulse Rate (bpm)</label>
+                            <input type="number" id="pulseRate" name="pulseRate" min="40" max="150" placeholder="e.g., 72">
+                        </div>
+                        <div class="form-group">
+                            <label for="respiratoryRate">Respiratory Rate (breaths/min)</label>
+                            <input type="number" id="respiratoryRate" name="respiratoryRate" min="10" max="30" placeholder="e.g., 16">
+                        </div>
+                        <div class="form-group">
+                            <label for="hb">Hemoglobin (g/dl)</label>
+                            <input type="number" id="hb" name="hb" min="5" max="20" step="0.1" placeholder="e.g., 12.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="bpSystolic">BP Systolic (mmHg)</label>
+                            <input type="number" id="bpSystolic" name="bpSystolic" min="80" max="200" placeholder="e.g., 120">
+                        </div>
+                        <div class="form-group">
+                            <label for="bpDiastolic">BP Diastolic (mmHg)</label>
+                            <input type="number" id="bpDiastolic" name="bpDiastolic" min="40" max="120" placeholder="e.g., 80">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menstrual History -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-calendar-alt"></i></div>
+                        Menstrual & Reproductive History
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cycle">Cycle Type</label>
+                            <select id="cycle" name="cycle">
+                                <option value="">Select Cycle Type</option>
+                                <option value="R">Regular</option>
+                                <option value="I">Irregular</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cycleLength">Cycle Length (days)</label>
+                            <input type="number" id="cycleLength" name="cycleLength" min="15" max="45" placeholder="e.g., 28">
+                        </div>
+                        <div class="form-group">
+                            <label for="pregnant">Currently Pregnant?</label>
+                            <select id="pregnant" name="pregnant">
+                                <option value="N">No</option>
+                                <option value="Y">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="abortions">Number of Abortions</label>
+                            <input type="number" id="abortions" name="abortions" min="0" max="10" value="0" placeholder="0 if none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hormone Levels -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-flask"></i></div>
+                        Hormone & Lab Values (Optional)
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="betaHCG1">I β-HCG (mIU/mL)</label>
+                            <input type="number" id="betaHCG1" name="betaHCG1" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="betaHCG2">II β-HCG (mIU/mL)</label>
+                            <input type="number" id="betaHCG2" name="betaHCG2" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="fsh">FSH (mIU/mL)</label>
+                            <input type="number" id="fsh" name="fsh" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="lh">LH (mIU/mL)</label>
+                            <input type="number" id="lh" name="lh" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="tsh">TSH (mIU/L)</label>
+                            <input type="number" id="tsh" name="tsh" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="amh">AMH (ng/mL)</label>
+                            <input type="number" id="amh" name="amh" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="prl">PRL (ng/mL)</label>
+                            <input type="number" id="prl" name="prl" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="vitD3">Vitamin D3 (ng/mL)</label>
+                            <input type="number" id="vitD3" name="vitD3" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="prg">PRG (ng/mL)</label>
+                            <input type="number" id="prg" name="prg" min="0" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="rbs">RBS - Random Blood Sugar (mg/dl)</label>
+                            <input type="number" id="rbs" name="rbs" min="50" max="400" placeholder="Leave blank if unknown">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Physical Measurements -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-ruler"></i></div>
+                        Physical Measurements
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="hip">Hip (inch)</label>
+                            <input type="number" id="hip" name="hip" min="20" max="60" step="0.1" placeholder="e.g., 36">
+                        </div>
+                        <div class="form-group">
+                            <label for="waist">Waist (inch)</label>
+                            <input type="number" id="waist" name="waist" min="20" max="50" step="0.1" placeholder="e.g., 28">
+                        </div>
+                        <div class="form-group">
+                            <label for="waistHipRatio">Waist:Hip Ratio (calculated)</label>
+                            <input type="text" id="waistHipRatio" name="waistHipRatio" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ultrasound Data -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-microscope"></i></div>
+                        Ultrasound Data (Optional)
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="follicleNoL">Follicle Number (Left)</label>
+                            <input type="number" id="follicleNoL" name="follicleNoL" min="0" max="50" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="follicleNoR">Follicle Number (Right)</label>
+                            <input type="number" id="follicleNoR" name="follicleNoR" min="0" max="50" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="avgFSizeL">Avg. Follicle Size Left (mm)</label>
+                            <input type="number" id="avgFSizeL" name="avgFSizeL" min="0" max="30" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="avgFSizeR">Avg. Follicle Size Right (mm)</label>
+                            <input type="number" id="avgFSizeR" name="avgFSizeR" min="0" max="30" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                        <div class="form-group">
+                            <label for="endometrium">Endometrium (mm)</label>
+                            <input type="number" id="endometrium" name="endometrium" min="0" max="20" step="0.1" placeholder="Leave blank if unknown">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Symptoms -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon"><i class="fas fa-stethoscope"></i></div>
+                        Symptoms & Lifestyle
+                    </h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="weightGain" name="weightGain" value="Y">
+                            <label for="weightGain">Weight Gain</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hairGrowth" name="hairGrowth" value="Y">
+                            <label for="hairGrowth">Excessive Hair Growth</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skinDarkening" name="skinDarkening" value="Y">
+                            <label for="skinDarkening">Skin Darkening</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hairLoss" name="hairLoss" value="Y">
+                            <label for="hairLoss">Hair Loss</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pimples" name="pimples" value="Y">
+                            <label for="pimples">Pimples/Acne</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fastFood" name="fastFood" value="Y">
+                            <label for="fastFood">Regular Fast Food</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="regExercise" name="regExercise" value="Y">
+                            <label for="regExercise">Regular Exercise</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="predict-btn" id="predictBtn">
+                    <i class="fas fa-brain"></i>
+                    <span class="btn-text">Analyze with AI</span>
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Analyzing...
+                    </div>
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div class="prediction-container">
+                <div class="prediction-card">
+                    <div class="card-content">
+                        <div class="prediction-icon pulse-animation">
+                            🔍
+                        </div>
+                        <h3 class="card-title">AI Prediction Result</h3>
+                        <div class="prediction-result">
+                            <div class="risk-level" id="riskLevel">Analyzing...</div>
+                            <div class="risk-description" id="riskDescription">Please wait while we process your data</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prediction-card confidence-card">
+                    <div class="card-content">
+                        <div class="prediction-icon">
+                            📊
+                        </div>
+                        <h3 class="card-title">Confidence Level</h3>
+                        <div class="confidence-level">
+                            <div class="confidence-percentage" id="confidencePercentage">0%</div>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                            <div class="risk-description" id="confidenceDescription">Calculating confidence...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-factors" id="riskFactors">
+                <h3><i class="fas fa-exclamation-triangle"></i>Key Risk Factors</h3>
+                <div id="riskFactorsList">
+                    <!-- Risk factors will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <i class="fas fa-info-circle"></i>
+            <strong>Medical Disclaimer:</strong> This AI prediction is for informational purposes only and should not replace professional medical advice. Always consult with a qualified healthcare provider for accurate diagnosis and treatment.
+        </div>
+    </div>
+
+    <script>
+// BMI Calculation
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value) / 100;
+    if (weight && height) {
+        const bmi = (weight / (height * height)).toFixed(1);
+        document.getElementById('bmi').value = bmi;
+    }
+}
+
+// Waist-Hip Ratio Calculation
+function calculateWaistHipRatio() {
+    const waist = parseFloat(document.getElementById('waist').value);
+    const hip = parseFloat(document.getElementById('hip').value);
+    if (waist && hip) {
+        const ratio = (waist / hip).toFixed(2);
+        document.getElementById('waistHipRatio').value = ratio;
+    }
+}
+
+// Auto-calculate BMI when weight/height changes
+document.getElementById('weight').addEventListener('input', calculateBMI);
+document.getElementById('height').addEventListener('input', calculateBMI);
+
+// Auto-calculate Waist-Hip ratio
+document.getElementById('waist').addEventListener('input', calculateWaistHipRatio);
+document.getElementById('hip').addEventListener('input', calculateWaistHipRatio);
+
+// Form submit
+document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    // Show loading state
+    const btn = document.getElementById("predictBtn");
+    btn.disabled = true;
+    btn.querySelector('.btn-text').style.display = 'none';
+    btn.querySelector('.loading').style.display = 'flex';
+    
+    document.getElementById("resultsSection").style.display = "block";
+    document.getElementById("resultsSection").scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("riskLevel").textContent = "Analyzing...";
+
+    // Collect form data - matching Flask backend expectations
+    const formData = {
+        age: parseInt(document.getElementById("age").value),
+        weight: parseFloat(document.getElementById("weight").value),
+        height: parseInt(document.getElementById("height").value),
+        bmi: parseFloat(document.getElementById("bmi").value),
+        bloodGroup: document.getElementById("bloodGroup").value,
+        marriageStatus: parseInt(document.getElementById("marriageStatus").value) || 0,
+        
+        pulseRate: parseInt(document.getElementById("pulseRate").value) || null,
+        respiratoryRate: parseInt(document.getElementById("respiratoryRate").value) || null,
+        hb: parseFloat(document.getElementById("hb").value) || null,
+        bpSystolic: parseInt(document.getElementById("bpSystolic").value) || null,
+        bpDiastolic: parseInt(document.getElementById("bpDiastolic").value) || null,
+        
+        cycle: document.getElementById("cycle").value,
+        cycleLength: parseInt(document.getElementById("cycleLength").value) || null,
+        pregnant: document.getElementById("pregnant").value,
+        abortions: parseInt(document.getElementById("abortions").value) || 0,
+        
+        betaHCG1: parseFloat(document.getElementById("betaHCG1").value) || null,
+        betaHCG2: parseFloat(document.getElementById("betaHCG2").value) || null,
+        fsh: parseFloat(document.getElementById("fsh").value) || null,
+        lh: parseFloat(document.getElementById("lh").value) || null,
+        tsh: parseFloat(document.getElementById("tsh").value) || null,
+        amh: parseFloat(document.getElementById("amh").value) || null,
+        prl: parseFloat(document.getElementById("prl").value) || null,
+        vitD3: parseFloat(document.getElementById("vitD3").value) || null,
+        prg: parseFloat(document.getElementById("prg").value) || null,
+        rbs: parseInt(document.getElementById("rbs").value) || null,
+        
+        hip: parseFloat(document.getElementById("hip").value) || null,
+        waist: parseFloat(document.getElementById("waist").value) || null,
+        
+        follicleNoL: parseInt(document.getElementById("follicleNoL").value) || null,
+        follicleNoR: parseInt(document.getElementById("follicleNoR").value) || null,
+        avgFSizeL: parseFloat(document.getElementById("avgFSizeL").value) || null,
+        avgFSizeR: parseFloat(document.getElementById("avgFSizeR").value) || null,
+        endometrium: parseFloat(document.getElementById("endometrium").value) || null,
+        
+        weightGain: document.getElementById("weightGain").checked ? 1 : 0,
+        hairGrowth: document.getElementById("hairGrowth").checked ? 1 : 0,
+        skinDarkening: document.getElementById("skinDarkening").checked ? 1 : 0,
+        hairLoss: document.getElementById("hairLoss").checked ? 1 : 0,
+        pimples: document.getElementById("pimples").checked ? 1 : 0,
+        fastFood: document.getElementById("fastFood").checked ? 1 : 0,
+        regExercise: document.getElementById("regExercise").checked ? 1 : 0
+    };
+
+    console.log("Sending data to Flask:", formData);
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Server error:", errorText);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Received result:", result);
+
+        // Update UI with results
+        const riskLevel = result.prediction === 1 ? "High Risk for PCOS" : "Low Risk for PCOS";
+        const riskColor = result.prediction === 1 ? "#FF6B9D" : "#28a745";
+        
+        document.getElementById("riskLevel").textContent = riskLevel;
+        document.getElementById("riskLevel").style.color = riskColor;
+        
+        document.getElementById("riskDescription").textContent = 
+            result.prediction === 1 ? 
+            "Based on the analysis, there are indicators suggesting PCOS risk. Please consult a healthcare provider." :
+            "Based on the analysis, the risk indicators for PCOS appear low.";
+
+        const confidence = Math.round(result.confidence * 100);
+        document.getElementById("confidencePercentage").textContent = confidence + "%";
+        document.getElementById("confidenceFill").style.width = confidence + "%";
+        document.getElementById("confidenceDescription").textContent = 
+            `Model confidence: ${confidence}%`;
+
+        // Risk factors based on form input
+        const riskFactorsList = document.getElementById("riskFactorsList");
+        riskFactorsList.innerHTML = "";
+        
+        const riskIndicators = [];
+        if (formData.weightGain) riskIndicators.push({factor: "Weight Gain", impact: "high"});
+        if (formData.hairGrowth) riskIndicators.push({factor: "Excessive Hair Growth", impact: "high"});
+        if (formData.skinDarkening) riskIndicators.push({factor: "Skin Darkening", impact: "medium"});
+        if (formData.hairLoss) riskIndicators.push({factor: "Hair Loss", impact: "medium"});
+        if (formData.pimples) riskIndicators.push({factor: "Acne/Pimples", impact: "medium"});
+        if (formData.cycle === "I") riskIndicators.push({factor: "Irregular Menstrual Cycle", impact: "high"});
+        if (formData.fastFood) riskIndicators.push({factor: "Regular Fast Food Consumption", impact: "low"});
+        
+        if (formData.bmi > 25) {
+            riskIndicators.push({
+                factor: `High BMI (${formData.bmi})`, 
+                impact: formData.bmi > 30 ? "high" : "medium"
+            });
+        }
+
+        if (riskIndicators.length === 0) {
+            riskFactorsList.innerHTML = '<div class="risk-factor-item"><span>No major risk factors identified</span><span class="factor-impact low-impact">Low</span></div>';
+        } else {
+            riskIndicators.forEach(({factor, impact}) => {
+                riskFactorsList.innerHTML += `
+                    <div class="risk-factor-item">
+                        <span>${factor}</span>
+                        <span class="factor-impact ${impact}-impact">
+                            ${impact.charAt(0).toUpperCase() + impact.slice(1)}
+                        </span>
+                    </div>`;
+            });
+        }
+
+    } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("riskLevel").textContent = "Connection Error";
+        document.getElementById("riskDescription").textContent = 
+            "Failed to connect to the prediction service. Please ensure the Flask server is running on port 5000.";
+        alert(`Error: ${err.message}\n\nMake sure Flask server is running at http://127.0.0.1:5000`);
+    } finally {
+        btn.disabled = false;
+        btn.querySelector('.btn-text').style.display = 'inline';
+        btn.querySelector('.loading').style.display = 'none';
+    }
+});
+    </script>
+</body>
+</html>
