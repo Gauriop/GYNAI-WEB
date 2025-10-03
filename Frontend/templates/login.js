@@ -1,214 +1,156 @@
- // Form validation state
-    const validation = {
-      email: false,
-      password: false
+// Login form validation and submission
+function handleLogin(event) {
+  event.preventDefault();
+  
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+  const loginBtn = document.getElementById('loginBtn');
+  const successMessage = document.getElementById('successMessage');
+  
+  // Reset errors
+  emailInput.classList.remove('error', 'valid');
+  passwordInput.classList.remove('error', 'valid');
+  emailError.classList.remove('show');
+  passwordError.classList.remove('show');
+  
+  let isValid = true;
+  
+  // Validate email
+  const emailValue = emailInput.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if (!emailValue || !emailRegex.test(emailValue)) {
+    emailInput.classList.add('error');
+    emailError.classList.add('show');
+    isValid = false;
+  } else {
+    emailInput.classList.add('valid');
+  }
+  
+  // Validate password
+  const passwordValue = passwordInput.value;
+  if (passwordValue.length < 6) {
+    passwordInput.classList.add('error');
+    passwordError.classList.add('show');
+    isValid = false;
+  } else {
+    passwordInput.classList.add('valid');
+  }
+  
+  if (!isValid) {
+    return false;
+  }
+  
+  // Show loading state
+  loginBtn.disabled = true;
+  loginBtn.classList.add('loading');
+  document.getElementById('buttonText').textContent = 'Logging in...';
+  
+  // Simulate API call
+  setTimeout(() => {
+    // Extract name from email (before @)
+    const username = emailValue.split('@')[0];
+    const displayName = username.charAt(0).toUpperCase() + username.slice(1);
+    
+    // Store user data
+    const userData = {
+      email: emailValue,
+      username: username,
+      displayName: displayName,
+      isLoggedIn: true,
+      loginTime: new Date().toISOString()
     };
+    
+    // Save to memory (since we can't use localStorage)
+    window.userData = userData;
+    
+    // For cross-page communication, we'll use URL parameters
+    const params = new URLSearchParams({
+      name: displayName,
+      email: emailValue
+    });
+    
+    // Show success message
+    successMessage.classList.add('show');
+    
+    // Redirect to dashboard after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = `dashboard.html?${params.toString()}`;
+    }, 1500);
+  }, 1500);
+  
+  return false;
+}
 
-    // Get form elements
-    const form = document.getElementById('loginForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const loginBtn = document.getElementById('loginBtn');
-    const buttonText = document.getElementById('buttonText');
-    const successMessage = document.getElementById('successMessage');
+// Toggle password visibility
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggle = document.querySelector('.password-toggle');
+  
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggle.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggle.textContent = '👁️';
+  }
+}
 
-    // Email validation function
-    function validateEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-      return emailRegex.test(email) || usernameRegex.test(email);
-    }
+// Handle forgot password
+function handleForgotPassword() {
+  alert('Password reset link would be sent to your email. (Demo mode)');
+  return false;
+}
 
-    // Password validation function
-    function validatePassword(password) {
-      return password.length >= 6;
-    }
+// Handle social login
+function handleSocialLogin(platform) {
+  alert(`Redirecting to ${platform} login... (Demo mode)`);
+  return false;
+}
 
-    // Show error message
-    function showError(errorElement, message) {
-      errorElement.textContent = message;
-      errorElement.classList.add('show');
-    }
-
-    // Hide error message
-    function hideError(errorElement) {
-      errorElement.classList.remove('show');
-    }
-
-    // Validate individual field
-    function validateField(field, value) {
-      const input = field === 'email' ? emailInput : passwordInput;
-      const errorElement = field === 'email' ? emailError : passwordError;
-      
-      let isValid = false;
-      let errorMessage = '';
-
-      if (field === 'email') {
-        if (!value.trim()) {
-          errorMessage = 'Email or username is required';
-        } else if (!validateEmail(value)) {
-          errorMessage = 'Please enter a valid email address or username (3-20 characters)';
-        } else {
-          isValid = true;
-        }
-      } else if (field === 'password') {
-        if (!value) {
-          errorMessage = 'Password is required';
-        } else if (!validatePassword(value)) {
-          errorMessage = 'Password must be at least 6 characters long';
-        } else {
-          isValid = true;
-        }
-      }
-
-      // Update UI based on validation
-      if (isValid) {
-        input.classList.remove('error');
-        input.classList.add('valid');
-        hideError(errorElement);
-      } else {
-        input.classList.remove('valid');
-        input.classList.add('error');
-        showError(errorElement, errorMessage);
-      }
-
-      validation[field] = isValid;
-      updateSubmitButton();
-      return isValid;
-    }
-
-    // Update submit button state
-    function updateSubmitButton() {
-      const isFormValid = validation.email && validation.password;
-      loginBtn.disabled = !isFormValid;
-    }
-
-    // Real-time validation on input
+// Real-time validation
+document.addEventListener('DOMContentLoaded', function() {
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  
+  if (emailInput) {
     emailInput.addEventListener('input', function() {
-      validateField('email', this.value);
+      const emailError = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (this.value && emailRegex.test(this.value.trim())) {
+        this.classList.remove('error');
+        this.classList.add('valid');
+        emailError.classList.remove('show');
+      } else if (this.value) {
+        this.classList.remove('valid');
+      }
     });
-
-    emailInput.addEventListener('blur', function() {
-      validateField('email', this.value);
-    });
-
+  }
+  
+  if (passwordInput) {
     passwordInput.addEventListener('input', function() {
-      validateField('password', this.value);
-    });
-
-    passwordInput.addEventListener('blur', function() {
-      validateField('password', this.value);
-    });
-
-    // Toggle password visibility
-    function togglePassword() {
-      const passwordField = document.getElementById('password');
-      const toggleBtn = document.querySelector('.password-toggle');
+      const passwordError = document.getElementById('passwordError');
       
-      if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        toggleBtn.textContent = '🙈';
-      } else {
-        passwordField.type = 'password';
-        toggleBtn.textContent = '👁️';
+      if (this.value.length >= 6) {
+        this.classList.remove('error');
+        this.classList.add('valid');
+        passwordError.classList.remove('show');
+      } else if (this.value) {
+        this.classList.remove('valid');
       }
-    }
-
-    // Handle form submission
-    function handleLogin(e) {
-      e.preventDefault();
-
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
-      // Validate all fields
-      const emailValid = validateField('email', email);
-      const passwordValid = validateField('password', password);
-
-      if (!emailValid || !passwordValid) {
-        // Focus on first invalid field
-        if (!emailValid) {
-          emailInput.focus();
-        } else if (!passwordValid) {
-          passwordInput.focus();
-        }
-        return;
-      }
-
-      // Show loading state
-      loginBtn.classList.add('loading');
-      loginBtn.disabled = true;
-      buttonText.textContent = 'Logging in...';
-
-      // Simulate API call
-      setTimeout(() => {
-        // Hide loading state
-        loginBtn.classList.remove('loading');
-        loginBtn.disabled = false;
-        buttonText.textContent = 'Login';
-
-        // Show success message
-        successMessage.classList.add('show');
-        
-        // Store login data if remember me is checked
-        if (document.getElementById('rememberMe').checked) {
-          // In a real app, you'd use secure methods to store tokens
-          console.log('Remember me checked - would store login token');
-        }
-
-        // Redirect after success message
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1500);
-      }, 2000);
-    }
-
-    // Handle forgot password
-    function handleForgotPassword() {
-      const email = emailInput.value.trim();
-      if (email && validateEmail(email)) {
-        alert(`Password reset link will be sent to: ${email}`);
-      } else {
-        alert('Please enter a valid email address first');
-        emailInput.focus();
-      }
-    }
-
-    // Handle social login
-    function handleSocialLogin(provider) {
-      const providers = {
-        facebook: 'Facebook',
-        google: 'Google',
-        instagram: 'Instagram'
-      };
-      
-      alert(`Redirecting to ${providers[provider]} login...`);
-      // In a real app, you'd redirect to the OAuth provider
-    }
-
-    // Initialize form
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set initial button state
-      updateSubmitButton();
-      
-      // Focus on email field
-      emailInput.focus();
-
-      // Add enter key support for better UX
-      emailInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          passwordInput.focus();
-        }
-      });
     });
-
-    // Add some interactive feedback
-    form.addEventListener('submit', function() {
-      // Add subtle animation to form
-      form.style.transform = 'scale(0.98)';
-      setTimeout(() => {
-        form.style.transform = 'scale(1)';
-      }, 150);
+  }
+  
+  // Check for remember me
+  const rememberMe = document.getElementById('rememberMe');
+  if (rememberMe) {
+    rememberMe.addEventListener('change', function() {
+      if (this.checked) {
+        console.log('Remember me enabled');
+      }
     });
+  }
+});
