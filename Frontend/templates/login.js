@@ -1,5 +1,5 @@
 // Login form validation and submission
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
   
   const emailInput = document.getElementById('email');
@@ -20,7 +20,6 @@ function handleLogin(event) {
   // Validate email
   const emailValue = emailInput.value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
   if (!emailValue || !emailRegex.test(emailValue)) {
     emailInput.classList.add('error');
     emailError.classList.add('show');
@@ -39,49 +38,49 @@ function handleLogin(event) {
     passwordInput.classList.add('valid');
   }
   
-  if (!isValid) {
-    return false;
-  }
+  if (!isValid) return false;
   
   // Show loading state
   loginBtn.disabled = true;
   loginBtn.classList.add('loading');
   document.getElementById('buttonText').textContent = 'Logging in...';
   
-  // Simulate API call
-  setTimeout(() => {
-    // Extract name from email (before @)
-    const username = emailValue.split('@')[0];
-    const displayName = username.charAt(0).toUpperCase() + username.slice(1);
-    
-    // Store user data
-    const userData = {
-      email: emailValue,
-      username: username,
-      displayName: displayName,
-      isLoggedIn: true,
-      loginTime: new Date().toISOString()
-    };
-    
-    // Save to memory (since we can't use localStorage)
-    window.userData = userData;
-    
-    // For cross-page communication, we'll use URL parameters
-    const params = new URLSearchParams({
-      name: displayName,
-      email: emailValue
+  try {
+    // Send login request to backend
+    const response = await fetch("http://127.0.0.1:5001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      credentials: 'include', // Important for sessions
+      body: `email=${encodeURIComponent(emailValue)}&password=${encodeURIComponent(passwordValue)}`
     });
     
-    // Show success message
-    successMessage.classList.add('show');
+    const data = await response.json();
     
-    // Redirect to dashboard after 1.5 seconds
-    setTimeout(() => {
-      window.location.href = `dashboard.html?${params.toString()}`;
-    }, 1500);
-  }, 1500);
-  
-  return false;
+    if (data.success) {
+      // Show success message
+      successMessage.classList.add('show');
+      
+      // Redirect to dashboard with user data
+      setTimeout(() => {
+        window.location.href = `dashboard.html?name=${encodeURIComponent(data.user.username)}&email=${encodeURIComponent(data.user.email)}`;
+      }, 1500);
+    } else {
+      // Show error from backend
+      alert(data.error || 'Login failed');
+      loginBtn.disabled = false;
+      loginBtn.classList.remove('loading');
+      document.getElementById('buttonText').textContent = 'Login';
+    }
+    
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Something went wrong. Please check if the server is running and try again.');
+    loginBtn.disabled = false;
+    loginBtn.classList.remove('loading');
+    document.getElementById('buttonText').textContent = 'Login';
+  }
 }
 
 // Toggle password visibility
@@ -98,19 +97,17 @@ function togglePassword() {
   }
 }
 
-// Handle forgot password
+// Handle forgot password (demo)
 function handleForgotPassword() {
   alert('Password reset link would be sent to your email. (Demo mode)');
-  return false;
 }
 
-// Handle social login
+// Handle social login (demo)
 function handleSocialLogin(platform) {
   alert(`Redirecting to ${platform} login... (Demo mode)`);
-  return false;
 }
 
-// Real-time validation
+// Real-time input validation
 document.addEventListener('DOMContentLoaded', function() {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
@@ -119,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
     emailInput.addEventListener('input', function() {
       const emailError = document.getElementById('emailError');
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
       if (this.value && emailRegex.test(this.value.trim())) {
         this.classList.remove('error');
         this.classList.add('valid');
@@ -133,23 +129,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (passwordInput) {
     passwordInput.addEventListener('input', function() {
       const passwordError = document.getElementById('passwordError');
-      
       if (this.value.length >= 6) {
         this.classList.remove('error');
         this.classList.add('valid');
         passwordError.classList.remove('show');
       } else if (this.value) {
         this.classList.remove('valid');
-      }
-    });
-  }
-  
-  // Check for remember me
-  const rememberMe = document.getElementById('rememberMe');
-  if (rememberMe) {
-    rememberMe.addEventListener('change', function() {
-      if (this.checked) {
-        console.log('Remember me enabled');
       }
     });
   }

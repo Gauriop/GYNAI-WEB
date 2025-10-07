@@ -42,7 +42,6 @@
             z-index: 10;
         }
 
-        /* Decorative background elements */
         .bg-decoration {
             position: fixed;
             inset: 0;
@@ -90,7 +89,6 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 3rem;
@@ -113,7 +111,6 @@
             margin: 0 auto;
         }
 
-        /* Search and Filters */
         .search-filters {
             display: flex;
             flex-direction: column;
@@ -239,7 +236,6 @@
             color: white;
         }
 
-        /* Statistics */
         .stats-container {
             display: flex;
             justify-content: center;
@@ -280,7 +276,6 @@
             color: var(--muted);
         }
 
-        /* Results header */
         .results-header {
             display: flex;
             justify-content: space-between;
@@ -321,7 +316,6 @@
             font-size: 1rem;
         }
 
-        /* Doctor cards */
         .doctors-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -478,7 +472,6 @@
             color: white;
         }
 
-        /* No results */
         .no-results {
             text-align: center;
             padding: 3rem;
@@ -505,7 +498,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Toast notifications */
         .toast {
             position: fixed;
             top: 1rem;
@@ -542,7 +534,82 @@
             border-left: 4px solid #3b82f6;
         }
 
-        /* Responsive */
+        /* Map Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--medical-primary);
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--medical-primary);
+        }
+
+        .modal-body {
+            padding: 0;
+            height: 500px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -578,11 +645,18 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .modal-body {
+                height: 400px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Background decorations -->
     <div class="bg-decoration">
         <div class="bg-circle bg-circle-1"></div>
         <div class="bg-circle bg-circle-2"></div>
@@ -590,13 +664,11 @@
     </div>
 
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <h1>Find Your Doctor</h1>
             <p>Discover qualified healthcare professionals near you and book appointments instantly</p>
         </div>
 
-        <!-- Search and Filters -->
         <div class="search-filters">
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
@@ -634,7 +706,6 @@
             </div>
         </div>
 
-        <!-- Statistics -->
         <div class="stats-container">
             <div class="stat-card">
                 <i class="fas fa-users stat-icon"></i>
@@ -655,16 +726,13 @@
             </div>
         </div>
 
-        <!-- Results Header -->
         <div class="results-header">
             <h2 class="results-title" id="resultsTitle">0 Doctors Found</h2>
             <div class="filter-tags" id="filterTags"></div>
         </div>
 
-        <!-- Doctors Grid -->
         <div class="doctors-grid" id="doctorsGrid"></div>
 
-        <!-- No Results -->
         <div class="no-results" id="noResults" style="display: none;">
             <i class="fas fa-stethoscope"></i>
             <h3>No doctors found</h3>
@@ -675,20 +743,56 @@
         </div>
     </div>
 
-    <!-- Toast notification -->
+    <!-- Map Modal -->
+    <div class="modal" id="mapModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="mapModalTitle">Doctor Location</h2>
+                <button class="close-btn" onclick="closeMapModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast">
         <div id="toastMessage"></div>
     </div>
 
     <script>
-        // Global variables
+        const API_BASE_URL = 'http://localhost:5000/api';
         let doctorsData = null;
         let filteredDoctors = [];
         let searchTerm = '';
         let selectedSpecialty = 'all';
         let selectedAvailability = 'all';
+        let userLocation = null;
+        let map = null;
+        let googleMapsApiKey = '';
+        let directionsService = null;
+        let directionsRenderer = null;
 
-        // Load data and initialize app
+        async function loadConfig() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/config`);
+                const config = await response.json();
+                googleMapsApiKey = config.googleMapsApiKey;
+                
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap`;
+                script.async = true;
+                script.defer = true;
+                document.head.appendChild(script);
+            } catch (error) {
+                console.error('Error loading config:', error);
+            }
+        }
+
+        window.initMap = function() {
+            console.log('Google Maps loaded successfully');
+        };
+
         async function loadDoctorsData() {
             try {
                 const response = await fetch('./database.json');
@@ -708,7 +812,6 @@
         }
 
         function populateDropdowns() {
-            // Populate specialty dropdown
             const specialtyContent = document.getElementById('specialtyContent');
             doctorsData.specialties.forEach(specialty => {
                 const item = document.createElement('div');
@@ -721,7 +824,6 @@
                 specialtyContent.appendChild(item);
             });
 
-            // Populate availability dropdown
             const availabilityContent = document.getElementById('availabilityContent');
             doctorsData.availabilityOptions.forEach(option => {
                 const item = document.createElement('div');
@@ -736,13 +838,11 @@
         }
 
         function setupEventListeners() {
-            // Search input
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 searchTerm = e.target.value.toLowerCase();
                 filterDoctors();
             });
 
-            // Dropdown toggles
             document.getElementById('specialtyDropdown').addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleDropdown('specialtyContent');
@@ -753,7 +853,6 @@
                 toggleDropdown('availabilityContent');
             });
 
-            // Close dropdowns when clicking outside
             document.addEventListener('click', () => {
                 document.querySelectorAll('.dropdown-content').forEach(dropdown => {
                     dropdown.classList.remove('show');
@@ -765,7 +864,6 @@
             const content = document.getElementById(contentId);
             content.classList.toggle('show');
             
-            // Close other dropdowns
             document.querySelectorAll('.dropdown-content').forEach(dropdown => {
                 if (dropdown.id !== contentId) {
                     dropdown.classList.remove('show');
@@ -821,7 +919,30 @@
                 return matchesSearch && matchesSpecialty && matchesAvailability;
             });
 
+            if (userLocation) {
+                filteredDoctors = filteredDoctors.map(doctor => ({
+                    ...doctor,
+                    distance: calculateDistance(
+                        userLocation.lat,
+                        userLocation.lng,
+                        doctor.location.latitude,
+                        doctor.location.longitude
+                    )
+                })).sort((a, b) => a.distance - b.distance);
+            }
+
             updateDisplay();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return (R * c).toFixed(2);
         }
 
         function updateDisplay() {
@@ -868,6 +989,13 @@
                     filterDoctors();
                 });
             }
+
+            if (userLocation) {
+                addFilterTag('Near Me', () => {
+                    userLocation = null;
+                    filterDoctors();
+                });
+            }
         }
 
         function addFilterTag(text, onRemove) {
@@ -901,6 +1029,7 @@
             const availabilityClass = doctor.availability;
             const stars = generateStars(doctor.rating);
             const initials = doctor.name.split(' ').map(n => n[0]).join('');
+            const distanceText = doctor.distance ? `${doctor.distance} km away` : '';
 
             return `
                 <div class="doctor-card">
@@ -919,6 +1048,7 @@
                         <div class="meta-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>${doctor.clinic}</span>
+                            ${distanceText ? `<span style="margin-left: auto; color: var(--medical-secondary); font-weight: 600;">${distanceText}</span>` : ''}
                         </div>
                         
                         <div class="meta-item rating">
@@ -970,6 +1100,7 @@
         function clearAllFilters() {
             document.getElementById('searchInput').value = '';
             searchTerm = '';
+            userLocation = null;
             selectSpecialty('All Specialties');
             selectAvailability('All Availability');
         }
@@ -983,10 +1114,13 @@
             showToast('Detecting your location...', 'info');
             
             navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
+                async (position) => {
+                    userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
                     showToast('Location detected successfully!', 'success');
-                    // In a real app, you would filter doctors by proximity
+                    filterDoctors();
                 },
                 (error) => {
                     console.error('Geolocation error:', error);
@@ -998,13 +1132,11 @@
         function bookAppointment(doctorId) {
             const doctor = filteredDoctors.find(d => d.id === doctorId);
             showToast(`Booking appointment with Dr. ${doctor.name}...`, 'success');
-            // In a real app, this would open a booking modal or navigate to booking page
         }
 
         function callDoctor(doctorId) {
             const doctor = filteredDoctors.find(d => d.id === doctorId);
             showToast(`Calling Dr. ${doctor.name} at ${doctor.phone}`, 'info');
-            // In a real app, this would initiate a call
             setTimeout(() => {
                 if (navigator.userAgent.match(/Mobile|Android|iPhone|iPad/)) {
                     window.location.href = `tel:${doctor.phone}`;
@@ -1016,11 +1148,90 @@
 
         function viewLocation(doctorId) {
             const doctor = filteredDoctors.find(d => d.id === doctorId);
-            showToast(`Opening map for ${doctor.clinic}`, 'info');
-            // In a real app, this would open Google Maps
-            const { latitude, longitude } = doctor.location;
-            const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
-            window.open(url, '_blank');
+            showMapModal(doctor);
+        }
+
+        function showMapModal(doctor) {
+            const modal = document.getElementById('mapModal');
+            const modalTitle = document.getElementById('mapModalTitle');
+            
+            modalTitle.textContent = `${doctor.clinic} - Dr. ${doctor.name}`;
+            modal.classList.add('show');
+
+            initializeMap(doctor);
+        }
+
+        function closeMapModal() {
+            const modal = document.getElementById('mapModal');
+            modal.classList.remove('show');
+        }
+
+        function initializeMap(doctor) {
+            const doctorLocation = {
+                lat: doctor.location.latitude,
+                lng: doctor.location.longitude
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: doctorLocation,
+                mapTypeControl: true,
+                streetViewControl: true,
+                fullscreenControl: true
+            });
+
+            const marker = new google.maps.Marker({
+                position: doctorLocation,
+                map: map,
+                title: doctor.clinic,
+                animation: google.maps.Animation.DROP
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="padding: 10px;">
+                        <h3 style="margin: 0 0 5px 0; color: var(--medical-primary);">Dr. ${doctor.name}</h3>
+                        <p style="margin: 0 0 5px 0;"><strong>${doctor.specialty}</strong></p>
+                        <p style="margin: 0 0 5px 0;">${doctor.clinic}</p>
+                        <p style="margin: 0; color: #10b981;"><strong>₹${doctor.consultationFee}</strong> consultation fee</p>
+                    </div>
+                `
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
+
+            infoWindow.open(map, marker);
+
+            if (userLocation) {
+                const userMarker = new google.maps.Marker({
+                    position: userLocation,
+                    map: map,
+                    title: 'Your Location',
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                });
+
+                if (!directionsService) {
+                    directionsService = new google.maps.DirectionsService();
+                    directionsRenderer = new google.maps.DirectionsRenderer({
+                        map: map,
+                        suppressMarkers: false
+                    });
+                }
+
+                const request = {
+                    origin: userLocation,
+                    destination: doctorLocation,
+                    travelMode: google.maps.TravelMode.DRIVING
+                };
+
+                directionsService.route(request, (result, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(result);
+                    }
+                });
+            }
         }
 
         function showToast(message, type = 'info') {
@@ -1035,8 +1246,10 @@
             }, 3000);
         }
 
-        // Initialize app when page loads
-        document.addEventListener('DOMContentLoaded', loadDoctorsData);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfig();
+            loadDoctorsData();
+        });
     </script>
 </body>
 </html>

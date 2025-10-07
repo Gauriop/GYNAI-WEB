@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GynAi Footer</title>
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    <footer>
+        <div class="container">
+            <!-- Newsletter Section -->
+            <div class="newsletter-section">
+                <h3>📧 Stay Updated</h3>
+                <p>Subscribe to our newsletter for health tips, updates, and exclusive content</p>
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- Main Footer Content -->
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GynAi</h4>
+                    <p>GynAi is your personal guide to women's health, powered by artificial intelligence and backed by medical research.</p>
+                    <p>Having questions about your health can be overwhelming. This is where GynAi comes in. We are providing trustworthy information to learn about your health and support you to find the healthiest possible lifestyle for you.</p>
+                    
+                    <div class="social-section">
+                        <h4 style="font-size: 1.2rem; margin-top: 1.5rem;">Follow Us</h4>
+                        <div class="social-links">
+                            <div class="social-icon">📘</div>
+                            <div class="social-icon">📷</div>
+                            <div class="social-icon">🐦</div>
+                            <div class="social-icon">💼</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p><a href="./tracker.html">Symptom Tracker</a></p>
+                    <p><a href="./prediction.html">Health Predictions</a></p>
+                    <p><a href="./doctors.html">Find Doctors</a></p>
+                    <p><a href="./dashboard.html">Dashboard</a></p>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Blog</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p><a href="#">Privacy Policy</a></p>
+                    <p><a href="#">Terms of Service</a></p>
+                    <p><a href="#">Contact Us</a></p>
+                    <p><a href="#">Help Center</a></p>
+                    <p><a href="#">FAQ</a></p>
+                    
+                    <div class="contact-info" style="margin-top: 2rem;">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <span>support@gynai.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>© 2025 GynAi. All rights reserved. Made with ❤️ for women's health.</p>
+                    <div class="footer-links">
+                        <a href="#">Sitemap</a>
+                        <a href="#">Accessibility</a>
+                        <a href="#">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        ↑
+    </div>
+
+    <script>
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.pageYOffset > 300) {
+                scrollTop.style.opacity = '1';
+                scrollTop.style.pointerEvents = 'auto';
+            } else {
+                scrollTop.style.opacity = '0';
+                scrollTop.style.pointerEvents = 'none';
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('.newsletter-input');
+            if (input.value) {
+                alert('Thank you for subscribing! 💕');
+                input.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

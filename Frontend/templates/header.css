@@ -1,0 +1,47 @@
+header {
+  background: #FFF0F5;
+  color: #750D37;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(117, 13, 55, 0.3);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #750D37;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav ul li a {
+  color: #750D37;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #FFF0F5;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
