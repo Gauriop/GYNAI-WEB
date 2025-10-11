@@ -10,10 +10,10 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = False  # True in production with HTTPS
+app.config['SESSION_COOKIE_SECURE'] = False  
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
 
-# Configure CORS
+
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -23,7 +23,7 @@ CORS(app, supports_credentials=True, origins=[
     "http://127.0.0.1:8000"
 ], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 
-# Database configuration
+
 db_config = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
