@@ -6,6 +6,81 @@
     <title>Symptom Tracker - GynAi</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="tracker.css">
+    <style>
+        /* Additional styles to ensure range sliders work properly */
+        .range-input {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .range-input:focus {
+            outline: none;
+        }
+        
+        .range-input::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #f3d5e3;
+            border-radius: 5px;
+        }
+        
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            cursor: pointer;
+            margin-top: -7px;
+        }
+        
+        .range-input::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #f3d5e3;
+            border-radius: 5px;
+        }
+        
+        .range-input::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            cursor: pointer;
+            border: none;
+        }
+        
+        .range-input::-ms-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: transparent;
+            border-color: transparent;
+            color: transparent;
+        }
+        
+        .range-input::-ms-fill-lower {
+            background: #f3d5e3;
+            border-radius: 5px;
+        }
+        
+        .range-input::-ms-fill-upper {
+            background: #f3d5e3;
+            border-radius: 5px;
+        }
+        
+        .range-input::-ms-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #750D37, #A0164D);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="decorative-circles">
@@ -20,16 +95,17 @@
             <i class="fas fa-arrow-left"></i>
             Back to Home
         </a>
-                        <a href="dashboard.html" class="back-link right">
-      Back to Dashboard <i class="fas fa-arrow-right"></i>
-    </a>
+         <a href="dashboard.html" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            Back to Dashboard
+        </a>
 
         <div class="header">
             <h1>Daily Symptom Tracker</h1>
             <p>Track your symptoms to help identify patterns and improve your health</p>
             <div class="date-picker">
                 <i class="fas fa-calendar-alt"></i>
-                <input type="date" id="trackingDate" value="">
+                <input type="date" id="trackingDate">
             </div>
         </div>
 
@@ -55,7 +131,7 @@
                                     <span>No Pain</span>
                                     <span>Severe Pain</span>
                                 </div>
-                                <div class="range-value" id="painValue">0</div>
+                                <div class="range-value" id="painLevelValue">0</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -88,7 +164,7 @@
                                     <span>None</span>
                                     <span>Severe</span>
                                 </div>
-                                <div class="range-value" id="headacheValue">0</div>
+                                <div class="range-value" id="headacheLevelValue">0</div>
                             </div>
                         </div>
                     </div>
@@ -144,7 +220,7 @@
                 <!-- Physical Symptoms -->
                 <div class="form-section">
                     <h3 class="section-title">
-                        <div class="section-icon"><i class="fas fa-body"></i></div>
+                        <div class="section-icon"><i class="fas fa-heartbeat"></i></div>
                         Physical Symptoms
                     </h3>
                     <div class="checkbox-group">
@@ -223,7 +299,7 @@
                                     <span>Calm</span>
                                     <span>Very Anxious</span>
                                 </div>
-                                <div class="range-value" id="anxietyValue">0</div>
+                                <div class="range-value" id="anxietyLevelValue">0</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -234,7 +310,7 @@
                                     <span>Relaxed</span>
                                     <span>Very Stressed</span>
                                 </div>
-                                <div class="range-value" id="stressValue">0</div>
+                                <div class="range-value" id="stressLevelValue">0</div>
                             </div>
                         </div>
                     </div>
@@ -270,7 +346,7 @@
                                     <span>Exhausted</span>
                                     <span>Very Energetic</span>
                                 </div>
-                                <div class="range-value" id="energyValue">5</div>
+                                <div class="range-value" id="energyLevelValue">5</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -281,7 +357,7 @@
                                     <span>Alert</span>
                                     <span>Very Tired</span>
                                 </div>
-                                <div class="range-value" id="fatigueValue">0</div>
+                                <div class="range-value" id="fatigueLevelValue">0</div>
                             </div>
                         </div>
                     </div>
@@ -317,7 +393,7 @@
                         <i class="fas fa-user-md"></i>
                         Find Doctors
                     </a>
-                    <a href="#" class="quick-btn" onclick="exportData()">
+                    <a href="#" class="quick-btn" onclick="exportData(); return false;">
                         <i class="fas fa-download"></i>
                         Export Data
                     </a>
@@ -326,8 +402,16 @@
         </form>
 
         <div class="tracking-history">
-            <h3><i class="fas fa-history"></i>Recent Entries</h3>
-            <div class="history-item">
-                <div>
-                    <div class="history-date">Yesterday</div>
-                    <div class="history-summary">Pain: 3/10 • Mood: Good •
+            <h3><i class="fas fa-history"></i> Recent Entries</h3>
+            <div id="historyContainer"></div>
+        </div>
+
+        <div class="disclaimer">
+            <i class="fas fa-info-circle"></i>
+            This tracker is for personal monitoring. Always consult with healthcare professionals for medical advice.
+        </div>
+    </div>
+
+    <script src="tracker.js"></script>
+</body>
+</html>
