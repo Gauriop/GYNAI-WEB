@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   // 🧩 1. Load Header
-  fetch("header.html")
+  fetch("templates/header.html")
     .then(response => response.text())
     .then(data => {
       document.getElementById("header-placeholder").innerHTML = data;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error("Error loading header:", error));
 
   // 🧩 2. Load Footer
-  fetch("footer.html")
+  fetch("templates/footer.html")
     .then(response => response.text())
     .then(data => {
       document.getElementById("footer-placeholder").innerHTML = data;
@@ -49,7 +49,7 @@ function setupDashboardLink() {
         });
         window.location.href = `dashboard.html?${params.toString()}`;
       } else {
-        window.location.href = "login.html";
+        window.location.href = "templates/login.html";
       }
     });
   }

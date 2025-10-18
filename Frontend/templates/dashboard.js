@@ -143,7 +143,7 @@ function animateValue(id, start, end, duration, isDecimal = false) {
 
 function handleLogout() {
     window.userData = null;
-    window.location.href = 'home.html';
+    window.location.href = 'index.html';
 }
 
 document.addEventListener('DOMContentLoaded', updateDashboard);
