@@ -1,5 +1,5 @@
 
-        const API_BASE_URL = 'http://localhost:5001/api';
+        // const API_BASE_URL = 'http://localhost:5001/api';
         let doctorsData = null;
         let filteredDoctors = [];
         let searchTerm = '';
@@ -14,7 +14,7 @@
 
         async function loadConfig() {
             try {
-                const response = await fetch(`${API_BASE_URL}/config`);
+                const response = await fetch(`${API_BASE_URL}/api/config`);
                 const config = await response.json();
                 googleMapsApiKey = config.googleMapsApiKey;
                 

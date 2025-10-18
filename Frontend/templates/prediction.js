@@ -369,7 +369,7 @@ document.getElementById("predictionForm").addEventListener("submit", async funct
     console.log("Sending data to Flask:", formData);
 
     try {
-        const response = await fetch("http://127.0.0.1:5001/predict", {
+        const response = await fetch(`${API_BASE_URL}/predict`, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
