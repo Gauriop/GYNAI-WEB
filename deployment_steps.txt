@@ -1,0 +1,34 @@
+GYNAI PROJECT - DEPLOYMENT STEPS
+=================================
+
+STEP 1: LOCAL TESTING
+----------------------
+cd backend
+pip install -r requirements.txt
+python main.py
+(Test at http://localhost:5001)
+
+STEP 2: PUSH TO GITHUB
+-----------------------
+git add .
+git commit -m "Added unified backend"
+git push origin main
+
+STEP 3: DEPLOY ON RENDER
+-------------------------
+1. Go to https://render.com and create New Web Service
+2. Connect your GitHub repository
+3. Configure:
+   - Root Directory: backend
+   - Build Command: pip install -r requirements.txt
+   - Start Command: gunicorn main:app
+4. Add Environment Variables:
+   SECRET_KEY, DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, GOOGLE_MAPS_API_KEY
+5. Click "Create Web Service"
+
+STEP 4: UPDATE FRONTEND
+------------------------
+Change API URL in your frontend JavaScript:
+const API_URL = 'https://your-app-name.onrender.com';
+
+DONE! Your app is live at https://your-app-name.onrender.com

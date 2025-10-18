@@ -177,7 +177,7 @@ if __name__ == '__main__':
     print("\n" + "="*50)
     print("PCOS Prediction Server Starting...")
     print("="*50)
-    print("Server: http://127.0.0.1:5000")
+    print("Server: http://127.0.0.1:5001")
     print("="*50 + "\n")
     
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(debug=True, host='127.0.0.1', port=5001)
