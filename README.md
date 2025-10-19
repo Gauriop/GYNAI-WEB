@@ -17,7 +17,7 @@
 
 ## About The Project
 
-**GynAi** is a comprehensive women's health platform that leverages artificial intelligence to predict PCOS risk, track symptoms, and connect users with healthcare professionals. The platform aims to empower women with accessible health information and early detection tools.
+**GynAi** is an innovative women's health platform designed to revolutionize how women understand and manage their reproductive health. By harnessing the power of artificial intelligence, GynAi provides accurate PCOS risk predictions, intelligent symptom tracking, and seamless connections to qualified healthcare professionals. Our mission is to empower women with accessible, data-driven health insights and early detection tools, breaking down barriers to quality healthcare. Whether you're monitoring your health journey, seeking answers to concerning symptoms, or looking for expert guidance, GynAi serves as your trusted companion in navigating the complexities of women's health with confidence and clarity.
 
 ### Key Objectives:
 - Provide AI-based PCOS risk prediction
