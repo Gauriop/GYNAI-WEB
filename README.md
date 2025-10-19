@@ -1,83 +1,62 @@
 # 🩺 GynAi - AI-Powered Women's Health Platform
 
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
-![App Screenshot](assets/homepage.png)
+![HomePage Screenshot](/assests/homepage.png)
+![RegisterPage Screenshot](/assests/registerpage.png)
+![LoginPage Screenshot](/assests/loginpage.png)
+![TrackerPage Screenshot](/assests/trackerpage.png)
+![PredictPage Screenshot](/assests/predictpage.png)
+![DoctorPage Screenshot](/assests/doctorpage.png)
+![CommunityPage Screenshot](/assests/communitypage.png)
+![DashboardPage Screenshot](/assests/dashboardpage.png)
+
 
 
 > An AI-powered web application for PCOS (Polycystic Ovary Syndrome) prediction, symptom tracking, and women's healthcare management.
 
 ---
 
-## 📋 Table of Contents
-
-- [About The Project](#about-the-project)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Screenshots](#screenshots)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running Locally](#running-locally)
-- [Deployment](#deployment)
-  - [Frontend Deployment (Netlify)](#frontend-deployment-netlify)
-  - [Backend Deployment (Render)](#backend-deployment-render)
-- [API Documentation](#api-documentation)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgments](#acknowledgments)
-
----
-
-## 🎯 About The Project
+## About The Project
 
 **GynAi** is a comprehensive women's health platform that leverages artificial intelligence to predict PCOS risk, track symptoms, and connect users with healthcare professionals. The platform aims to empower women with accessible health information and early detection tools.
 
 ### Key Objectives:
-- 🔬 Provide AI-based PCOS risk prediction
-- 📊 Enable daily symptom tracking and pattern analysis
-- 🏥 Connect users with nearby gynecologists and specialists
-- 📚 Educate about women's health conditions and management
+- Provide AI-based PCOS risk prediction
+- Enable daily symptom tracking and pattern analysis
+- Connect users with nearby gynecologists and specialists
+- Educate about women's health conditions and management
 
-**Live Demo:** [https://harmonious-cobbler-92d292.netlify.app](https://harmonious-cobbler-92d292.netlify.app)
+**Live Demo:** [https://gynai-app.netlify.app/](https://gynai-app.netlify.app/)
 
 ---
 
-## ✨ Features
+## Features
 
-### 🤖 AI-Powered PCOS Prediction
+### AI-Powered PCOS Prediction
 - Advanced machine learning model for PCOS risk assessment
 - Input various health parameters (BMI, hormones, symptoms)
 - Instant risk analysis with confidence scores
 - Personalized diet, exercise, and lifestyle recommendations
 
-### 📝 Symptom Tracker
+### Symptom Tracker
 - Daily symptom logging (pain, mood, energy, sleep)
 - Menstrual cycle tracking
 - Physical and mental health monitoring
 - Historical data visualization and pattern recognition
 
-### 🩺 Doctor Finder
+### Doctor Finder
 - Search gynecologists and specialists by location
 - Filter by specialty, availability, and ratings
 - View consultation fees and doctor profiles
 - Integrated Google Maps for directions
 - Book appointments (interface ready)
 
-### 👤 User Authentication
+### User Authentication
 - Secure registration and login system
 - Password encryption with bcrypt
 - Session management
 - Personalized dashboard
 
-### 📱 Responsive Design
+### Responsive Design
 - Mobile-friendly interface
 - Modern, intuitive UI/UX
 - Fast loading times
@@ -85,7 +64,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **HTML5** - Structure and content
@@ -119,7 +98,7 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### System Architecture Diagram
 
@@ -193,41 +172,8 @@
 
 ---
 
-## 📸 Screenshots
 
-### Homepage
-![Homepage](screenshots/homepage.png)
-*Beautiful landing page with hero section and feature highlights*
-
-### PCOS Prediction
-![Prediction Form](screenshots/prediction-form.png)
-*Comprehensive health assessment form with 40+ parameters*
-
-![Prediction Results](screenshots/prediction-results.png)
-*AI-powered results with confidence scores and recommendations*
-
-### Symptom Tracker
-![Symptom Tracker](screenshots/symptom-tracker.png)
-*Daily symptom logging with intuitive interface*
-
-### Doctor Finder
-![Doctor Finder](screenshots/doctor-finder.png)
-*Search and filter doctors with Google Maps integration*
-
-### User Dashboard
-![Dashboard](screenshots/dashboard.png)
-*Personalized health dashboard with metrics and insights*
-
-### Authentication
-![Login Page](screenshots/login.png)
-*Secure login with modern design*
-
-![Register Page](screenshots/register.png)
-*Easy registration process*
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -255,14 +201,14 @@ Before you begin, ensure you have the following installed:
 
 ### Installation
 
-#### 1️⃣ Clone the Repository
+####  Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/gynai.git
 cd gynai
 ```
 
-#### 2️⃣ Backend Setup
+#### Backend Setup
 
 **Navigate to backend directory:**
 ```bash
@@ -285,46 +231,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**Create `requirements.txt` if not exists:**
-```txt
-Flask==3.0.0
-Flask-CORS==4.0.0
-mysql-connector-python==8.2.0
-bcrypt==4.1.1
-joblib==1.3.2
-numpy==1.26.2
-pandas==2.1.4
-scikit-learn==1.3.2
-gunicorn==21.2.0
-python-dotenv==1.0.0
-```
-
-**Set up MySQL Database:**
-
-```sql
--- Create database
-CREATE DATABASE user_system;
-
--- Use database
-USE user_system;
-
--- Create users table
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create login history table
-CREATE TABLE login_history (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
+**Set up MySQL Database**
 
 **Configure environment variables:**
 
@@ -389,7 +296,7 @@ You should see:
 ✓ Doctors database loaded successfully!
 ```
 
-#### 2️⃣ Start Frontend Server
+#### Start Frontend Server
 
 **Option A: Using VS Code Live Server**
 1. Install "Live Server" extension in VS Code
@@ -404,7 +311,7 @@ python -m http.server 5500
 ```
 Then open: `http://127.0.0.1:5500`
 
-#### 3️⃣ Access the Application
+#### Access the Application
 
 Open your browser and go to:
 ```
@@ -413,7 +320,7 @@ http://127.0.0.1:5500/index.html
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
 ### Frontend Deployment (Netlify)
 
@@ -455,43 +362,17 @@ http://127.0.0.1:5500/index.html
      - Publish directory: `.`
    - Click "Deploy site"
 
-3. **Create `netlify.toml` in Frontend folder:**
-   ```toml
-   [build]
-     publish = "."
-
-   [[redirects]]
-     from = "/*"
-     to = "/index.html"
-     status = 200
-   ```
-
----
+3. **Create `netlify.toml` in Frontend folder**
 
 ### Backend Deployment (Render)
 
-#### 1️⃣ Prepare for Deployment
+#### Prepare for Deployment
 
 **Ensure these files exist in Backend folder:**
 
-**`requirements.txt`:**
-```txt
-Flask==3.0.0
-Flask-CORS==4.0.0
-mysql-connector-python==8.2.0
-bcrypt==4.1.1
-joblib==1.3.2
-numpy==1.26.2
-pandas==2.1.4
-scikit-learn==1.3.2
-gunicorn==21.2.0
-python-dotenv==1.0.0
-```
+**`requirements.txt`**
 
-**`Procfile` (optional but recommended):**
-```
-web: gunicorn app:app
-```
+**`Procfile`**
 
 **Update `app.py` CORS:**
 ```python
@@ -503,7 +384,7 @@ CORS(app, supports_credentials=True, origins=[
 ])
 ```
 
-#### 2️⃣ Deploy to Render
+#### Deploy to Render
 
 1. **Push to GitHub:**
    ```bash
@@ -545,7 +426,7 @@ CORS(app, supports_credentials=True, origins=[
    - Wait for deployment (5-10 minutes)
    - Get URL: `https://your-app.onrender.com`
 
-#### 3️⃣ Update Frontend Config
+#### Update Frontend Config
 
 **Update `Frontend/templates/config.js`:**
 ```javascript
@@ -566,7 +447,7 @@ const API_CONFIG = {
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
 ### Base URL
 ```
@@ -691,72 +572,7 @@ Response: 200 OK
 
 ---
 
-## 📁 Project Structure
-
-```
-gynai/
-├── Frontend/
-│   ├── index.html                 # Homepage
-│   ├── netlify.toml               # Netlify configuration
-│   ├── images/                    # Image assets
-│   │   ├── dash.png
-│   │   ├── d.png
-│   │   ├── doc.jpeg
-│   │   └── ...
-│   ├── learn-more/                # Educational pages
-│   │   ├── causes.html
-│   │   ├── fertility.html
-│   │   └── ...
-│   └── templates/
-│       ├── config.js              # API configuration
-│       ├── dashboard.html         # User dashboard
-│       ├── dashboard.css
-│       ├── dashboard.js
-│       ├── doctors.html           # Doctor finder
-│       ├── doctor.css
-│       ├── doctor.js
-│       ├── database.json          # Doctors data (frontend)
-│       ├── footer.html            # Reusable footer
-│       ├── footer.css
-│       ├── header.html            # Reusable header
-│       ├── header.css
-│       ├── home.css               # Homepage styles
-│       ├── home.js                # Homepage logic
-│       ├── login.html             # Login page
-│       ├── login.css
-│       ├── login.js
-│       ├── prediction.html        # PCOS prediction
-│       ├── prediction.css
-│       ├── prediction.js
-│       ├── register.html          # Registration
-│       ├── register.css
-│       ├── register.js
-│       ├── tracker.html           # Symptom tracker
-│       ├── tracker.css
-│       └── tracker.js
-│
-├── Backend/
-│   ├── app.py                     # Main Flask application
-│   ├── requirements.txt           # Python dependencies
-│   ├── .env                       # Environment variables (not in git)
-│   ├── .gitignore                 # Git ignore file
-│   ├── pcos_model.pkl             # Trained ML model
-│   ├── database.json              # Doctors data (backend)
-│   └── Procfile                   # Deployment configuration
-│
-├── screenshots/                   # Project screenshots
-│   ├── homepage.png
-│   ├── prediction-form.png
-│   ├── dashboard.png
-│   └── ...
-│
-├── README.md                      # This file
-└── LICENSE                        # License file
-```
-
----
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Here's how you can help:
 
@@ -784,23 +600,12 @@ Contributions are welcome! Here's how you can help:
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
-
-## 👥 Contact
-
-**Your Name** - [@yourtwitter](https://twitter.com/yourtwitter) - your.email@example.com
-
-**Project Link:** [https://github.com/yourusername/gynai](https://github.com/yourusername/gynai)
-
-**Live Demo:** [https://harmonious-cobbler-92d292.netlify.app](https://harmonious-cobbler-92d292.netlify.app)
-
----
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Flask Documentation](https://flask.palletsprojects.com/)
 - [scikit-learn](https://scikit-learn.org/)
@@ -813,7 +618,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
 
-## 📊 Project Statistics
+## Project Statistics
 
 - **Lines of Code:** ~5000+
 - **Files:** 30+

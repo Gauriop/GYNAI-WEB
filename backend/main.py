@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True for production (HTTPS)
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True for production (HTTPS)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
 
 # CORS configuration
@@ -30,7 +30,7 @@ CORS(app, supports_credentials=True, origins=[
     "http://127.0.0.1:5500",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "hhttps://gynai-app.netlify.app",  # YOUR ACTUAL NETLIFY URL!
+    "https://gynai-app.netlify.app",  # YOUR ACTUAL NETLIFY URL!
     "https://*.netlify.app",  # Allow all Netlify subdomains
     os.getenv('FRONTEND_URL', '')
 ], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
