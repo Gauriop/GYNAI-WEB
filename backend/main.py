@@ -10,6 +10,9 @@ from math import radians, sin, cos, sqrt, atan2
 import joblib
 import numpy as np
 import pandas as pd
+from dotenv import load_dotenv  
+
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -34,10 +37,11 @@ CORS(app, supports_credentials=True, origins=[
 
 # Database configuration
 db_config = {
-    'host': os.getenv('DB_HOST', 'localhost'),
-    'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', 'CaptainA1918@'),
-    'database': os.getenv('DB_NAME', 'user_system')
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT', 3306)),  # ✅ Added port
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME')
 }
 
 # Google Maps API Key

@@ -5,6 +5,10 @@ import bcrypt
 import os
 import re
 from datetime import timedelta
+from dotenv import load_dotenv  # ✅ ADD THIS
+
+# ✅ ADD THIS LINE - Load .env file
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
@@ -12,7 +16,6 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = False  
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
-
 
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:3000",
@@ -23,13 +26,23 @@ CORS(app, supports_credentials=True, origins=[
     "http://127.0.0.1:8000"
 ], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 
-
+# ✅ UPDATED - Now reads from .env file
 db_config = {
-    'host': os.getenv('DB_HOST', 'localhost'),
-    'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', 'CaptainA1918@'),
-    'database': os.getenv('DB_NAME', 'user_system')  # <- default to gynai_db
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT', 3306)),  # ✅ Added port
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME')
 }
+
+# ✅ ADD THIS - Print to verify connection details
+print("=" * 50)
+print("Database Configuration:")
+print(f"Host: {db_config['host']}")
+print(f"Port: {db_config['port']}")
+print(f"User: {db_config['user']}")
+print(f"Database: {db_config['database']}")
+print("=" * 50)
 
 def get_db_connection():
     try:
