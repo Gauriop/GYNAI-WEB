@@ -27,7 +27,8 @@ CORS(app, supports_credentials=True, origins=[
     "http://127.0.0.1:5500",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://cheerful-unicorn-123abc.netlify.app", # MY NETLIFY URL!
+    "https://harmonious-cobbler-92d292.netlify.app",  # YOUR ACTUAL NETLIFY URL!
+    "https://*.netlify.app",  # Allow all Netlify subdomains
     os.getenv('FRONTEND_URL', '')
 ], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 

@@ -1,7 +1,7 @@
 // config.js
 const API_CONFIG = {
   // REPLACE THIS URL with your Render backend URL
-  BACKEND_URL: 'https://gynai-web-1.onrender.com/',
+  BACKEND_URL: 'https://gynai-web-1.onrender.com',
   
   getBaseURL: function() {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
