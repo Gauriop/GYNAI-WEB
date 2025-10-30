@@ -42,14 +42,13 @@
                             <h2>Welcome Back!</h2>
                             <p>Have You Had a Routine Health Check This Month?</p>
                             <div class="welcome-buttons">
-                                <button class="btn-primary" onclick="window.location.href='tracker.html'">Check Now</button>
-                                <button class="btn-secondary" onclick="window.location.href='prediction.html'">View Report</button>
+                                <button class="btn-primary" onclick="window.location.href='predict.html'">Check Now</button>
+                                <button class="btn-secondary" onclick="window.location.href='tracker.html'">View Report</button>
                             </div>
                         </div>
-                       <div class="doctor-image">
-    <img src="image/doc.jpeg" alt="" class="doctor-photo">
-</div>
-
+                        <div class="doctor-image">
+                            <img src="image/doc.jpeg" alt="Doctor" class="doctor-photo">
+                        </div>
                     </div>
 
                     <div class="health-metrics">
@@ -73,10 +72,24 @@
                         </div>
                     </div>
 
+                    <!-- Health Summary Card - Full Width -->
+                    <div class="health-summary-card">
+                        <div id="healthSummary">
+                            <div style="padding: 1.5rem; text-align: center; color: #750D37; opacity: 0.6;">
+                                <p>📋 No recent health data tracked yet</p>
+                                <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                                    <a href="tracker.html" style="color: #a91b5a; text-decoration: none; font-weight: 600;">
+                                        Start tracking your health →
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="chart-section">
                         <div class="section-header">
                             <h3 class="section-title">Symptom Tracking Overview</h3>
-                            <a href="#" class="view-report-btn">View Report →</a>
+                            <a href="tracker.html" class="view-report-btn">View Report →</a>
                         </div>
                         <div class="chart-container" id="chartContainer"></div>
                         <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; font-size: 0.85rem;">
@@ -158,6 +171,7 @@
                             <button class="book-btn">Book</button>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="sidebar">
@@ -209,7 +223,106 @@
                                 <p>Dr. Mehta • Completed</p>
                             </div>
                         </div>
-                        <a href="#" class="view-report-btn" style="display: block; text-align: center; margin-top: 1rem;">View All →</a>
+                        <a href="doctors.html" class="view-report-btn" style="display: block; text-align: center; margin-top: 1rem;">View All →</a>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="section-header">
+                            <h3 class="section-title">📚 Educational Resources</h3>
+                            <span class="view-report-btn" style="cursor: default;">Learn More</span>
+                        </div>
+                        
+                        <div class="resource-grid">
+                            <div class="resource-item">
+                                <div class="resource-icon">🩺</div>
+                                <h4>Understanding PCOS</h4>
+                                <p>Learn about symptoms, causes, and diagnosis of Polycystic Ovary Syndrome</p>
+                                <button class="resource-btn" onclick="toggleResourceModal('pcos')">Read More</button>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon">🥗</div>
+                                <h4>Diet & Nutrition</h4>
+                                <p>PCOS-friendly foods, meal planning tips, and nutritional guidelines</p>
+                                <button class="resource-btn" onclick="toggleResourceModal('diet')">Read More</button>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon">🏃‍♀️</div>
+                                <h4>Exercise Guide</h4>
+                                <p>Effective workouts and fitness routines for managing PCOS symptoms</p>
+                                <button class="resource-btn" onclick="toggleResourceModal('exercise')">Read More</button>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon">💊</div>
+                                <h4>Treatment Options</h4>
+                                <p>Medical treatments, supplements, and lifestyle interventions</p>
+                                <button class="resource-btn" onclick="toggleResourceModal('treatment')">Read More</button>
+                            </div>
+                        </div>
+
+                        <div class="faq-section">
+                            <h3 class="faq-title">❓ Frequently Asked Questions</h3>
+                            <div class="faq-container">
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>What is PCOS and how common is it?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>PCOS (Polycystic Ovary Syndrome) is a hormonal disorder affecting 1 in 10 women of reproductive age. It's characterized by irregular periods, excess androgen levels, and polycystic ovaries. Early diagnosis and management can help control symptoms and reduce long-term health risks.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>What are the main symptoms of PCOS?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>Common symptoms include irregular or missed periods, excess hair growth (hirsutism), acne, weight gain, thinning hair on the scalp, darkening of skin, and difficulty getting pregnant. Not all women experience all symptoms.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>Can diet really help manage PCOS?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>Yes! A balanced diet can significantly improve PCOS symptoms. Focus on low-GI foods, lean proteins, healthy fats, and plenty of vegetables. Limiting processed foods and sugar helps manage insulin resistance, a key factor in PCOS.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>What type of exercise is best for PCOS?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>A combination of cardio and strength training works best. Aim for 150 minutes of moderate exercise weekly. Activities like brisk walking, swimming, cycling, and resistance training help improve insulin sensitivity and hormone balance.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>Can PCOS be cured?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>PCOS cannot be completely cured, but symptoms can be effectively managed through lifestyle changes, medications, and regular monitoring. Many women successfully control their symptoms and lead healthy lives with proper management.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>How does PCOS affect fertility?</span>
+                                        <span class="faq-icon">+</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>PCOS is one of the leading causes of infertility due to irregular ovulation. However, many women with PCOS can conceive with proper treatment, lifestyle modifications, or fertility treatments. Consult a specialist for personalized guidance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -222,7 +335,6 @@
         </div>
     </footer>
 
-    <script src="dashboard.js">
-    </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

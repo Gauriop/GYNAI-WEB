@@ -66,9 +66,16 @@ moodOptions.forEach(option => {
     });
 });
 
-// Form submission
+// DEBUG: Check localStorage on page load
+console.log('=== TRACKER DEBUG ===');
+console.log('Existing tracking data:', localStorage.getItem('trackingData'));
+console.log('LocalStorage available:', typeof(Storage) !== "undefined");
+
+// Form submission with localStorage
 document.getElementById('trackingForm').addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    console.log('Form submitted!');
 
     // Collect form data
     const formData = {
@@ -94,8 +101,8 @@ document.getElementById('trackingForm').addEventListener('submit', (e) => {
         timestamp: new Date().toISOString()
     };
 
-    // Get existing data
-    let trackingData = JSON.parse(window.trackingData || '[]');
+    // Get existing data from localStorage
+    let trackingData = JSON.parse(localStorage.getItem('trackingData') || '[]');
     
     // Check if entry for this date exists
     const existingIndex = trackingData.findIndex(entry => entry.date === formData.date);
@@ -108,8 +115,14 @@ document.getElementById('trackingForm').addEventListener('submit', (e) => {
     // Sort by date (newest first)
     trackingData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Store data
+    // Store data in localStorage (this will be accessible by dashboard)
+    localStorage.setItem('trackingData', JSON.stringify(trackingData));
+
+    // Also update window.trackingData for compatibility
     window.trackingData = JSON.stringify(trackingData);
+
+    // Calculate and store dashboard metrics
+    updateDashboardMetrics(trackingData);
 
     // Show success message
     const successMessage = document.getElementById('successMessage');
@@ -125,10 +138,48 @@ document.getElementById('trackingForm').addEventListener('submit', (e) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// Update dashboard metrics based on tracker data
+function updateDashboardMetrics(trackingData) {
+    if (trackingData.length === 0) return;
+
+    // Get the most recent entry
+    const latestEntry = trackingData[0];
+    
+    // Calculate average values from last 7 entries
+    const recentEntries = trackingData.slice(0, 7);
+    
+    const avgPainLevel = Math.round(
+        recentEntries.reduce((sum, e) => sum + parseInt(e.painLevel || 0), 0) / recentEntries.length
+    );
+    
+    const avgSleepHours = (
+        recentEntries.reduce((sum, e) => sum + parseFloat(e.sleepHours || 0), 0) / recentEntries.length
+    ).toFixed(1);
+    
+    const avgEnergyLevel = Math.round(
+        recentEntries.reduce((sum, e) => sum + parseInt(e.energyLevel || 0), 0) / recentEntries.length
+    );
+
+    // Store metrics for dashboard
+    const dashboardMetrics = {
+        heartRate: parseInt(latestEntry.anxietyLevel) * 8 + 50, // Simulated heart rate based on anxiety
+        hemoglobin: 12.5, // Default value
+        painLevel: parseInt(latestEntry.painLevel),
+        sleepHours: parseFloat(latestEntry.sleepHours || 0),
+        energyLevel: parseInt(latestEntry.energyLevel),
+        avgPainLevel: avgPainLevel,
+        avgSleepHours: avgSleepHours,
+        avgEnergyLevel: avgEnergyLevel,
+        lastUpdated: new Date().toISOString()
+    };
+
+    localStorage.setItem('dashboardMetrics', JSON.stringify(dashboardMetrics));
+}
+
 // Display history
 function displayHistory() {
     const historyContainer = document.getElementById('historyContainer');
-    const trackingData = JSON.parse(window.trackingData || '[]');
+    const trackingData = JSON.parse(localStorage.getItem('trackingData') || '[]');
 
     if (trackingData.length === 0) {
         historyContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;"><i class="fas fa-inbox" style="font-size: 3rem; display: block; margin-bottom: 15px;"></i><p>No entries yet. Start tracking your symptoms!</p></div>';
@@ -178,7 +229,7 @@ function displayHistory() {
 
 // Export data function
 function exportData() {
-    const trackingData = JSON.parse(window.trackingData || '[]');
+    const trackingData = JSON.parse(localStorage.getItem('trackingData') || '[]');
     
     if (trackingData.length === 0) {
         alert('No data to export yet!');
@@ -230,7 +281,7 @@ function exportData() {
 // Load data for selected date if it exists
 document.getElementById('trackingDate').addEventListener('change', function() {
     const selectedDate = this.value;
-    const trackingData = JSON.parse(window.trackingData || '[]');
+    const trackingData = JSON.parse(localStorage.getItem('trackingData') || '[]');
     const existingEntry = trackingData.find(entry => entry.date === selectedDate);
 
     if (existingEntry) {
